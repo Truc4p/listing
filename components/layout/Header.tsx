@@ -27,7 +27,7 @@ export default function Header() {
               <Building2 className="w-5 h-5 text-white" />
             </div>
             <div className="leading-tight">
-              <span className="block text-[15px] font-semibold text-[#1a1a1a] tracking-wide">
+              <span className="block text-[16px] font-semibold text-[#1a1a1a] tracking-wide" style={{ fontFamily: "var(--font-playfair)" }}>
                 Căn Hộ Thanh Hà
               </span>
               <span className="block text-[10px] text-[#9a8a7a] uppercase tracking-[3px]">
