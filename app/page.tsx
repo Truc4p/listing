@@ -52,19 +52,25 @@ export default async function HomePage() {
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#faf7f2]">
+        {/* Decorative concentric circles */}
+        <div className="absolute -top-48 -right-48 w-[700px] h-[700px] rounded-full border border-[#c9a84c]/10 pointer-events-none" />
+        <div className="absolute -top-28 -right-28 w-[480px] h-[480px] rounded-full border border-[#c9a84c]/8 pointer-events-none" />
+
         {/* Subtle dot-grid */}
         <div
-          className="absolute inset-0 opacity-[0.035]"
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
           style={{
             backgroundImage:
               "radial-gradient(circle, #c9a84c 1px, transparent 1px)",
             backgroundSize: "36px 36px",
           }}
         />
-        {/* Soft gold glow top-right */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#c9a84c] opacity-5 blur-3xl rounded-full" />
-        {/* Warm left strip */}
-        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-linear-to-b from-transparent via-[#c9a84c] to-transparent opacity-40" />
+
+        {/* Gold glow top-right */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a84c] opacity-[0.06] blur-[120px] rounded-full pointer-events-none" />
+
+        {/* Left accent strip */}
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-transparent via-[#c9a84c] to-transparent opacity-50 pointer-events-none" />
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-24">
           {/* Eyebrow */}
@@ -76,19 +82,19 @@ export default async function HomePage() {
             <span className="h-px w-10 bg-[#c9a84c]" />
           </div>
 
-          {/* Heading */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light text-[#1a1a1a] leading-[1.1] mb-6 tracking-tight">
+          {/* Heading — Playfair Display */}
+          <h1 className="font-heading text-6xl sm:text-7xl lg:text-[86px] font-light text-[#1a1a1a] leading-[1.05] mb-8 tracking-tight">
             Không Gian Sống
             <br />
-            <span className="font-semibold italic text-[#c9a84c]">
+            <span className="font-heading font-semibold italic text-[#c9a84c]">
               Đẳng Cấp
             </span>
           </h1>
 
           {/* Gold rule */}
-          <div className="w-14 h-0.5 bg-[#c9a84c] mx-auto mb-7" />
+          <div className="w-16 h-0.5 bg-[#c9a84c] mx-auto mb-8" />
 
-          <p className="text-[#6b6b6b] text-lg max-w-xl mx-auto mb-12 leading-relaxed font-light">
+          <p className="text-[#6b6b6b] text-lg sm:text-xl max-w-xl mx-auto mb-14 leading-relaxed font-light">
             Phòng trọ và căn hộ cho thuê chất lượng cao tại trung tâm Sài
             Gòn. Không gian thoáng, sạch sẽ, an toàn và đầy đủ tiện nghi.
           </p>
@@ -99,7 +105,7 @@ export default async function HomePage() {
               href="/rooms"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 px-10 h-12 text-sm font-medium tracking-wide rounded-sm shadow-lg shadow-[#c9a84c]/20"
+                "bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 px-10 h-12 text-sm font-medium tracking-wide rounded-md shadow-xl shadow-[#c9a84c]/25"
               )}
             >
               Xem phòng trống
@@ -109,7 +115,7 @@ export default async function HomePage() {
               href="/contact"
               className={cn(
                 buttonVariants({ size: "lg", variant: "outline" }),
-                "border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-10 h-12 text-sm font-medium tracking-wide rounded-sm"
+                "border-[#1a1a1a]/25 text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-10 h-12 text-sm font-medium tracking-wide rounded-md"
               )}
             >
               <Phone className="mr-2 w-4 h-4" />
@@ -117,15 +123,18 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto">
+          {/* Stats — glass cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
             {stats.map(({ value, label }) => (
-              <div key={label} className="text-center">
-                <div className="text-2xl font-semibold text-[#1a1a1a] mb-1">
+              <div
+                key={label}
+                className="text-center p-5 rounded-2xl bg-white/70 backdrop-blur-sm border border-[#e8ddd0] shadow-sm hover:shadow-md hover:border-[#c9a84c]/30 transition-all"
+              >
+                <div className="text-2xl font-bold text-[#1a1a1a] mb-1">
                   {value}
                 </div>
-                <div className="w-6 h-px bg-[#c9a84c] mx-auto mb-1.5" />
-                <div className="text-xs text-[#9a8a7a] uppercase tracking-widest">
+                <div className="w-5 h-px bg-[#c9a84c] mx-auto mb-1.5" />
+                <div className="text-xs text-[#9a8a7a] uppercase tracking-widest font-light">
                   {label}
                 </div>
               </div>
@@ -140,27 +149,29 @@ export default async function HomePage() {
       </section>
 
       {/* ── Featured Rooms ────────────────────────────────────── */}
-      <section className="py-24 bg-white">
+      <section className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section header */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-16 gap-6">
             <div>
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-3 mb-4">
                 <span className="h-px w-8 bg-[#c9a84c]" />
                 <span className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-[4px]">
                   Nổi bật
                 </span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight">
+              <h2 className="font-heading text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight">
                 Phòng & Căn Hộ{" "}
-                <span className="font-semibold">Được Chọn Lọc</span>
+                <span className="font-heading font-semibold italic">
+                  Được Chọn Lọc
+                </span>
               </h2>
             </div>
             <Link
               href="/rooms"
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "border-[#c9a84c] text-[#c9a84c] hover:bg-[#c9a84c] hover:text-white rounded-sm shrink-0 text-sm tracking-wide"
+                "border-[#c9a84c] text-[#c9a84c] hover:bg-[#c9a84c] hover:text-white rounded-md shrink-0 text-sm tracking-wide"
               )}
             >
               Xem tất cả
@@ -169,13 +180,13 @@ export default async function HomePage() {
           </div>
 
           {featuredRooms.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredRooms.map((room) => (
                 <RoomCard key={room._id} room={room} />
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 border border-[#e8ddd0] rounded-sm">
+            <div className="text-center py-20 border border-[#e8ddd0] rounded-2xl">
               <p className="text-[#9a8a7a] mb-4">
                 Chưa có phòng nổi bật. Vui lòng quay lại sau.
               </p>
@@ -183,7 +194,7 @@ export default async function HomePage() {
                 href="/rooms"
                 className={cn(
                   buttonVariants(),
-                  "bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 rounded-sm"
+                  "bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 rounded-md"
                 )}
               >
                 Xem tất cả phòng
@@ -193,43 +204,45 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Why Choose Us ─────────────────────────────────────── */}
-      <section className="py-24 bg-[#faf7f2]">
+      {/* ── Why Choose Us — DARK ──────────────────────────────── */}
+      <section className="py-28 bg-[#0d0c0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="flex items-center justify-center gap-3 mb-4">
               <span className="h-px w-8 bg-[#c9a84c]" />
               <span className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-[4px]">
                 Cam kết của chúng tôi
               </span>
               <span className="h-px w-8 bg-[#c9a84c]" />
             </div>
-            <h2 className="text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight mb-4">
+            <h2 className="font-heading text-3xl sm:text-4xl font-light text-white tracking-tight mb-4">
               Tại Sao Chọn{" "}
-              <span className="font-semibold">Thanh Hà?</span>
+              <span className="font-heading font-semibold italic text-[#c9a84c]">
+                Thanh Hà?
+              </span>
             </h2>
-            <p className="text-[#9a8a7a] max-w-xl mx-auto font-light">
+            <p className="text-white/45 max-w-xl mx-auto font-light">
               Chúng tôi không chỉ cho thuê phòng — chúng tôi tạo ra một ngôi
               nhà thực sự cho bạn.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {highlights.map(({ Icon, title, desc }, i) => (
               <div
                 key={title}
-                className="group bg-white p-8 border border-[#e8ddd0] hover:border-[#c9a84c] transition-all duration-300 hover:shadow-lg hover:shadow-[#c9a84c]/5"
+                className="group bg-white/[0.04] border border-white/10 hover:border-[#c9a84c]/40 hover:bg-white/[0.07] p-8 transition-all duration-300 rounded-2xl"
               >
-                <div className="w-10 h-10 border border-[#e8ddd0] group-hover:border-[#c9a84c] flex items-center justify-center mb-5 transition-colors">
-                  <Icon className="w-4.5 h-4.5 text-[#c9a84c]" />
+                <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/20 group-hover:border-[#c9a84c]/40 flex items-center justify-center mb-6 transition-colors">
+                  <Icon className="w-5 h-5 text-[#c9a84c]" />
                 </div>
-                <div className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-widest mb-2">
+                <div className="text-[#c9a84c]/50 text-[10px] font-medium uppercase tracking-widest mb-2">
                   0{i + 1}
                 </div>
-                <h3 className="font-semibold text-[#1a1a1a] mb-2 text-[15px]">
+                <h3 className="font-semibold text-white mb-2.5 text-[15px]">
                   {title}
                 </h3>
-                <p className="text-sm text-[#9a8a7a] leading-relaxed font-light">
+                <p className="text-sm text-white/40 leading-relaxed font-light">
                   {desc}
                 </p>
               </div>
@@ -239,24 +252,25 @@ export default async function HomePage() {
       </section>
 
       {/* ── Map ───────────────────────────────────────────────── */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-[#faf7f2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="flex items-center justify-center gap-3 mb-4">
               <span className="h-px w-8 bg-[#c9a84c]" />
               <span className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-[4px]">
                 Vị trí
               </span>
               <span className="h-px w-8 bg-[#c9a84c]" />
             </div>
-            <h2 className="text-3xl font-light text-[#1a1a1a] tracking-tight">
-              Chúng Tôi Ở <span className="font-semibold">Đây</span>
+            <h2 className="font-heading text-3xl font-light text-[#1a1a1a] tracking-tight">
+              Chúng Tôi Ở{" "}
+              <span className="font-heading font-semibold italic">Đây</span>
             </h2>
             <p className="mt-3 text-[#9a8a7a] font-light">
               123 Đường Thanh Hà, Phường 1, Quận 1, TP. Hồ Chí Minh
             </p>
           </div>
-          <div className="border border-[#e8ddd0] overflow-hidden aspect-video max-h-112.5">
+          <div className="rounded-2xl overflow-hidden shadow-xl aspect-video max-h-[450px]">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4241674197607!2d106.69585107480527!3d10.777620989376826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4b3330bcc7%3A0x4db964d76bf7e042!2zUXXhuq1uIDEsIEjhu5MgQ2jDrSBNaW5oLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
               width="100%"
@@ -271,16 +285,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA Banner ────────────────────────────────────────── */}
-      <section className="py-24 bg-[#faf7f2] border-t border-[#e8ddd0] relative overflow-hidden">
-        {/* Subtle dot-grid background */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #c9a84c 1px, transparent 1px)",
-            backgroundSize: "36px 36px",
-          }}
-        />
+      {/* ── CTA Banner — DARK ─────────────────────────────────── */}
+      <section className="py-28 bg-[#0d0c0a] relative overflow-hidden">
+        {/* Gold glow center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#c9a84c] opacity-[0.07] blur-[120px] rounded-full pointer-events-none" />
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
           <div className="flex items-center justify-center gap-3 mb-5">
@@ -290,14 +298,14 @@ export default async function HomePage() {
             </span>
             <span className="h-px w-8 bg-[#c9a84c]" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight mb-4">
+          <h2 className="font-heading text-4xl sm:text-5xl font-light text-white tracking-tight mb-4">
             Sẵn sàng tìm{" "}
-            <span className="font-semibold italic text-[#c9a84c]">
+            <span className="font-heading font-semibold italic text-[#c9a84c]">
               phòng lý tưởng?
             </span>
           </h2>
           <div className="w-14 h-0.5 bg-[#c9a84c] mx-auto mb-6" />
-          <p className="text-[#9a8a7a] font-light mb-12">
+          <p className="text-white/45 font-light mb-12">
             Liên hệ với chúng tôi ngay hôm nay để được tư vấn miễn phí và
             xem phòng trực tiếp.
           </p>
@@ -306,7 +314,7 @@ export default async function HomePage() {
               href="/contact"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 px-10 h-12 text-sm font-medium tracking-wide rounded-sm shadow-lg shadow-[#c9a84c]/20"
+                "bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 px-10 h-12 text-sm font-medium tracking-wide rounded-md shadow-xl shadow-[#c9a84c]/20"
               )}
             >
               <MessageCircle className="mr-2 w-4 h-4" />
@@ -314,7 +322,7 @@ export default async function HomePage() {
             </Link>
             <a
               href="tel:+84909000000"
-              className="flex items-center gap-2 text-[#1a1a1a] border border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-10 h-12 rounded-sm text-sm font-medium tracking-wide transition-colors"
+              className="flex items-center gap-2 text-white border border-white/20 hover:border-white/50 hover:bg-white/10 px-10 h-12 rounded-md text-sm font-medium tracking-wide transition-all"
             >
               <Phone className="w-4 h-4" />
               Gọi 0909 000 000

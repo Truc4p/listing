@@ -56,8 +56,9 @@ export default function ContactPage() {
               Liên hệ
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight">
-            Liên Hệ <span className="font-semibold">Với Chúng Tôi</span>
+          <h1 className="font-heading text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight">
+            Liên Hệ{" "}
+            <span className="font-heading font-semibold italic">Với Chúng Tôi</span>
           </h1>
           <p className="text-[#9a8a7a] font-light mt-2 max-w-xl">
             Có câu hỏi hoặc muốn xem phòng? Hãy để lại thông tin — chúng tôi

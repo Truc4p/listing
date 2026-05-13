@@ -44,9 +44,9 @@ export default function RoomsPage() {
               Danh sách
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight">
+          <h1 className="font-heading text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight">
             Phòng & Căn Hộ{" "}
-            <span className="font-semibold">Cho Thuê</span>
+            <span className="font-heading font-semibold italic">Cho Thuê</span>
           </h1>
           <p className="text-[#9a8a7a] font-light mt-2 max-w-xl">
             Khám phá các lựa chọn phòng trọ và căn hộ được chọn lọc kỹ lưỡng
@@ -64,10 +64,10 @@ export default function RoomsPage() {
                 <button
                   key={value}
                   onClick={() => setFilter(value)}
-                  className={`px-4 py-1.5 text-xs font-medium uppercase tracking-widest transition-colors ${
+                  className={`px-5 py-2 text-xs font-medium rounded-full transition-all duration-200 ${
                     filter === value
-                      ? "bg-[#c9a84c] text-white"
-                      : "text-[#9a8a7a] hover:text-[#c9a84c]"
+                      ? "bg-[#c9a84c] text-white shadow-md shadow-[#c9a84c]/25"
+                      : "text-[#9a8a7a] bg-[#f5ede0] hover:text-[#c9a84c] hover:bg-[#c9a84c]/10"
                   }`}
                 >
                   {label}

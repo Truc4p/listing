@@ -157,7 +157,7 @@ export default async function RoomDetailPage({ params }: Props) {
                   {room.available ? "Còn trống" : "Đã thuê"}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-light text-[#1a1a1a] tracking-tight mb-4">
+              <h1 className="font-heading text-2xl sm:text-3xl font-light text-[#1a1a1a] tracking-tight mb-4">
                 {room.title}
               </h1>
               <div className="flex flex-wrap items-center gap-5 text-xs text-[#9a8a7a] uppercase tracking-wide">
