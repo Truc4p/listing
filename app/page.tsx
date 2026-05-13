@@ -272,12 +272,15 @@ export default async function HomePage() {
       </section>
 
       {/* ── CTA Banner ────────────────────────────────────────── */}
-      <section className="py-24 bg-[#141414] relative overflow-hidden">
-        {/* Gold accent lines */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#c9a84c] to-transparent opacity-40" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#c9a84c] to-transparent opacity-40" />
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-linear-to-b from-transparent via-[#c9a84c] to-transparent opacity-20" />
-        <div className="absolute right-0 top-0 bottom-0 w-px bg-linear-to-b from-transparent via-[#c9a84c] to-transparent opacity-20" />
+      <section className="py-24 bg-[#faf7f2] border-t border-[#e8ddd0] relative overflow-hidden">
+        {/* Subtle dot-grid background */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: "radial-gradient(circle, #c9a84c 1px, transparent 1px)",
+            backgroundSize: "36px 36px",
+          }}
+        />
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
           <div className="flex items-center justify-center gap-3 mb-5">
@@ -287,13 +290,14 @@ export default async function HomePage() {
             </span>
             <span className="h-px w-8 bg-[#c9a84c]" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-light text-white tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight mb-4">
             Sẵn sàng tìm{" "}
-            <span className="font-semibold text-[#c9a84c]">
+            <span className="font-semibold italic text-[#c9a84c]">
               phòng lý tưởng?
             </span>
           </h2>
-          <p className="text-[#7a6a5a] font-light mb-12">
+          <div className="w-14 h-0.5 bg-[#c9a84c] mx-auto mb-6" />
+          <p className="text-[#9a8a7a] font-light mb-12">
             Liên hệ với chúng tôi ngay hôm nay để được tư vấn miễn phí và
             xem phòng trực tiếp.
           </p>
@@ -302,7 +306,7 @@ export default async function HomePage() {
               href="/contact"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 px-10 h-12 text-sm font-medium tracking-wide rounded-sm"
+                "bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 px-10 h-12 text-sm font-medium tracking-wide rounded-sm shadow-lg shadow-[#c9a84c]/20"
               )}
             >
               <MessageCircle className="mr-2 w-4 h-4" />
@@ -310,7 +314,7 @@ export default async function HomePage() {
             </Link>
             <a
               href="tel:+84909000000"
-              className="flex items-center gap-2 text-white border border-[#3a3a3a] hover:border-[#c9a84c] hover:text-[#c9a84c] px-10 h-12 rounded-sm text-sm font-medium tracking-wide transition-colors"
+              className="flex items-center gap-2 text-[#1a1a1a] border border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-10 h-12 rounded-sm text-sm font-medium tracking-wide transition-colors"
             >
               <Phone className="w-4 h-4" />
               Gọi 0909 000 000
