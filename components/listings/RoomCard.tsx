@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Maximize2, Layers, ArrowRight } from "lucide-react";
+import { Heart, Star, Layers } from "lucide-react";
 import { urlFor } from "@/lib/sanity";
 import type { Room } from "@/types";
 
@@ -14,86 +14,72 @@ export default function RoomCard({ room }: RoomCardProps) {
     : null;
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500">
+    <Link href={`/rooms/${room.slug.current}`} className="group block">
       {/* Image */}
-      <div className="relative aspect-4/3 bg-linear-to-br from-[#f5ede0] to-[#e8d5be] overflow-hidden">
+      <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 mb-3">
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={room.title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-700"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <Layers className="w-12 h-12 text-[#c9a84c] opacity-20" />
+          <div className="w-full h-full flex items-center justify-center bg-amber-50">
+            <Layers className="w-10 h-10 text-[#FF385C] opacity-30" />
           </div>
         )}
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent" />
-
-        {/* Type badge */}
-        <div className="absolute top-3 left-3">
-          <span className="text-[10px] font-medium uppercase tracking-[2px] bg-white/90 backdrop-blur-sm text-[#c9a84c] px-2.5 py-1 rounded-full">
-            {room.type === "apartment" ? "Căn hộ" : "Phòng trọ"}
-          </span>
-        </div>
-
         {/* Availability badge */}
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 left-3">
           <span
-            className={`text-[10px] font-medium uppercase tracking-[2px] px-2.5 py-1 rounded-full backdrop-blur-sm ${
+            className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
               room.available
-                ? "bg-emerald-500/90 text-white"
-                : "bg-black/50 text-white/70"
+                ? "bg-white/95 text-gray-800 shadow-sm"
+                : "bg-gray-900/70 backdrop-blur-sm text-white/80"
             }`}
           >
             {room.available ? "Còn trống" : "Đã thuê"}
           </span>
         </div>
 
-        {/* Price overlay */}
-        <div className="absolute bottom-3 left-3">
-          <div className="bg-[#c9a84c] text-white px-3 py-1.5 rounded-lg shadow-lg">
-            <span className="font-bold text-sm">{room.price.toLocaleString("vi-VN")}đ</span>
-            <span className="text-white/75 text-xs ml-1">/tháng</span>
+        {/* Heart — appears on hover */}
+        <button
+          className="absolute top-3 right-3 p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={(e) => e.preventDefault()}
+          aria-label="Lưu phòng"
+        >
+          <Heart
+            className="w-5 h-5 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]"
+            strokeWidth={2.5}
+          />
+        </button>
+      </div>
+
+      {/* Info */}
+      <div className="space-y-0.5 px-0.5">
+        <div className="flex items-start justify-between gap-2">
+          <p className="font-semibold text-gray-900 text-[15px] leading-snug line-clamp-1 flex-1">
+            {room.title}
+          </p>
+          <div className="flex items-center gap-0.5 shrink-0">
+            <Star className="w-3 h-3 fill-gray-900 text-gray-900" />
+            <span className="text-sm font-medium text-gray-900">4.9</span>
           </div>
         </div>
+        <p className="text-gray-500 text-sm">Quận 1, TP. Hồ Chí Minh</p>
+        <p className="text-gray-500 text-sm">
+          {room.type === "apartment" ? "Căn hộ" : "Phòng trọ"} · {room.area} m²
+          {room.floor ? ` · Tầng ${room.floor}` : ""}
+        </p>
+        <p className="pt-1.5 text-gray-900 text-sm">
+          <span className="font-semibold">
+            {room.price.toLocaleString("vi-VN")}đ
+          </span>{" "}
+          <span className="text-gray-500 font-normal">/tháng</span>
+        </p>
       </div>
-
-      {/* Content */}
-      <div className="p-5">
-        <h3 className="font-semibold text-[#1a1a1a] text-base leading-snug mb-3 group-hover:text-[#c9a84c] transition-colors line-clamp-2">
-          {room.title}
-        </h3>
-
-        <div className="flex items-center gap-4 text-xs text-[#9a8a7a] mb-4">
-          <span className="flex items-center gap-1.5">
-            <Maximize2 className="w-3 h-3 text-[#c9a84c]" />
-            {room.area} m²
-          </span>
-          {room.floor && (
-            <span className="flex items-center gap-1.5">
-              <Layers className="w-3 h-3 text-[#c9a84c]" />
-              Tầng {room.floor}
-            </span>
-          )}
-          <span className="flex items-center gap-1.5">
-            <MapPin className="w-3 h-3 text-[#c9a84c]" />
-            Quận 1
-          </span>
-        </div>
-
-        <Link
-          href={`/rooms/${room.slug.current}`}
-          className="flex items-center justify-center gap-2 w-full py-2.5 bg-[#faf7f2] hover:bg-[#c9a84c] text-[#6b6b6b] hover:text-white text-xs font-medium uppercase tracking-widest transition-all duration-300 rounded-xl"
-        >
-          Xem chi tiết
-          <ArrowRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
-    </div>
+    </Link>
   );
 }

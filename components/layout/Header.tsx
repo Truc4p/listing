@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Building2, Phone, Menu, X } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { Building2, Phone, Menu, X, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -15,109 +14,121 @@ const navLinks = [
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-black/6 shadow-sm shadow-black/4">
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full bg-white transition-shadow duration-300",
+        scrolled ? "shadow-md" : "border-b border-gray-100"
+      )}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18">
+        <div className="flex items-center justify-between h-20 gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-[#c9a84c] flex items-center justify-center group-hover:bg-[#b8963e] transition-colors shadow-md shadow-[#c9a84c]/25">
-              <Building2 className="w-5 h-5 text-white" />
-            </div>
-            <div className="leading-tight">
-              <span className="block text-[15px] font-semibold text-[#1a1a1a] tracking-wide font-heading">
-                Căn Hộ Thanh Hà
-              </span>
-              <span className="block text-[10px] text-[#9a8a7a] uppercase tracking-[3px]">
-                Luxury Rentals
-              </span>
-            </div>
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <Building2 className="w-7 h-7 text-[#FF385C]" />
+            <span className="font-bold text-xl text-[#FF385C] hidden sm:block tracking-tight">
+              Thanh Hà
+            </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  "px-4 py-2 text-sm font-medium transition-all duration-200 rounded-full",
-                  pathname === href
-                    ? "text-[#c9a84c] bg-[#c9a84c]/8"
-                    : "text-[#4a3f35] hover:text-[#c9a84c] hover:bg-[#c9a84c]/5"
-                )}
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
+          {/* Search Pill — desktop */}
+          <button
+            onClick={() => router.push("/rooms")}
+            className="hidden md:flex items-center border border-gray-200 rounded-full shadow-sm hover:shadow-md transition-shadow px-2 py-2 gap-0 bg-white cursor-pointer"
+          >
+            <span className="text-sm font-medium text-gray-800 px-4">Tìm phòng</span>
+            <span className="w-px h-5 bg-gray-200" />
+            <span className="text-sm text-gray-500 px-4">Loại phòng</span>
+            <span className="w-px h-5 bg-gray-200" />
+            <span className="text-sm text-gray-500 px-4">Giá tiền</span>
+            <div className="ml-1 bg-[#FF385C] rounded-full p-2.5">
+              <Search className="w-3.5 h-3.5 text-white" />
+            </div>
+          </button>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* Right actions — desktop */}
+          <div className="hidden md:flex items-center gap-2 shrink-0">
             <a
               href="tel:+84909000000"
-              className="flex items-center gap-1.5 text-sm text-[#6b6b6b] hover:text-[#c9a84c] transition-colors"
+              className="flex items-center gap-1.5 text-sm text-gray-600 hover:bg-gray-100 px-4 py-2.5 rounded-full font-medium transition-colors"
             >
               <Phone className="w-3.5 h-3.5" />
               0909 000 000
             </a>
             <Link
               href="/contact"
-              className={cn(
-                buttonVariants(),
-                "bg-[#c9a84c] hover:bg-[#b8963e] text-white text-sm border-0 px-5 rounded-md shadow-md shadow-[#c9a84c]/20"
-              )}
+              className="bg-[#FF385C] hover:bg-[#E31C5F] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors shadow-sm"
             >
               Liên hệ ngay
             </Link>
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden p-2 text-[#4a3f35] hover:text-[#c9a84c] transition-colors"
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          {/* Mobile: compact search + burger */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={() => router.push("/rooms")}
+              className="flex items-center gap-2 border border-gray-200 rounded-full px-4 py-2.5 shadow-sm bg-white"
+            >
+              <Search className="w-4 h-4 text-gray-500" />
+              <span className="text-sm font-medium text-gray-800">Tìm phòng</span>
+            </button>
+            <button
+              onClick={() => setMobileOpen((v) => !v)}
+              className="p-2.5 rounded-full border border-gray-200 hover:shadow-md transition-shadow bg-white"
+              aria-label="Menu"
+            >
+              {mobileOpen ? (
+                <X className="w-4 h-4 text-gray-700" />
+              ) : (
+                <Menu className="w-4 h-4 text-gray-700" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-black/6 bg-white/95 backdrop-blur-xl px-4 py-4 space-y-1">
-          {navLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={() => setMobileOpen(false)}
-              className={cn(
-                "block px-4 py-2.5 text-sm font-medium rounded-xl transition-all",
-                pathname === href
-                  ? "text-[#c9a84c] bg-[#c9a84c]/8"
-                  : "text-[#4a3f35] hover:text-[#c9a84c] hover:bg-[#c9a84c]/5"
-              )}
-            >
-              {label}
-            </Link>
-          ))}
-          <div className="pt-3 flex flex-col gap-2">
+        <div className="md:hidden bg-white border-t border-gray-100 px-4 pb-5 pt-2">
+          <nav className="space-y-1 mb-4">
+            {navLinks.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "block px-4 py-3 text-sm font-medium rounded-xl transition-colors",
+                  pathname === href
+                    ? "text-[#FF385C] bg-rose-50"
+                    : "text-gray-700 hover:bg-gray-50"
+                )}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+          <div className="border-t border-gray-100 pt-4 space-y-2">
             <a
               href="tel:+84909000000"
-              className="flex items-center gap-2 text-sm text-[#6b6b6b] px-4 py-2"
+              className="flex items-center gap-2.5 text-sm text-gray-600 px-4 py-2"
             >
-              <Phone className="w-4 h-4 text-[#c9a84c]" />
+              <Phone className="w-4 h-4 text-[#FF385C]" />
               0909 000 000
             </a>
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}
-              className={cn(
-                buttonVariants(),
-                "w-full bg-[#c9a84c] hover:bg-[#b8963e] text-white border-0 rounded-md justify-center shadow-md shadow-[#c9a84c]/20"
-              )}
+              className="block w-full bg-[#FF385C] hover:bg-[#E31C5F] text-white text-sm font-semibold px-4 py-3 rounded-full text-center transition-colors"
             >
               Liên hệ ngay
             </Link>

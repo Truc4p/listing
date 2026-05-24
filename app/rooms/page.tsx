@@ -1,11 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Building2 } from "lucide-react";
+import { LayoutGrid, BedDouble, Building2, SlidersHorizontal } from "lucide-react";
 import RoomCard from "@/components/listings/RoomCard";
 import type { Room } from "@/types";
 
 type Filter = "all" | "room" | "apartment";
+
+const categories: { value: Filter; label: string; Icon: React.ElementType }[] = [
+  { value: "all", label: "Tất cả", Icon: LayoutGrid },
+  { value: "room", label: "Phòng trọ", Icon: BedDouble },
+  { value: "apartment", label: "Căn hộ", Icon: Building2 },
+];
 
 export default function RoomsPage() {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -27,112 +33,107 @@ export default function RoomsPage() {
     return true;
   });
 
-  const filterBtns: { value: Filter; label: string }[] = [
-    { value: "all", label: "Tất cả" },
-    { value: "room", label: "Phòng trọ" },
-    { value: "apartment", label: "Căn hộ" },
-  ];
-
   return (
     <>
-      {/* Page hero */}
-      <section className="bg-[#faf7f2] py-16 border-b border-[#e8ddd0]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8 bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-[4px]">
-              Danh sách
-            </span>
-          </div>
-          <h1 className="font-heading text-3xl sm:text-4xl font-light text-[#1a1a1a] tracking-tight">
-            Phòng & Căn Hộ{" "}
-            <span className="font-heading font-semibold italic">Cho Thuê</span>
-          </h1>
-          <p className="text-[#9a8a7a] font-light mt-2 max-w-xl">
-            Khám phá các lựa chọn phòng trọ và căn hộ được chọn lọc kỹ lưỡng
-            tại Căn Hộ Thanh Hà.
-          </p>
-        </div>
-      </section>
+      {/* Page header */}
+      <div className="bg-white border-b border-gray-100 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto">
+        <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight">
+          Phòng &amp; Căn hộ cho thuê
+        </h1>
+        <p className="text-gray-500 mt-1.5 text-sm">
+          Quận 1, TP. Hồ Chí Minh · {rooms.length} chỗ ở
+        </p>
+      </div>
 
-      {/* Filter bar */}
-      <section className="sticky top-16 z-30 bg-white border-b border-[#e8ddd0]">
+      {/* Category filter bar — Airbnb-style */}
+      <div className="sticky top-20 z-30 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center gap-3 py-3">
-            <div className="flex gap-1">
-              {filterBtns.map(({ value, label }) => (
+          <div className="flex items-center gap-2 overflow-x-auto py-4 scrollbar-none">
+            {/* Category pills */}
+            <div className="flex gap-2 shrink-0">
+              {categories.map(({ value, label, Icon }) => (
                 <button
                   key={value}
                   onClick={() => setFilter(value)}
-                  className={`px-5 py-2 text-xs font-medium rounded-full transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-medium transition-all whitespace-nowrap ${
                     filter === value
-                      ? "bg-[#c9a84c] text-white shadow-md shadow-[#c9a84c]/25"
-                      : "text-[#9a8a7a] bg-[#f5ede0] hover:text-[#c9a84c] hover:bg-[#c9a84c]/10"
+                      ? "bg-gray-900 text-white border-gray-900 shadow-sm"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:bg-gray-50"
                   }`}
                 >
+                  <Icon className="w-4 h-4" />
                   {label}
                 </button>
               ))}
             </div>
-            <div className="ml-auto flex items-center gap-2">
-              <label className="flex items-center gap-2 text-xs text-[#9a8a7a] cursor-pointer select-none uppercase tracking-wide">
-                <input
-                  type="checkbox"
-                  checked={availableOnly}
-                  onChange={(e) => setAvailableOnly(e.target.checked)}
-                  className="rounded accent-[#c9a84c]"
-                />
-                Chỉ còn trống
-              </label>
-            </div>
+
+            {/* Divider */}
+            <div className="w-px h-6 bg-gray-200 mx-1 shrink-0" />
+
+            {/* Available toggle */}
+            <button
+              onClick={() => setAvailableOnly((v) => !v)}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-medium transition-all whitespace-nowrap ${
+                availableOnly
+                  ? "bg-rose-500 text-white border-rose-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:bg-gray-50"
+              }`}
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              Còn trống
+            </button>
+
+            {/* Result count */}
+            {!loading && (
+              <p className="ml-auto shrink-0 text-sm text-gray-400 whitespace-nowrap">
+                {filtered.length} kết quả
+              </p>
+            )}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Grid */}
-      <section className="py-16 bg-[#faf7f2] min-h-[60vh]">
+      {/* Listing grid */}
+      <section className="py-10 bg-white min-h-[60vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-80 bg-[#f0e8dc] animate-pulse"
-                />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="space-y-3">
+                  <div className="aspect-4/3 rounded-2xl bg-gray-100 animate-pulse" />
+                  <div className="h-4 w-3/4 bg-gray-100 rounded animate-pulse" />
+                  <div className="h-3 w-1/2 bg-gray-100 rounded animate-pulse" />
+                  <div className="h-3 w-1/3 bg-gray-100 rounded animate-pulse" />
+                </div>
               ))}
             </div>
           ) : filtered.length > 0 ? (
-            <>
-              <p className="text-xs text-[#9a8a7a] uppercase tracking-widest mb-8">
-                {filtered.length} kết quả
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.map((room) => (
-                  <RoomCard key={room._id} room={room} />
-                ))}
-              </div>
-            </>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filtered.map((room) => (
+                <RoomCard key={room._id} room={room} />
+              ))}
+            </div>
           ) : (
             <div className="text-center py-28">
-              <div className="w-14 h-14 border border-[#e8ddd0] flex items-center justify-center mx-auto mb-5">
-                <Search className="w-6 h-6 text-[#c9a84c] opacity-50" />
+              <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-5">
+                <Building2 className="w-6 h-6 text-gray-400" />
               </div>
-              <h3 className="text-[#1a1a1a] font-medium mb-2">
+              <h3 className="text-gray-900 font-semibold mb-1.5">
                 Không tìm thấy kết quả
               </h3>
-              <p className="text-[#9a8a7a] text-sm font-light">
+              <p className="text-gray-400 text-sm">
                 Thử thay đổi bộ lọc hoặc liên hệ với chúng tôi.
               </p>
             </div>
           )}
 
           {!loading && rooms.length === 0 && (
-            <div className="mt-10 p-8 border border-[#e8ddd0] bg-white text-center">
-              <Building2 className="w-7 h-7 text-[#c9a84c] mx-auto mb-3 opacity-60" />
-              <p className="text-[#1a1a1a] font-medium mb-1">
+            <div className="mt-10 p-8 rounded-2xl border border-dashed border-gray-200 text-center">
+              <Building2 className="w-7 h-7 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-700 font-medium mb-1">
                 Chưa có dữ liệu phòng
               </p>
-              <p className="text-[#9a8a7a] text-sm font-light">
+              <p className="text-gray-400 text-sm">
                 Kết nối Sanity CMS và thêm phòng qua{" "}
                 <a href="/studio" className="text-[#c9a84c] underline">
                   /studio
