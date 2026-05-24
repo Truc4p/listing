@@ -135,7 +135,7 @@ export default function RoomsPage() {
               </p>
               <p className="text-gray-400 text-sm">
                 Kết nối Sanity CMS và thêm phòng qua{" "}
-                <a href="/studio" className="text-[#c9a84c] underline">
+                <a href="/studio" className="text-[#FF385C] underline">
                   /studio
                 </a>
                 .

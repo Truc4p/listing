@@ -5,34 +5,25 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#faf7f2] text-[#6b6b6b] border-t border-[#e8ddd0]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <footer className="bg-gray-50 border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-9 h-9 rounded-sm bg-[#c9a84c] flex items-center justify-center">
-                <Building2 className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <span className="block text-[15px] font-semibold text-[#1a1a1a] tracking-wide">
-                  Căn Hộ Thanh Hà
-                </span>
-                <span className="block text-[9px] text-[#c9a84c] uppercase tracking-[3px]">
-                  Luxury Rentals
-                </span>
-              </div>
-            </div>
-            <p className="text-sm text-[#9a8a7a] leading-relaxed mb-6 font-light">
-              Không gian sống tinh tế, an toàn và đẳng cấp dành cho những ai
-              trân trọng chất lượng cuộc sống tại trung tâm Sài Gòn.
+          <div className="md:col-span-1">
+            <Link href="/" className="flex items-center gap-2 mb-4">
+              <Building2 className="w-6 h-6 text-[#FF385C]" />
+              <span className="font-bold text-lg text-gray-900">Thanh Hà</span>
+            </Link>
+            <p className="text-sm text-gray-500 leading-relaxed mb-5">
+              Phòng trọ và căn hộ chất lượng cao tại trung tâm Quận 1,
+              TP. Hồ Chí Minh.
             </p>
             <div className="flex gap-3">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 border border-[#e8ddd0] hover:border-[#c9a84c] text-[#9a8a7a] hover:text-[#c9a84c] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#FF385C] hover:text-[#FF385C] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
                 aria-label="Facebook"
               >
                 <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
@@ -43,7 +34,7 @@ export default function Footer() {
                 href="https://zalo.me/0909000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 border border-[#e8ddd0] hover:border-[#c9a84c] text-[#9a8a7a] hover:text-[#c9a84c] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#FF385C] hover:text-[#FF385C] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
                 aria-label="Zalo"
               >
                 <MessageCircle className="w-4 h-4" />
@@ -51,15 +42,15 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick links */}
+          {/* Navigation */}
           <div>
-            <h3 className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-[4px] mb-5">
+            <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-4">
               Điều hướng
             </h3>
             <ul className="space-y-3">
               {[
                 { href: "/", label: "Trang chủ" },
-                { href: "/rooms", label: "Danh sách phòng & căn hộ" },
+                { href: "/rooms", label: "Danh sách phòng" },
                 { href: "/rooms?type=room", label: "Phòng trọ" },
                 { href: "/rooms?type=apartment", label: "Căn hộ" },
                 { href: "/contact", label: "Liên hệ" },
@@ -67,9 +58,8 @@ export default function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-[#9a8a7a] hover:text-[#c9a84c] transition-colors flex items-center gap-2 font-light"
+                    className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
                   >
-                    <span className="w-3 h-px bg-[#c9a84c] opacity-50" />
                     {label}
                   </Link>
                 </li>
@@ -78,51 +68,52 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
-            <h3 className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-[4px] mb-5">
+          <div className="md:col-span-2">
+            <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-4">
               Liên hệ
             </h3>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm">
-                <MapPin className="w-4 h-4 text-[#c9a84c] mt-0.5 shrink-0" />
-                <span className="text-[#9a8a7a] font-light">
-                  123 Đường Thanh Hà, Phường 1,
-                  <br />
-                  Quận 1, TP. Hồ Chí Minh
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-[#FF385C] mt-0.5 shrink-0" />
+                <span className="text-sm text-gray-500">
+                  123 Đường Thanh Hà, Phường 1, Quận 1, TP. Hồ Chí Minh
                 </span>
               </li>
-              <li className="flex items-center gap-3 text-sm">
-                <Phone className="w-4 h-4 text-[#c9a84c] shrink-0" />
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-[#FF385C] shrink-0" />
                 <a
                   href="tel:+84909000000"
-                  className="text-[#9a8a7a] hover:text-[#c9a84c] transition-colors font-light"
+                  className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
                 >
                   0909 000 000
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-sm">
-                <Mail className="w-4 h-4 text-[#c9a84c] shrink-0" />
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-[#FF385C] shrink-0" />
                 <a
                   href="mailto:info@canhothanhha.vn"
-                  className="text-[#9a8a7a] hover:text-[#c9a84c] transition-colors font-light"
+                  className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
                 >
                   info@canhothanhha.vn
                 </a>
               </li>
             </ul>
-            <div className="mt-5 p-4 border border-[#e8ddd0] bg-white">
-              <p className="text-xs text-[#9a8a7a] font-light">
-                <span className="text-[#c9a84c] font-medium block mb-1">
-                  Giờ làm việc
-                </span>
-                Thứ 2 – Chủ nhật · 8:00 – 21:00
+            <div className="mt-5 inline-flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 shadow-sm">
+              <div className="w-2 h-2 rounded-full bg-emerald-500" />
+              <p className="text-xs text-gray-600 font-medium">
+                Mở cửa Thứ 2 – Chủ nhật · 8:00 – 21:00
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-[#e8ddd0] text-center text-xs text-[#b8a890]">
-          © {currentYear} Căn Hộ Thanh Hà · All rights reserved
+        <div className="mt-12 pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
+          <span>© {currentYear} Căn Hộ Thanh Hà · All rights reserved</span>
+          <div className="flex items-center gap-1">
+            <span>Made with</span>
+            <span className="text-[#FF385C]">♥</span>
+            <span>in Sài Gòn</span>
+          </div>
         </div>
       </div>
     </footer>
