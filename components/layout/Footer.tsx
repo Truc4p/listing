@@ -15,7 +15,7 @@ export default function Footer() {
               <span className="font-bold text-lg text-gray-900">Thanh Hà</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed mb-5">
-              Phòng trọ và căn hộ chất lượng cao tại trung tâm Son Tra,
+              Phòng trọ và căn hộ chất lượng cao tại Son Tra,
               Da Nang.
             </p>
             <div className="flex gap-3">
@@ -112,7 +112,7 @@ export default function Footer() {
           <div className="flex items-center gap-1">
             <span>Made with</span>
             <span className="text-[#378451]">♥</span>
-            <span>in Sài Gòn</span>
+            <span>in Da Nang</span>
           </div>
         </div>
       </div>

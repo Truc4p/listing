@@ -22,7 +22,7 @@ const highlights = [
   {
     Icon: MapPin,
     title: "Vị trí đắc địa",
-    desc: "Trung tâm Son Tra, gần chợ, trường học, bệnh viện, tiện di chuyển",
+    desc: "Son Tra, gần chợ, trường học, bệnh viện, tiện di chuyển",
   },
   {
     Icon: Zap,
@@ -61,7 +61,7 @@ export default async function HomePage() {
           </h1>
 
           <p className="text-gray-500 text-lg sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
-            Phòng trọ và căn hộ cho thuê tại trung tâm Son Tra, Da Nang. An
+            Phòng trọ và căn hộ cho thuê tại Son Tra, Da Nang. An
             toàn, tiện nghi, giá hợp lý.
           </p>
 
