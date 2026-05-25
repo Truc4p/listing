@@ -38,10 +38,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: room.title,
-    description: `${room.type === "apartment" ? "Căn hộ" : "Phòng trọ"} ${room.area}m² tại Son Tra, Da Nang. Giá ${room.price.toLocaleString("vi-VN")}đ/tháng.`,
+    description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² in Son Tra, Da Nang. Rent: ${room.price.toLocaleString("en-US")}₫/month.`,
     openGraph: {
-      title: `${room.title} | Căn Hộ Thanh Hà`,
-      description: `${room.type === "apartment" ? "Căn hộ" : "Phòng"} ${room.area}m² · ${room.price.toLocaleString("vi-VN")}đ/tháng`,
+      title: `${room.title} | Thanh Ha Apartments`,
+      description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² · ${room.price.toLocaleString("en-US")}₫/month`,
       ...(imageUrl && { images: [{ url: imageUrl, width: 1200, height: 630 }] }),
     },
   };
@@ -60,7 +60,7 @@ export default async function RoomDetailPage({ params }: Props) {
     urlFor(img).width(600).height(400).fit("crop").url()
   );
 
-  const descriptionText = `${room.type === "apartment" ? "Căn hộ" : "Phòng trọ"} ${room.area}m², tầng ${room.floor ?? "?"}. Giá ${room.price.toLocaleString("vi-VN")}đ/tháng.`;
+  const descriptionText = `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m², floor ${room.floor ?? "?"}. Rent: ${room.price.toLocaleString("en-US")}₫/month.`;
 
   return (
     <>
@@ -84,7 +84,7 @@ export default async function RoomDetailPage({ params }: Props) {
             className="flex items-center gap-1 hover:text-gray-900 transition-colors font-medium"
           >
             <ChevronLeft className="w-4 h-4" />
-            Phòng &amp; Căn hộ
+            Rooms &amp; Apartments
           </Link>
         </nav>
 
@@ -120,7 +120,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 <div key={i} className="relative bg-gray-100">
                   <Image
                     src={url}
-                    alt={`${room.title} – ảnh ${i + 2}`}
+                    alt={`${room.title} – photo ${i + 2}`}
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 25vw, 300px"
@@ -140,7 +140,7 @@ export default async function RoomDetailPage({ params }: Props) {
             {images.length > 1 && (
               <button className="absolute bottom-4 right-4 flex items-center gap-2 bg-white border border-gray-900 rounded-xl px-4 py-2 text-sm font-semibold shadow-sm hover:bg-gray-50 transition-colors">
                 <Grid2x2 className="w-4 h-4" />
-                Xem tất cả {images.length} ảnh
+                Show all {images.length} photos
               </button>
             )}
           </div>
@@ -160,10 +160,10 @@ export default async function RoomDetailPage({ params }: Props) {
                       : "bg-gray-100 text-gray-500"
                   }`}
                 >
-                  {room.available ? "Còn trống" : "Đã thuê"}
+                  {room.available ? "Available" : "Rented"}
                 </span>
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-[#378451]">
-                  {room.type === "apartment" ? "Căn hộ" : "Phòng trọ"}
+                  {room.type === "apartment" ? "Apartment" : "Room"}
                 </span>
               </div>
               <div className="flex flex-wrap items-center gap-5 text-sm text-gray-500">
@@ -174,7 +174,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 {room.floor && (
                   <span className="flex items-center gap-1.5">
                     <Layers className="w-4 h-4" />
-                    Tầng {room.floor}
+                    Floor {room.floor}
                   </span>
                 )}
                 <span className="flex items-center gap-1.5">
@@ -188,7 +188,7 @@ export default async function RoomDetailPage({ params }: Props) {
             {room.description && room.description.length > 0 && (
               <div className="pb-8 border-b border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                  Mô tả chi tiết
+                  Description
                 </h2>
                 <div className="prose prose-slate max-w-none text-gray-600 leading-relaxed text-sm">
                   <PortableText value={room.description} />
@@ -200,7 +200,7 @@ export default async function RoomDetailPage({ params }: Props) {
             {room.amenities && room.amenities.length > 0 && (
               <div className="pb-8 border-b border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900 mb-5">
-                  Tiện nghi
+                  Amenities
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {room.amenities.map((key) => {
@@ -224,7 +224,7 @@ export default async function RoomDetailPage({ params }: Props) {
             {/* Location */}
             <div>
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                Vị trí
+                Location
               </h2>
               <p className="text-sm text-gray-500 mb-4">
                 75 Luong Huu Khanh, Son Tra, Da Nang
@@ -238,7 +238,7 @@ export default async function RoomDetailPage({ params }: Props) {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Vị trí"
+                  title="Location"
                 />
               </div>
             </div>
@@ -251,9 +251,9 @@ export default async function RoomDetailPage({ params }: Props) {
                 {/* Price */}
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-2xl font-semibold text-gray-900">
-                    {room.price.toLocaleString("vi-VN")}đ
+                    {room.price.toLocaleString("en-US")}₫
                   </span>
-                  <span className="text-gray-500 text-sm">/tháng</span>
+                  <span className="text-gray-500 text-sm">/month</span>
                 </div>
 
                 {/* Availability */}
@@ -262,7 +262,7 @@ export default async function RoomDetailPage({ params }: Props) {
                     className={`w-2 h-2 rounded-full ${room.available ? "bg-emerald-500" : "bg-gray-400"}`}
                   />
                   <span className="text-sm text-gray-600">
-                    {room.available ? "Còn trống, sẵn sàng cho thuê" : "Hiện đã có người thuê"}
+                    {room.available ? "Available, ready to rent" : "Currently occupied"}
                   </span>
                 </div>
 
@@ -270,17 +270,17 @@ export default async function RoomDetailPage({ params }: Props) {
                 <ul className="space-y-2.5 mb-6 pb-6 border-b border-gray-100">
                   <li className="flex items-center gap-2.5 text-sm text-gray-600">
                     <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
-                    Diện tích {room.area} m²
+                    {room.area} m² floor area
                   </li>
                   {room.floor && (
                     <li className="flex items-center gap-2.5 text-sm text-gray-600">
                       <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
-                      Tầng {room.floor}
+                      Floor {room.floor}
                     </li>
                   )}
                   <li className="flex items-center gap-2.5 text-sm text-gray-600">
                     <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
-                    {room.type === "apartment" ? "Căn hộ" : "Phòng trọ"}
+                    {room.type === "apartment" ? "Apartment" : "Room"}
                   </li>
                   <li className="flex items-center gap-2.5 text-sm text-gray-600">
                     <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
@@ -295,19 +295,19 @@ export default async function RoomDetailPage({ params }: Props) {
                     className="flex items-center justify-center gap-2 w-full bg-[#378451] hover:bg-[#2D6B42] text-white font-semibold py-3.5 rounded-xl transition-colors text-sm"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    Liên hệ tư vấn
+                    Contact us
                   </Link>
                   <a
                     href="tel:+84909000000"
                     className="flex items-center justify-center gap-2 w-full border border-gray-300 hover:border-gray-500 text-gray-700 font-semibold py-3.5 rounded-xl text-sm transition-colors hover:bg-gray-50"
                   >
                     <Phone className="w-4 h-4" />
-                    Gọi ngay: 0909 000 000
+                    Call now: 0909 000 000
                   </a>
                 </div>
 
                 <p className="mt-4 text-xs text-gray-400 text-center">
-                  Liên hệ để xác nhận phòng còn trống trước khi đến xem.
+                  Contact us to confirm availability before visiting.
                 </p>
               </div>
             </div>

@@ -18,22 +18,22 @@ export async function sendContactEmail(data: ContactEmailData) {
   const ownerEmail = process.env.OWNER_EMAIL || "owner@example.com";
 
   const { error } = await getResend().emails.send({
-    from: "Căn Hộ Thanh Hà <noreply@thanhha.com>",
+    from: "Thanh Ha Apartments <noreply@thanhha.com>",
     to: ownerEmail,
     replyTo: data.email,
-    subject: `Tin nhắn mới từ ${data.name}`,
+    subject: `New message from ${data.name}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1e3a6f;">Tin nhắn mới từ website</h2>
+        <h2 style="color: #1e3a6f;">New message from website</h2>
         <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="padding: 8px; font-weight: bold; width: 140px;">Họ tên:</td><td style="padding: 8px;">${data.name}</td></tr>
+          <tr><td style="padding: 8px; font-weight: bold; width: 140px;">Name:</td><td style="padding: 8px;">${data.name}</td></tr>
           <tr style="background: #f8f9fa;"><td style="padding: 8px; font-weight: bold;">Email:</td><td style="padding: 8px;">${data.email}</td></tr>
-          <tr><td style="padding: 8px; font-weight: bold;">Điện thoại:</td><td style="padding: 8px;">${data.phone}</td></tr>
-          ${data.roomInterest ? `<tr style="background: #f8f9fa;"><td style="padding: 8px; font-weight: bold;">Quan tâm đến:</td><td style="padding: 8px;">${data.roomInterest}</td></tr>` : ""}
-          <tr><td style="padding: 8px; font-weight: bold; vertical-align: top;">Tin nhắn:</td><td style="padding: 8px;">${data.message.replace(/\n/g, "<br>")}</td></tr>
+          <tr><td style="padding: 8px; font-weight: bold;">Phone:</td><td style="padding: 8px;">${data.phone}</td></tr>
+          ${data.roomInterest ? `<tr style="background: #f8f9fa;"><td style="padding: 8px; font-weight: bold;">Interested in:</td><td style="padding: 8px;">${data.roomInterest}</td></tr>` : ""}
+          <tr><td style="padding: 8px; font-weight: bold; vertical-align: top;">Message:</td><td style="padding: 8px;">${data.message.replace(/\n/g, "<br>")}</td></tr>
         </table>
         <hr style="margin: 24px 0; border: none; border-top: 1px solid #e5e7eb;" />
-        <p style="color: #6b7280; font-size: 12px;">Email này được gửi từ form liên hệ tại Căn Hộ Thanh Hà.</p>
+        <p style="color: #6b7280; font-size: 12px;">This email was sent from the contact form at Thanh Ha Apartments.</p>
       </div>
     `,
   });

@@ -12,10 +12,10 @@ export default function Footer() {
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <Building2 className="w-6 h-6 text-[#378451]" />
-              <span className="font-bold text-lg text-gray-900">Thanh Hà</span>
+              <span className="font-bold text-lg text-gray-900">Thanh Ha</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed mb-5">
-              Phòng trọ và căn hộ chất lượng cao tại Son Tra,
+              Quality rooms and apartments in Son Tra,
               Da Nang.
             </p>
             <div className="flex gap-3">
@@ -45,15 +45,15 @@ export default function Footer() {
           {/* Navigation */}
           <div>
             <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-4">
-              Điều hướng
+              Navigation
             </h3>
             <ul className="space-y-3">
               {[
-                { href: "/", label: "Trang chủ" },
-                { href: "/rooms", label: "Danh sách phòng" },
-                { href: "/rooms?type=room", label: "Phòng trọ" },
-                { href: "/rooms?type=apartment", label: "Căn hộ" },
-                { href: "/contact", label: "Liên hệ" },
+                { href: "/", label: "Home" },
+                { href: "/rooms", label: "All rooms" },
+                { href: "/rooms?type=room", label: "Rooms" },
+                { href: "/rooms?type=apartment", label: "Apartments" },
+                { href: "/contact", label: "Contact" },
               ].map(({ href, label }) => (
                 <li key={href}>
                   <Link
@@ -70,7 +70,7 @@ export default function Footer() {
           {/* Contact */}
           <div className="md:col-span-2">
             <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-4">
-              Liên hệ
+              Contact
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
@@ -101,14 +101,14 @@ export default function Footer() {
             <div className="mt-5 inline-flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 shadow-sm">
               <div className="w-2 h-2 rounded-full bg-emerald-500" />
               <p className="text-xs text-gray-600 font-medium">
-                Mở cửa Thứ 2 – Chủ nhật · 8:00 – 21:00
+                Open Mon – Sun · 8:00 – 21:00
               </p>
             </div>
           </div>
         </div>
 
         <div className="mt-12 pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
-          <span>© {currentYear} Căn Hộ Thanh Hà · All rights reserved</span>
+          <span>© {currentYear} Thanh Ha Apartments · All rights reserved</span>
           <div className="flex items-center gap-1">
             <span>Made with</span>
             <span className="text-[#378451]">♥</span>

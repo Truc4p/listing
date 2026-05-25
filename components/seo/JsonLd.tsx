@@ -2,9 +2,9 @@ export function LocalBusinessJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    name: "Căn Hộ Thanh Hà",
+    name: "Thanh Ha Apartments",
     description:
-      "Cho thuê phòng trọ và căn hộ chất lượng tại Da Nang. An toàn, tiện nghi, giá hợp lý.",
+      "Quality rooms and apartments for rent in Da Nang. Safe, comfortable, and affordable.",
     url: "https://canhothanhha.vn",
     telephone: "+84909000000",
     email: "info@canhothanhha.vn",

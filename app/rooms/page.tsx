@@ -8,9 +8,9 @@ import type { Room } from "@/types";
 type Filter = "all" | "room" | "apartment";
 
 const categories: { value: Filter; label: string; Icon: React.ElementType }[] = [
-  { value: "all", label: "Tất cả", Icon: LayoutGrid },
-  { value: "room", label: "Phòng trọ", Icon: BedDouble },
-  { value: "apartment", label: "Căn hộ", Icon: Building2 },
+  { value: "all", label: "All", Icon: LayoutGrid },
+  { value: "room", label: "Room", Icon: BedDouble },
+  { value: "apartment", label: "Apartment", Icon: Building2 },
 ];
 
 export default function RoomsPage() {
@@ -38,10 +38,10 @@ export default function RoomsPage() {
       {/* Page header */}
       <div className="bg-white border-b border-gray-100 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight">
-          Phòng &amp; Căn hộ cho thuê
+          Rooms &amp; Apartments for Rent
         </h1>
         <p className="text-gray-500 mt-1.5 text-sm">
-          Son Tra, Da Nang · {rooms.length} chỗ ở
+          Son Tra, Da Nang · {rooms.length} listings
         </p>
       </div>
 
@@ -80,13 +80,13 @@ export default function RoomsPage() {
               }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
-              Còn trống
+              Available
             </button>
 
             {/* Result count */}
             {!loading && (
               <p className="ml-auto shrink-0 text-sm text-gray-400 whitespace-nowrap">
-                {filtered.length} kết quả
+                {filtered.length} results
               </p>
             )}
           </div>
@@ -119,10 +119,10 @@ export default function RoomsPage() {
                 <Building2 className="w-6 h-6 text-gray-400" />
               </div>
               <h3 className="text-gray-900 font-semibold mb-1.5">
-                Không tìm thấy kết quả
+                No results found
               </h3>
               <p className="text-gray-400 text-sm">
-                Thử thay đổi bộ lọc hoặc liên hệ với chúng tôi.
+                Try adjusting your filters or contact us.
               </p>
             </div>
           )}
@@ -131,10 +131,10 @@ export default function RoomsPage() {
             <div className="mt-10 p-8 rounded-2xl border border-dashed border-gray-200 text-center">
               <Building2 className="w-7 h-7 text-gray-300 mx-auto mb-3" />
               <p className="text-gray-700 font-medium mb-1">
-                Chưa có dữ liệu phòng
+                No rooms yet
               </p>
               <p className="text-gray-400 text-sm">
-                Kết nối Sanity CMS và thêm phòng qua{" "}
+                Connect Sanity CMS and add rooms via{" "}
                 <a href="/studio" className="text-[#378451] underline">
                   /studio
                 </a>

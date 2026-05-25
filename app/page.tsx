@@ -16,31 +16,31 @@ import type { Room } from "@/types";
 const highlights = [
   {
     Icon: Shield,
-    title: "An toàn & Bảo mật",
-    desc: "Camera 24/7, khóa từ cao cấp, đội ngũ bảo vệ chuyên nghiệp",
+    title: "Safety & Security",
+    desc: "24/7 cameras, premium smart locks, professional security team",
   },
   {
     Icon: MapPin,
-    title: "Vị trí đắc địa",
-    desc: "Son Tra, gần chợ, trường học, bệnh viện, tiện di chuyển",
+    title: "Prime Location",
+    desc: "Son Tra, close to markets, schools, hospitals, easy to get around",
   },
   {
     Icon: Zap,
-    title: "Tiện nghi đầy đủ",
-    desc: "Điều hòa, máy nước nóng, WiFi tốc độ cao, nội thất hiện đại",
+    title: "Full Amenities",
+    desc: "Air conditioning, water heater, high-speed WiFi, modern furnishings",
   },
   {
     Icon: HeadphonesIcon,
-    title: "Hỗ trợ 24/7",
-    desc: "Đội ngũ quản lý nhiệt tình, xử lý sự cố nhanh chóng, chu đáo",
+    title: "24/7 Support",
+    desc: "Dedicated management team, fast incident response, attentive service",
   },
 ];
 
 const stats = [
-  { value: "50+", label: "Phòng & căn hộ" },
-  { value: "5+", label: "Năm kinh nghiệm" },
-  { value: "200+", label: "Khách hài lòng" },
-  { value: "100%", label: "An toàn" },
+  { value: "50+", label: "Rooms & apartments" },
+  { value: "5+", label: "Years of experience" },
+  { value: "200+", label: "Satisfied guests" },
+  { value: "100%", label: "Safety" },
 ];
 
 export default async function HomePage() {
@@ -53,16 +53,16 @@ export default async function HomePage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Heading */}
           <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-semibold text-gray-900 leading-[1.08] tracking-tight mb-6">
-            Tìm không gian sống
+            Find your ideal
             <br />
             <span className="text-[#378451] italic font-medium">
-              lý tưởng của bạn
+              living space
             </span>
           </h1>
 
           <p className="text-gray-500 text-lg sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
-            Phòng trọ và căn hộ cho thuê tại Son Tra, Da Nang. An
-            toàn, tiện nghi, giá hợp lý.
+            Rooms and apartments for rent in Son Tra, Da Nang. Safe,
+            comfortable, and affordable.
           </p>
 
           {/* Search pill */}
@@ -73,12 +73,12 @@ export default async function HomePage() {
             <Search className="w-4 h-4 text-gray-400 shrink-0" />
             <div className="flex-1 text-left">
               <p className="font-semibold text-gray-800 text-sm leading-none mb-0.5">
-                Tìm phòng ngay
+                Search now
               </p>
-              <p className="text-gray-400 text-xs">Son Tra · Phòng trọ & Căn hộ</p>
+              <p className="text-gray-400 text-xs">Son Tra · Rooms & Apartments</p>
             </div>
             <span className="bg-[#378451] text-white text-sm font-semibold px-5 py-2.5 rounded-full shrink-0 hover:bg-[#2D6B42] transition-colors">
-              Tìm
+              Search
             </span>
           </Link>
 
@@ -104,13 +104,13 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-semibold text-gray-900">
-              Phòng nổi bật
+              Featured Rooms
             </h2>
             <Link
               href="/rooms"
               className="text-sm font-medium text-gray-700 underline underline-offset-2 hover:text-[#378451] transition-colors flex items-center gap-1"
             >
-              Xem tất cả
+              View all
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -124,13 +124,13 @@ export default async function HomePage() {
           ) : (
             <div className="text-center py-20 border border-dashed border-gray-200 rounded-2xl">
               <p className="text-gray-400 mb-4 text-sm">
-                Chưa có phòng nổi bật. Vui lòng quay lại sau.
+                No featured rooms yet. Please check back later.
               </p>
               <Link
                 href="/rooms"
                 className="bg-[#378451] hover:bg-[#2D6B42] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors inline-block"
               >
-                Xem tất cả phòng
+                Browse all rooms
               </Link>
             </div>
           )}
@@ -142,14 +142,13 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <p className="text-[#378451] text-sm font-semibold mb-2">
-              Cam kết của chúng tôi
+              Our Promise
             </p>
             <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight">
-              Tại sao chọn Thanh Hà?
+              Why choose Thanh Ha?
             </h2>
             <p className="text-gray-500 mt-3 max-w-md">
-              Chúng tôi không chỉ cho thuê phòng — chúng tôi tạo ra một ngôi
-              nhà thực sự cho bạn.
+              We don&apos;t just rent rooms — we create a real home for you.
             </p>
           </div>
 
@@ -174,9 +173,9 @@ export default async function HomePage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <p className="text-[#378451] text-sm font-semibold mb-2">Vị trí</p>
+            <p className="text-[#378451] text-sm font-semibold mb-2">Location</p>
             <h2 className="text-3xl font-semibold text-gray-900">
-              Chúng tôi ở đây
+              Find us here
             </h2>
             <p className="mt-2 text-gray-500 text-sm">
               75 Luong Huu Khanh, Son Tra, Da Nang
@@ -191,7 +190,7 @@ export default async function HomePage() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Vị trí Căn Hộ Thanh Hà"
+              title="Thanh Ha Apartments Location"
             />
           </div>
         </div>
@@ -200,16 +199,15 @@ export default async function HomePage() {
       {/* ── CTA Banner ────────────────────────────────────────── */}
       <section className="py-20 bg-gray-50 border-t border-gray-100">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[#378451] text-sm font-semibold mb-3">Liên hệ</p>
+          <p className="text-[#378451] text-sm font-semibold mb-3">Contact</p>
           <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900 tracking-tight mb-4">
-            Sẵn sàng tìm{" "}
+            Ready to find your{" "}
             <span className="text-[#378451] italic font-medium">
-              phòng lý tưởng?
+              ideal room?
             </span>
           </h2>
           <p className="text-gray-500 mb-10 leading-relaxed">
-            Liên hệ với chúng tôi ngay hôm nay để được tư vấn miễn phí và xem
-            phòng trực tiếp.
+            Contact us today for a free consultation and to view rooms in person.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
@@ -217,14 +215,14 @@ export default async function HomePage() {
               className="bg-[#378451] hover:bg-[#2D6B42] text-white font-semibold px-8 py-3.5 rounded-full transition-colors shadow-sm flex items-center gap-2 text-sm"
             >
               <MessageCircle className="w-4 h-4" />
-              Gửi tin nhắn
+              Send a message
             </Link>
             <a
               href="tel:+84909000000"
               className="flex items-center gap-2 border border-gray-300 hover:border-gray-400 text-gray-700 hover:bg-gray-100 font-semibold px-8 py-3.5 rounded-full text-sm transition-colors"
             >
               <Phone className="w-4 h-4" />
-              Gọi 0909 000 000
+              Call 0909 000 000
             </a>
           </div>
         </div>

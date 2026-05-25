@@ -3,9 +3,9 @@ import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import ContactForm from "@/components/contact/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Liên hệ",
+  title: "Contact",
   description:
-    "Liên hệ với Căn Hộ Thanh Hà để được tư vấn miễn phí về phòng trọ và căn hộ cho thuê tại Da Nang.",
+    "Contact Thanh Ha Apartments for a free consultation on rooms and apartments for rent in Da Nang.",
   alternates: {
     canonical: "https://canhothanhha.vn/contact",
   },
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const contactInfo = [
   {
     Icon: Phone,
-    label: "Điện thoại",
+    label: "Phone",
     value: "0909 000 000",
     href: "tel:+84909000000",
   },
@@ -32,14 +32,14 @@ const contactInfo = [
   },
   {
     Icon: MapPin,
-    label: "Địa chỉ",
+    label: "Address",
     value: "75 Luong Huu Khanh, Son Tra, Da Nang",
     href: null,
   },
   {
     Icon: Clock,
-    label: "Giờ làm việc",
-    value: "Thứ 2 – Chủ nhật · 8:00 – 21:00",
+    label: "Working hours",
+    value: "Mon – Sun · 8:00 – 21:00",
     href: null,
   },
 ];
@@ -49,13 +49,13 @@ export default function ContactPage() {
     <>
       {/* Hero */}
       <div className="bg-white border-b border-gray-100 py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <p className="text-[#378451] text-sm font-semibold mb-2">Liên hệ</p>
+        <p className="text-[#378451] text-sm font-semibold mb-2">Contact</p>
         <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight">
-          Liên hệ với chúng tôi
+          Get in touch
         </h1>
         <p className="text-gray-500 mt-2 max-w-xl text-sm">
-          Có câu hỏi hoặc muốn xem phòng? Hãy để lại thông tin — chúng tôi sẽ
-          phản hồi trong 24 giờ.
+          Have a question or want to view a room? Leave your details — we&apos;ll
+          respond within 24 hours.
         </p>
       </div>
 
@@ -108,7 +108,7 @@ export default function ContactPage() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Vị trí Căn Hộ Thanh Hà"
+                  title="Thanh Ha Apartments Location"
                 />
               </div>
             </div>
@@ -117,10 +117,10 @@ export default function ContactPage() {
             <div className="lg:col-span-3">
               <div className="border border-gray-200 rounded-2xl p-8 shadow-sm">
                 <h2 className="text-xl font-semibold text-gray-900 mb-1.5">
-                  Gửi tin nhắn
+                  Send a message
                 </h2>
                 <p className="text-gray-500 text-sm mb-7">
-                  Điền thông tin bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ.
+                  Fill in the form below and we&apos;ll get back to you within 24 hours.
                 </p>
                 <ContactForm />
               </div>

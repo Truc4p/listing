@@ -26,40 +26,40 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL("https://canhothanhha.vn"),
   title: {
-    default: "Căn Hộ Thanh Hà | Cho thuê phòng & căn hộ tại Da Nang",
-    template: "%s | Căn Hộ Thanh Hà",
+    default: "Thanh Ha Apartments | Rooms & Apartments for Rent in Da Nang",
+    template: "%s | Thanh Ha Apartments",
   },
   description:
-    "Căn Hộ Thanh Hà cung cấp phòng trọ và căn hộ cho thuê chất lượng cao tại Son Tra, Da Nang. Không gian sạch sẽ, an toàn, tiện nghi, giá hợp lý.",
+    "Thanh Ha Apartments offers high-quality rooms and apartments for rent in Son Tra, Da Nang. Clean, safe, comfortable, and affordable.",
   keywords: [
-    "cho thuê phòng",
-    "căn hộ cho thuê",
-    "phòng trọ",
+    "room for rent",
+    "apartment for rent",
+    "rental room",
     "Son Tra",
     "Da Nang",
-    "Thanh Hà",
+    "Thanh Ha",
   ],
   openGraph: {
     type: "website",
-    locale: "vi_VN",
+    locale: "en_US",
     url: "https://canhothanhha.vn",
-    siteName: "Căn Hộ Thanh Hà",
-    title: "Căn Hộ Thanh Hà | Cho thuê phòng & căn hộ tại Da Nang",
+    siteName: "Thanh Ha Apartments",
+    title: "Thanh Ha Apartments | Rooms & Apartments for Rent in Da Nang",
     description:
-      "Phòng trọ và căn hộ cho thuê chất lượng tại Son Tra, Da Nang.",
+      "Quality rooms and apartments for rent in Son Tra, Da Nang.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Căn Hộ Thanh Hà",
+        alt: "Thanh Ha Apartments",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Căn Hộ Thanh Hà | Cho thuê phòng & căn hộ",
-    description: "Phòng trọ và căn hộ cho thuê tại Da Nang",
+    title: "Thanh Ha Apartments | Rooms & Apartments for Rent",
+    description: "Rooms and apartments for rent in Da Nang",
   },
   robots: {
     index: true,
@@ -82,7 +82,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="vi"
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
       <head>

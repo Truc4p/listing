@@ -40,7 +40,7 @@ export default function RoomCard({ room }: RoomCardProps) {
                 : "bg-gray-900/70 backdrop-blur-sm text-white/80"
             }`}
           >
-            {room.available ? "Còn trống" : "Đã thuê"}
+            {room.available ? "Available" : "Rented"}
           </span>
         </div>
 
@@ -48,7 +48,7 @@ export default function RoomCard({ room }: RoomCardProps) {
         <button
           className="absolute top-3 right-3 p-1 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={(e) => e.preventDefault()}
-          aria-label="Lưu phòng"
+          aria-label="Save room"
         >
           <Heart
             className="w-5 h-5 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]"
@@ -70,14 +70,14 @@ export default function RoomCard({ room }: RoomCardProps) {
         </div>
         <p className="text-gray-500 text-sm">Son Tra, Da Nang</p>
         <p className="text-gray-500 text-sm">
-          {room.type === "apartment" ? "Căn hộ" : "Phòng trọ"} · {room.area} m²
-          {room.floor ? ` · Tầng ${room.floor}` : ""}
+          {room.type === "apartment" ? "Apartment" : "Room"} · {room.area} m²
+          {room.floor ? ` · Floor ${room.floor}` : ""}
         </p>
         <p className="pt-1.5 text-gray-900 text-sm">
           <span className="font-semibold">
-            {room.price.toLocaleString("vi-VN")}đ
+            {room.price.toLocaleString("en-US")}₫
           </span>{" "}
-          <span className="text-gray-500 font-normal">/tháng</span>
+          <span className="text-gray-500 font-normal">/month</span>
         </p>
       </div>
     </Link>

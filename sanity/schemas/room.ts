@@ -2,12 +2,12 @@ import { defineField, defineType } from "sanity";
 
 export const room = defineType({
   name: "room",
-  title: "Phòng / Căn hộ",
+  title: "Room / Apartment",
   type: "document",
   fields: [
     defineField({
       name: "title",
-      title: "Tên phòng",
+      title: "Room name",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
@@ -20,12 +20,12 @@ export const room = defineType({
     }),
     defineField({
       name: "type",
-      title: "Loại",
+      title: "Type",
       type: "string",
       options: {
         list: [
-          { title: "Phòng trọ", value: "room" },
-          { title: "Căn hộ", value: "apartment" },
+          { title: "Room", value: "room" },
+          { title: "Apartment", value: "apartment" },
         ],
         layout: "radio",
       },
@@ -33,52 +33,52 @@ export const room = defineType({
     }),
     defineField({
       name: "price",
-      title: "Giá thuê (VNĐ/tháng)",
+      title: "Rent (VND/month)",
       type: "number",
       validation: (Rule) => Rule.required().positive(),
     }),
     defineField({
       name: "area",
-      title: "Diện tích (m²)",
+      title: "Floor area (m²)",
       type: "number",
       validation: (Rule) => Rule.required().positive(),
     }),
     defineField({
       name: "floor",
-      title: "Tầng",
+      title: "Floor",
       type: "number",
     }),
     defineField({
       name: "description",
-      title: "Mô tả chi tiết",
+      title: "Description",
       type: "array",
       of: [{ type: "block" }],
     }),
     defineField({
       name: "amenities",
-      title: "Tiện nghi",
+      title: "Amenities",
       type: "array",
       of: [{ type: "string" }],
       options: {
         list: [
-          { title: "Điều hòa", value: "ac" },
-          { title: "Máy nước nóng", value: "water_heater" },
-          { title: "Ban công", value: "balcony" },
-          { title: "Gác lửng", value: "mezzanine" },
-          { title: "Tủ lạnh", value: "fridge" },
-          { title: "Máy giặt", value: "washer" },
-          { title: "Bếp", value: "kitchen" },
-          { title: "WiFi miễn phí", value: "wifi" },
-          { title: "Chỗ để xe", value: "parking" },
-          { title: "An ninh 24/7", value: "security" },
-          { title: "Cửa sổ thoáng", value: "window" },
-          { title: "Nội thất đầy đủ", value: "furnished" },
+          { title: "Air conditioning", value: "ac" },
+          { title: "Water heater", value: "water_heater" },
+          { title: "Balcony", value: "balcony" },
+          { title: "Mezzanine", value: "mezzanine" },
+          { title: "Refrigerator", value: "fridge" },
+          { title: "Washing machine", value: "washer" },
+          { title: "Kitchen", value: "kitchen" },
+          { title: "Free WiFi", value: "wifi" },
+          { title: "Parking", value: "parking" },
+          { title: "24/7 security", value: "security" },
+          { title: "Ventilated windows", value: "window" },
+          { title: "Fully furnished", value: "furnished" },
         ],
       },
     }),
     defineField({
       name: "images",
-      title: "Hình ảnh",
+      title: "Images",
       type: "array",
       of: [
         {
@@ -88,7 +88,7 @@ export const room = defineType({
             defineField({
               name: "alt",
               type: "string",
-              title: "Mô tả ảnh (alt text)",
+              title: "Image description (alt text)",
             }),
           ],
         },
@@ -96,13 +96,13 @@ export const room = defineType({
     }),
     defineField({
       name: "available",
-      title: "Còn trống",
+      title: "Available",
       type: "boolean",
       initialValue: true,
     }),
     defineField({
       name: "featured",
-      title: "Phòng nổi bật",
+      title: "Featured",
       type: "boolean",
       initialValue: false,
     }),
@@ -119,7 +119,7 @@ export const room = defineType({
       return {
         title,
         media,
-        subtitle: `${type === "apartment" ? "Căn hộ" : "Phòng"} · ${price?.toLocaleString("vi-VN")}đ/tháng · ${available ? "Còn trống" : "Đã thuê"}`,
+        subtitle: `${type === "apartment" ? "Apartment" : "Room"} · ${price?.toLocaleString("en-US")}₫/month · ${available ? "Available" : "Rented"}`,
       };
     },
   },

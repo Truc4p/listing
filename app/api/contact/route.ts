@@ -8,14 +8,14 @@ export async function POST(req: NextRequest) {
 
     if (!name || !email || !phone || !message) {
       return NextResponse.json(
-        { error: "Vui lòng điền đầy đủ thông tin bắt buộc." },
+        { error: "Please fill in all required fields." },
         { status: 400 }
       );
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
-        { error: "Địa chỉ email không hợp lệ." },
+        { error: "Invalid email address." },
         { status: 400 }
       );
     }
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error("Contact email error:", err);
     return NextResponse.json(
-      { error: "Gửi thất bại. Vui lòng thử lại sau." },
+      { error: "Failed to send. Please try again later." },
       { status: 500 }
     );
   }

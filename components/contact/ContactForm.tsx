@@ -41,17 +41,17 @@ export default function ContactForm({ prefilledRoom }: ContactFormProps) {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Gửi thất bại");
+        throw new Error(data.error || "Failed to send");
       }
 
-      toast.success("Gửi tin nhắn thành công!", {
-        description: "Chúng tôi sẽ liên hệ lại với bạn trong thời gian sớm nhất.",
+      toast.success("Message sent!", {
+        description: "We'll get back to you as soon as possible.",
       });
       setForm({ name: "", email: "", phone: "", roomInterest: "", message: "" });
     } catch (err) {
-      toast.error("Gửi thất bại", {
+      toast.error("Failed to send", {
         description:
-          err instanceof Error ? err.message : "Vui lòng thử lại sau.",
+          err instanceof Error ? err.message : "Please try again later.",
       });
     } finally {
       setPending(false);
@@ -62,18 +62,18 @@ export default function ContactForm({ prefilledRoom }: ContactFormProps) {
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <Label htmlFor="name">Họ và tên *</Label>
+          <Label htmlFor="name">Full name *</Label>
           <Input
             id="name"
             name="name"
-            placeholder="Nguyễn Văn A"
+            placeholder="John Smith"
             value={form.name}
             onChange={handleChange}
             required
           />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="phone">Số điện thoại *</Label>
+          <Label htmlFor="phone">Phone number *</Label>
           <Input
             id="phone"
             name="phone"
@@ -100,22 +100,22 @@ export default function ContactForm({ prefilledRoom }: ContactFormProps) {
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="roomInterest">Quan tâm đến phòng (tuỳ chọn)</Label>
+        <Label htmlFor="roomInterest">Room of interest (optional)</Label>
         <Input
           id="roomInterest"
           name="roomInterest"
-          placeholder="Tên phòng hoặc căn hộ bạn quan tâm"
+          placeholder="Room or apartment name you're interested in"
           value={form.roomInterest}
           onChange={handleChange}
         />
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="message">Nội dung tin nhắn *</Label>
+        <Label htmlFor="message">Message *</Label>
         <Textarea
           id="message"
           name="message"
-          placeholder="Xin chào, tôi muốn hỏi thêm thông tin về..."
+          placeholder="Hello, I'd like to know more about..."
           rows={5}
           value={form.message}
           onChange={handleChange}
@@ -131,12 +131,12 @@ export default function ContactForm({ prefilledRoom }: ContactFormProps) {
         {pending ? (
           <>
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-            Đang gửi...
+            Sending...
           </>
         ) : (
           <>
             <Send className="w-4 h-4 mr-2" />
-            Gửi tin nhắn
+            Send message
           </>
         )}
       </Button>

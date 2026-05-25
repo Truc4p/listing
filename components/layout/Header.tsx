@@ -7,9 +7,9 @@ import { Building2, Phone, Menu, X, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "Trang chủ" },
-  { href: "/rooms", label: "Phòng & Căn hộ" },
-  { href: "/contact", label: "Liên hệ" },
+  { href: "/", label: "Home" },
+  { href: "/rooms", label: "Rooms & Apartments" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {
@@ -37,7 +37,7 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <Building2 className="w-7 h-7 text-[#378451]" />
             <span className="font-bold text-xl text-[#378451] hidden sm:block tracking-tight">
-              Thanh Hà
+              Thanh Ha
             </span>
           </Link>
 
@@ -46,11 +46,11 @@ export default function Header() {
             onClick={() => router.push("/rooms")}
             className="hidden md:flex items-center border border-gray-200 rounded-full shadow-sm hover:shadow-md transition-shadow px-2 py-2 gap-0 bg-white cursor-pointer"
           >
-            <span className="text-sm font-medium text-gray-800 px-4">Tìm phòng</span>
+            <span className="text-sm font-medium text-gray-800 px-4">Search rooms</span>
             <span className="w-px h-5 bg-gray-200" />
-            <span className="text-sm text-gray-500 px-4">Loại phòng</span>
+            <span className="text-sm text-gray-500 px-4">Room type</span>
             <span className="w-px h-5 bg-gray-200" />
-            <span className="text-sm text-gray-500 px-4">Giá tiền</span>
+            <span className="text-sm text-gray-500 px-4">Price</span>
             <div className="ml-1 bg-[#378451] rounded-full p-2.5">
               <Search className="w-3.5 h-3.5 text-white" />
             </div>
@@ -69,7 +69,7 @@ export default function Header() {
               href="/contact"
               className="bg-[#378451] hover:bg-[#2D6B42] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors shadow-sm"
             >
-              Liên hệ ngay
+              Contact us
             </Link>
           </div>
 
@@ -80,7 +80,7 @@ export default function Header() {
               className="flex items-center gap-2 border border-gray-200 rounded-full px-4 py-2.5 shadow-sm bg-white"
             >
               <Search className="w-4 h-4 text-gray-500" />
-              <span className="text-sm font-medium text-gray-800">Tìm phòng</span>
+              <span className="text-sm font-medium text-gray-800">Search rooms</span>
             </button>
             <button
               onClick={() => setMobileOpen((v) => !v)}
@@ -130,7 +130,7 @@ export default function Header() {
               onClick={() => setMobileOpen(false)}
               className="block w-full bg-[#378451] hover:bg-[#2D6B42] text-white text-sm font-semibold px-4 py-3 rounded-full text-center transition-colors"
             >
-              Liên hệ ngay
+              Contact us
             </Link>
           </div>
         </div>

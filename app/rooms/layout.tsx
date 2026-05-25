@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Phòng & Căn hộ cho thuê",
+  title: "Rooms & Apartments for Rent",
   description:
-    "Danh sách phòng trọ và căn hộ cho thuê tại Căn Hộ Thanh Hà, Son Tra, Da Nang. Đầy đủ tiện nghi, giá hợp lý.",
+    "Browse rooms and apartments for rent at Thanh Ha Apartments, Son Tra, Da Nang. Fully equipped, affordable pricing.",
   alternates: {
     canonical: "https://canhothanhha.vn/rooms",
   },
