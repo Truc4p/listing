@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Contact Thanh Ha Apartments for a free consultation on rooms and apartments for rent in Da Nang.",
   alternates: {
-    canonical: "https://thanh-ha-apartment.com/contact",
+    canonical: "https://ha-apartment.com/contact",
   },
 };
 
@@ -27,8 +27,8 @@ const contactInfo = [
   {
     Icon: Mail,
     label: "Email",
-    value: "info@thanh-ha-apartment.com",
-    href: "mailto:info@thanh-ha-apartment.com",
+    value: "info@ha-apartment.com",
+    href: "mailto:info@ha-apartment.com",
   },
   {
     Icon: MapPin,

@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/studio/", "/api/"],
       },
     ],
-    sitemap: "https://thanh-ha-apartment.com/sitemap.xml",
+    sitemap: "https://ha-apartment.com/sitemap.xml",
   };
 }

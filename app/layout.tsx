@@ -24,7 +24,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://thanh-ha-apartment.com"),
+  metadataBase: new URL("https://ha-apartment.com"),
   title: {
     default: "Thanh Ha Apartments | Rooms & Apartments for Rent in Da Nang",
     template: "%s | Thanh Ha Apartments",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://thanh-ha-apartment.com",
+    url: "https://ha-apartment.com",
     siteName: "Thanh Ha Apartments",
     title: "Thanh Ha Apartments | Rooms & Apartments for Rent in Da Nang",
     description:
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://thanh-ha-apartment.com",
+    canonical: "https://ha-apartment.com",
   },
 };
 

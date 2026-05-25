@@ -5,9 +5,9 @@ export function LocalBusinessJsonLd() {
     name: "Thanh Ha Apartments",
     description:
       "Quality rooms and apartments for rent in Da Nang. Safe, comfortable, and affordable.",
-    url: "https://thanh-ha-apartment.com",
+    url: "https://ha-apartment.com",
     telephone: "+84909000000",
-    email: "info@thanh-ha-apartment.com",
+    email: "info@ha-apartment.com",
     address: {
       "@type": "PostalAddress",
       streetAddress: "75 Luong Huu Khanh",
@@ -63,7 +63,7 @@ export function RoomJsonLd({
     "@type": "RealEstateListing",
     name: title,
     description,
-    url: `https://thanh-ha-apartment.com/rooms/${slug}`,
+    url: `https://ha-apartment.com/rooms/${slug}`,
     ...(imageUrl && { image: imageUrl }),
     offers: {
       "@type": "Offer",

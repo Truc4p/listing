@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllRoomSlugs } from "@/lib/sanity";
 
-const BASE_URL = "https://thanh-ha-apartment.com";
+const BASE_URL = "https://ha-apartment.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getAllRoomSlugs();

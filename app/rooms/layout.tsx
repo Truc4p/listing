@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Browse rooms and apartments for rent at Thanh Ha Apartments, Son Tra, Da Nang. Fully equipped, affordable pricing.",
   alternates: {
-    canonical: "https://thanh-ha-apartment.com/rooms",
+    canonical: "https://ha-apartment.com/rooms",
   },
 };
 
