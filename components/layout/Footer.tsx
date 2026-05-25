@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <Building2 className="w-6 h-6 text-[#FF385C]" />
+              <Building2 className="w-6 h-6 text-[#378451]" />
               <span className="font-bold text-lg text-gray-900">Thanh Hà</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed mb-5">
@@ -23,7 +23,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#FF385C] hover:text-[#FF385C] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#378451] hover:text-[#378451] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
                 aria-label="Facebook"
               >
                 <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
@@ -34,7 +34,7 @@ export default function Footer() {
                 href="https://zalo.me/0909000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#FF385C] hover:text-[#FF385C] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#378451] hover:text-[#378451] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
                 aria-label="Zalo"
               >
                 <MessageCircle className="w-4 h-4" />
@@ -74,13 +74,13 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-[#FF385C] mt-0.5 shrink-0" />
+                <MapPin className="w-4 h-4 text-[#378451] mt-0.5 shrink-0" />
                 <span className="text-sm text-gray-500">
                   123 Đường Thanh Hà, Phường 1, Quận 1, TP. Hồ Chí Minh
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-[#FF385C] shrink-0" />
+                <Phone className="w-4 h-4 text-[#378451] shrink-0" />
                 <a
                   href="tel:+84909000000"
                   className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
@@ -89,7 +89,7 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-[#FF385C] shrink-0" />
+                <Mail className="w-4 h-4 text-[#378451] shrink-0" />
                 <a
                   href="mailto:info@canhothanhha.vn"
                   className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
@@ -111,7 +111,7 @@ export default function Footer() {
           <span>© {currentYear} Căn Hộ Thanh Hà · All rights reserved</span>
           <div className="flex items-center gap-1">
             <span>Made with</span>
-            <span className="text-[#FF385C]">♥</span>
+            <span className="text-[#378451]">♥</span>
             <span>in Sài Gòn</span>
           </div>
         </div>

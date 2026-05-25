@@ -75,7 +75,7 @@ export default function RoomsPage() {
               onClick={() => setAvailableOnly((v) => !v)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-medium transition-all whitespace-nowrap ${
                 availableOnly
-                  ? "bg-rose-500 text-white border-rose-500"
+                  ? "bg-emerald-600 text-white border-emerald-600"
                   : "bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:bg-gray-50"
               }`}
             >
@@ -135,7 +135,7 @@ export default function RoomsPage() {
               </p>
               <p className="text-gray-400 text-sm">
                 Kết nối Sanity CMS và thêm phòng qua{" "}
-                <a href="/studio" className="text-[#FF385C] underline">
+                <a href="/studio" className="text-[#378451] underline">
                   /studio
                 </a>
                 .

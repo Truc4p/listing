@@ -49,13 +49,13 @@ export default async function HomePage() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="bg-linear-to-b from-rose-50 to-white py-24 md:py-36">
+      <section className="bg-linear-to-b from-emerald-50 to-white py-24 md:py-36">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Heading */}
           <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-semibold text-gray-900 leading-[1.08] tracking-tight mb-6">
             Tìm không gian sống
             <br />
-            <span className="text-[#FF385C] italic font-medium">
+            <span className="text-[#378451] italic font-medium">
               lý tưởng của bạn
             </span>
           </h1>
@@ -77,7 +77,7 @@ export default async function HomePage() {
               </p>
               <p className="text-gray-400 text-xs">Quận 1 · Phòng trọ & Căn hộ</p>
             </div>
-            <span className="bg-[#FF385C] text-white text-sm font-semibold px-5 py-2.5 rounded-full shrink-0 hover:bg-[#E31C5F] transition-colors">
+            <span className="bg-[#378451] text-white text-sm font-semibold px-5 py-2.5 rounded-full shrink-0 hover:bg-[#2D6B42] transition-colors">
               Tìm
             </span>
           </Link>
@@ -108,7 +108,7 @@ export default async function HomePage() {
             </h2>
             <Link
               href="/rooms"
-              className="text-sm font-medium text-gray-700 underline underline-offset-2 hover:text-[#FF385C] transition-colors flex items-center gap-1"
+              className="text-sm font-medium text-gray-700 underline underline-offset-2 hover:text-[#378451] transition-colors flex items-center gap-1"
             >
               Xem tất cả
               <ArrowRight className="w-3.5 h-3.5" />
@@ -128,7 +128,7 @@ export default async function HomePage() {
               </p>
               <Link
                 href="/rooms"
-                className="bg-[#FF385C] hover:bg-[#E31C5F] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors inline-block"
+                className="bg-[#378451] hover:bg-[#2D6B42] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors inline-block"
               >
                 Xem tất cả phòng
               </Link>
@@ -141,7 +141,7 @@ export default async function HomePage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <p className="text-[#FF385C] text-sm font-semibold mb-2">
+            <p className="text-[#378451] text-sm font-semibold mb-2">
               Cam kết của chúng tôi
             </p>
             <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight">
@@ -157,10 +157,10 @@ export default async function HomePage() {
             {highlights.map(({ Icon, title, desc }) => (
               <div
                 key={title}
-                className="bg-white rounded-2xl p-7 border border-gray-100 hover:border-[#FF385C]/30 hover:shadow-md transition-all duration-200"
+                className="bg-white rounded-2xl p-7 border border-gray-100 hover:border-[#378451]/30 hover:shadow-md transition-all duration-200"
               >
-                <div className="w-11 h-11 rounded-xl bg-rose-50 flex items-center justify-center mb-5">
-                  <Icon className="w-5 h-5 text-[#FF385C]" />
+                <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center mb-5">
+                  <Icon className="w-5 h-5 text-[#378451]" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">{title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
@@ -174,7 +174,7 @@ export default async function HomePage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <p className="text-[#FF385C] text-sm font-semibold mb-2">Vị trí</p>
+            <p className="text-[#378451] text-sm font-semibold mb-2">Vị trí</p>
             <h2 className="text-3xl font-semibold text-gray-900">
               Chúng tôi ở đây
             </h2>
@@ -200,10 +200,10 @@ export default async function HomePage() {
       {/* ── CTA Banner ────────────────────────────────────────── */}
       <section className="py-20 bg-gray-50 border-t border-gray-100">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[#FF385C] text-sm font-semibold mb-3">Liên hệ</p>
+          <p className="text-[#378451] text-sm font-semibold mb-3">Liên hệ</p>
           <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900 tracking-tight mb-4">
             Sẵn sàng tìm{" "}
-            <span className="text-[#FF385C] italic font-medium">
+            <span className="text-[#378451] italic font-medium">
               phòng lý tưởng?
             </span>
           </h2>
@@ -214,7 +214,7 @@ export default async function HomePage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href="/contact"
-              className="bg-[#FF385C] hover:bg-[#E31C5F] text-white font-semibold px-8 py-3.5 rounded-full transition-colors shadow-sm flex items-center gap-2 text-sm"
+              className="bg-[#378451] hover:bg-[#2D6B42] text-white font-semibold px-8 py-3.5 rounded-full transition-colors shadow-sm flex items-center gap-2 text-sm"
             >
               <MessageCircle className="w-4 h-4" />
               Gửi tin nhắn

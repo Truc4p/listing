@@ -35,8 +35,8 @@ export default function Header() {
         <div className="flex items-center justify-between h-20 gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <Building2 className="w-7 h-7 text-[#FF385C]" />
-            <span className="font-bold text-xl text-[#FF385C] hidden sm:block tracking-tight">
+            <Building2 className="w-7 h-7 text-[#378451]" />
+            <span className="font-bold text-xl text-[#378451] hidden sm:block tracking-tight">
               Thanh Hà
             </span>
           </Link>
@@ -51,7 +51,7 @@ export default function Header() {
             <span className="text-sm text-gray-500 px-4">Loại phòng</span>
             <span className="w-px h-5 bg-gray-200" />
             <span className="text-sm text-gray-500 px-4">Giá tiền</span>
-            <div className="ml-1 bg-[#FF385C] rounded-full p-2.5">
+            <div className="ml-1 bg-[#378451] rounded-full p-2.5">
               <Search className="w-3.5 h-3.5 text-white" />
             </div>
           </button>
@@ -67,7 +67,7 @@ export default function Header() {
             </a>
             <Link
               href="/contact"
-              className="bg-[#FF385C] hover:bg-[#E31C5F] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors shadow-sm"
+              className="bg-[#378451] hover:bg-[#2D6B42] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors shadow-sm"
             >
               Liên hệ ngay
             </Link>
@@ -109,7 +109,7 @@ export default function Header() {
                 className={cn(
                   "block px-4 py-3 text-sm font-medium rounded-xl transition-colors",
                   pathname === href
-                    ? "text-[#FF385C] bg-rose-50"
+                    ? "text-[#378451] bg-emerald-50"
                     : "text-gray-700 hover:bg-gray-50"
                 )}
               >
@@ -122,13 +122,13 @@ export default function Header() {
               href="tel:+84909000000"
               className="flex items-center gap-2.5 text-sm text-gray-600 px-4 py-2"
             >
-              <Phone className="w-4 h-4 text-[#FF385C]" />
+              <Phone className="w-4 h-4 text-[#378451]" />
               0909 000 000
             </a>
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="block w-full bg-[#FF385C] hover:bg-[#E31C5F] text-white text-sm font-semibold px-4 py-3 rounded-full text-center transition-colors"
+              className="block w-full bg-[#378451] hover:bg-[#2D6B42] text-white text-sm font-semibold px-4 py-3 rounded-full text-center transition-colors"
             >
               Liên hệ ngay
             </Link>

@@ -26,8 +26,8 @@ export default function RoomCard({ room }: RoomCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-rose-50">
-            <Layers className="w-10 h-10 text-[#FF385C] opacity-30" />
+          <div className="w-full h-full flex items-center justify-center bg-emerald-50">
+            <Layers className="w-10 h-10 text-[#378451] opacity-30" />
           </div>
         )}
 

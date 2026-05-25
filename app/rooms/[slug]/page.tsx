@@ -162,7 +162,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 >
                   {room.available ? "Còn trống" : "Đã thuê"}
                 </span>
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-50 text-[#FF385C]">
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-[#378451]">
                   {room.type === "apartment" ? "Căn hộ" : "Phòng trọ"}
                 </span>
               </div>
@@ -269,21 +269,21 @@ export default async function RoomDetailPage({ params }: Props) {
                 {/* Key facts */}
                 <ul className="space-y-2.5 mb-6 pb-6 border-b border-gray-100">
                   <li className="flex items-center gap-2.5 text-sm text-gray-600">
-                    <CheckCircle2 className="w-4 h-4 text-[#FF385C] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
                     Diện tích {room.area} m²
                   </li>
                   {room.floor && (
                     <li className="flex items-center gap-2.5 text-sm text-gray-600">
-                      <CheckCircle2 className="w-4 h-4 text-[#FF385C] shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
                       Tầng {room.floor}
                     </li>
                   )}
                   <li className="flex items-center gap-2.5 text-sm text-gray-600">
-                    <CheckCircle2 className="w-4 h-4 text-[#FF385C] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
                     {room.type === "apartment" ? "Căn hộ" : "Phòng trọ"}
                   </li>
                   <li className="flex items-center gap-2.5 text-sm text-gray-600">
-                    <CheckCircle2 className="w-4 h-4 text-[#FF385C] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
                     Quận 1, TP. Hồ Chí Minh
                   </li>
                 </ul>
@@ -292,7 +292,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 <div className="space-y-3">
                   <Link
                     href={`/contact?room=${encodeURIComponent(room.title)}`}
-                    className="flex items-center justify-center gap-2 w-full bg-[#FF385C] hover:bg-[#E31C5F] text-white font-semibold py-3.5 rounded-xl transition-colors text-sm"
+                    className="flex items-center justify-center gap-2 w-full bg-[#378451] hover:bg-[#2D6B42] text-white font-semibold py-3.5 rounded-xl transition-colors text-sm"
                   >
                     <MessageCircle className="w-4 h-4" />
                     Liên hệ tư vấn

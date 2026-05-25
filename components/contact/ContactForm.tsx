@@ -126,7 +126,7 @@ export default function ContactForm({ prefilledRoom }: ContactFormProps) {
       <Button
         type="submit"
         disabled={pending}
-        className="w-full bg-[#FF385C] hover:bg-[#E31C5F] text-white font-semibold rounded-xl border-0"
+        className="w-full bg-[#378451] hover:bg-[#2D6B42] text-white font-semibold rounded-xl border-0"
       >
         {pending ? (
           <>

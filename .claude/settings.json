@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -i '' 's/#FF385C/#378451/g; s/#E31C5F/#2D6B42/g' app/page.tsx app/contact/page.tsx app/rooms/page.tsx \"app/rooms/[slug]/page.tsx\" components/contact/ContactForm.tsx components/layout/Header.tsx components/layout/Footer.tsx components/listings/RoomCard.tsx)",
+      "Bash(sed -i '' 's/bg-rose-50/bg-emerald-50/g; s/from-rose-50/from-emerald-50/g; s/bg-rose-500/bg-emerald-600/g; s/border-rose-500/border-emerald-600/g' app/page.tsx app/contact/page.tsx app/rooms/page.tsx \"app/rooms/[slug]/page.tsx\" components/layout/Header.tsx components/listings/RoomCard.tsx)"
+    ],
+    "additionalDirectories": [
+      "/Users/phamthanhtruc/Documents/1.code/listing/app/rooms/[slug]"
+    ]
+  }
+}

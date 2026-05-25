@@ -49,7 +49,7 @@ export default function ContactPage() {
     <>
       {/* Hero */}
       <div className="bg-white border-b border-gray-100 py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <p className="text-[#FF385C] text-sm font-semibold mb-2">Liên hệ</p>
+        <p className="text-[#378451] text-sm font-semibold mb-2">Liên hệ</p>
         <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight">
           Liên hệ với chúng tôi
         </h1>
@@ -68,8 +68,8 @@ export default function ContactPage() {
               <ul className="space-y-5">
                 {contactInfo.map(({ Icon, label, value, href }) => (
                   <li key={label} className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center shrink-0">
-                      <Icon className="w-5 h-5 text-[#FF385C]" />
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+                      <Icon className="w-5 h-5 text-[#378451]" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-400 font-medium uppercase tracking-wide mb-0.5">
@@ -84,7 +84,7 @@ export default function ContactPage() {
                               ? "noopener noreferrer"
                               : undefined
                           }
-                          className="text-gray-900 text-sm font-medium hover:text-[#FF385C] transition-colors"
+                          className="text-gray-900 text-sm font-medium hover:text-[#378451] transition-colors"
                         >
                           {value}
                         </a>
