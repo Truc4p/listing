@@ -26,17 +26,17 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL("https://canhothanhha.vn"),
   title: {
-    default: "Căn Hộ Thanh Hà | Cho thuê phòng & căn hộ tại TP.HCM",
+    default: "Căn Hộ Thanh Hà | Cho thuê phòng & căn hộ tại Da Nang",
     template: "%s | Căn Hộ Thanh Hà",
   },
   description:
-    "Căn Hộ Thanh Hà cung cấp phòng trọ và căn hộ cho thuê chất lượng cao tại Quận 1, TP. Hồ Chí Minh. Không gian sạch sẽ, an toàn, tiện nghi, giá hợp lý.",
+    "Căn Hộ Thanh Hà cung cấp phòng trọ và căn hộ cho thuê chất lượng cao tại Son Tra, Da Nang. Không gian sạch sẽ, an toàn, tiện nghi, giá hợp lý.",
   keywords: [
     "cho thuê phòng",
     "căn hộ cho thuê",
     "phòng trọ",
-    "Quận 1",
-    "TP.HCM",
+    "Son Tra",
+    "Da Nang",
     "Thanh Hà",
   ],
   openGraph: {
@@ -44,9 +44,9 @@ export const metadata: Metadata = {
     locale: "vi_VN",
     url: "https://canhothanhha.vn",
     siteName: "Căn Hộ Thanh Hà",
-    title: "Căn Hộ Thanh Hà | Cho thuê phòng & căn hộ tại TP.HCM",
+    title: "Căn Hộ Thanh Hà | Cho thuê phòng & căn hộ tại Da Nang",
     description:
-      "Phòng trọ và căn hộ cho thuê chất lượng tại Quận 1, TP. Hồ Chí Minh.",
+      "Phòng trọ và căn hộ cho thuê chất lượng tại Son Tra, Da Nang.",
     images: [
       {
         url: "/og-image.jpg",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Căn Hộ Thanh Hà | Cho thuê phòng & căn hộ",
-    description: "Phòng trọ và căn hộ cho thuê tại TP.HCM",
+    description: "Phòng trọ và căn hộ cho thuê tại Da Nang",
   },
   robots: {
     index: true,

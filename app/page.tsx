@@ -22,7 +22,7 @@ const highlights = [
   {
     Icon: MapPin,
     title: "Vị trí đắc địa",
-    desc: "Trung tâm Quận 1, gần chợ, trường học, bệnh viện, tiện di chuyển",
+    desc: "Trung tâm Son Tra, gần chợ, trường học, bệnh viện, tiện di chuyển",
   },
   {
     Icon: Zap,
@@ -61,7 +61,7 @@ export default async function HomePage() {
           </h1>
 
           <p className="text-gray-500 text-lg sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
-            Phòng trọ và căn hộ cho thuê tại trung tâm Quận 1, TP.HCM. An
+            Phòng trọ và căn hộ cho thuê tại trung tâm Son Tra, Da Nang. An
             toàn, tiện nghi, giá hợp lý.
           </p>
 
@@ -75,7 +75,7 @@ export default async function HomePage() {
               <p className="font-semibold text-gray-800 text-sm leading-none mb-0.5">
                 Tìm phòng ngay
               </p>
-              <p className="text-gray-400 text-xs">Quận 1 · Phòng trọ & Căn hộ</p>
+              <p className="text-gray-400 text-xs">Son Tra · Phòng trọ & Căn hộ</p>
             </div>
             <span className="bg-[#378451] text-white text-sm font-semibold px-5 py-2.5 rounded-full shrink-0 hover:bg-[#2D6B42] transition-colors">
               Tìm
@@ -179,7 +179,7 @@ export default async function HomePage() {
               Chúng tôi ở đây
             </h2>
             <p className="mt-2 text-gray-500 text-sm">
-              123 Đường Thanh Hà, Phường 1, Quận 1, TP. Hồ Chí Minh
+              75 Luong Huu Khanh, Son Tra, Da Nang
             </p>
           </div>
           <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm aspect-video max-h-112.5">

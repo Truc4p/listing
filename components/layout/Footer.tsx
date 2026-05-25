@@ -15,8 +15,8 @@ export default function Footer() {
               <span className="font-bold text-lg text-gray-900">Thanh Hà</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed mb-5">
-              Phòng trọ và căn hộ chất lượng cao tại trung tâm Quận 1,
-              TP. Hồ Chí Minh.
+              Phòng trọ và căn hộ chất lượng cao tại trung tâm Son Tra,
+              Da Nang.
             </p>
             <div className="flex gap-3">
               <a
@@ -76,7 +76,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#378451] mt-0.5 shrink-0" />
                 <span className="text-sm text-gray-500">
-                  123 Đường Thanh Hà, Phường 1, Quận 1, TP. Hồ Chí Minh
+                  75 Luong Huu Khanh, Son Tra, Da Nang
                 </span>
               </li>
               <li className="flex items-center gap-3">

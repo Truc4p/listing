@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: room.title,
-    description: `${room.type === "apartment" ? "Căn hộ" : "Phòng trọ"} ${room.area}m² tại Quận 1, TP.HCM. Giá ${room.price.toLocaleString("vi-VN")}đ/tháng.`,
+    description: `${room.type === "apartment" ? "Căn hộ" : "Phòng trọ"} ${room.area}m² tại Son Tra, Da Nang. Giá ${room.price.toLocaleString("vi-VN")}đ/tháng.`,
     openGraph: {
       title: `${room.title} | Căn Hộ Thanh Hà`,
       description: `${room.type === "apartment" ? "Căn hộ" : "Phòng"} ${room.area}m² · ${room.price.toLocaleString("vi-VN")}đ/tháng`,
@@ -179,7 +179,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 )}
                 <span className="flex items-center gap-1.5">
                   <MapPin className="w-4 h-4" />
-                  Quận 1, TP. Hồ Chí Minh
+                  Son Tra, Da Nang
                 </span>
               </div>
             </div>
@@ -227,7 +227,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 Vị trí
               </h2>
               <p className="text-sm text-gray-500 mb-4">
-                123 Đường Thanh Hà, Phường 1, Quận 1, TP. Hồ Chí Minh
+                75 Luong Huu Khanh, Son Tra, Da Nang
               </p>
               <div className="rounded-2xl overflow-hidden border border-gray-100 h-56">
                 <iframe
@@ -284,7 +284,7 @@ export default async function RoomDetailPage({ params }: Props) {
                   </li>
                   <li className="flex items-center gap-2.5 text-sm text-gray-600">
                     <CheckCircle2 className="w-4 h-4 text-[#378451] shrink-0" />
-                    Quận 1, TP. Hồ Chí Minh
+                    Son Tra, Da Nang
                   </li>
                 </ul>
 

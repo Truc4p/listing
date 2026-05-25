@@ -4,15 +4,15 @@ export function LocalBusinessJsonLd() {
     "@type": "RealEstateAgent",
     name: "Căn Hộ Thanh Hà",
     description:
-      "Cho thuê phòng trọ và căn hộ chất lượng tại TP. Hồ Chí Minh. An toàn, tiện nghi, giá hợp lý.",
+      "Cho thuê phòng trọ và căn hộ chất lượng tại Da Nang. An toàn, tiện nghi, giá hợp lý.",
     url: "https://canhothanhha.vn",
     telephone: "+84909000000",
     email: "info@canhothanhha.vn",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "123 Đường Thanh Hà, Phường 1",
-      addressLocality: "Quận 1",
-      addressRegion: "TP. Hồ Chí Minh",
+      streetAddress: "75 Luong Huu Khanh",
+      addressLocality: "Son Tra",
+      addressRegion: "Da Nang",
       addressCountry: "VN",
     },
     openingHoursSpecification: {
@@ -88,9 +88,9 @@ export function RoomJsonLd({
     accommodationCategory: type === "apartment" ? "Apartment" : "Room",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "123 Đường Thanh Hà, Phường 1",
-      addressLocality: "Quận 1",
-      addressRegion: "TP. Hồ Chí Minh",
+      streetAddress: "75 Luong Huu Khanh",
+      addressLocality: "Son Tra",
+      addressRegion: "Da Nang",
       addressCountry: "VN",
     },
   };

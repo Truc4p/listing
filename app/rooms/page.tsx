@@ -41,7 +41,7 @@ export default function RoomsPage() {
           Phòng &amp; Căn hộ cho thuê
         </h1>
         <p className="text-gray-500 mt-1.5 text-sm">
-          Quận 1, TP. Hồ Chí Minh · {rooms.length} chỗ ở
+          Son Tra, Da Nang · {rooms.length} chỗ ở
         </p>
       </div>
 

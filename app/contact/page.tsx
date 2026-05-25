@@ -5,7 +5,7 @@ import ContactForm from "@/components/contact/ContactForm";
 export const metadata: Metadata = {
   title: "Liên hệ",
   description:
-    "Liên hệ với Căn Hộ Thanh Hà để được tư vấn miễn phí về phòng trọ và căn hộ cho thuê tại TP.HCM.",
+    "Liên hệ với Căn Hộ Thanh Hà để được tư vấn miễn phí về phòng trọ và căn hộ cho thuê tại Da Nang.",
   alternates: {
     canonical: "https://canhothanhha.vn/contact",
   },
@@ -33,7 +33,7 @@ const contactInfo = [
   {
     Icon: MapPin,
     label: "Địa chỉ",
-    value: "123 Đường Thanh Hà, Phường 1, Quận 1, TP.HCM",
+    value: "75 Luong Huu Khanh, Son Tra, Da Nang",
     href: null,
   },
   {

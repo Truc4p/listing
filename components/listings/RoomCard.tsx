@@ -68,7 +68,7 @@ export default function RoomCard({ room }: RoomCardProps) {
             <span className="text-sm font-medium text-gray-900">4.9</span>
           </div>
         </div>
-        <p className="text-gray-500 text-sm">Quận 1, TP. Hồ Chí Minh</p>
+        <p className="text-gray-500 text-sm">Son Tra, Da Nang</p>
         <p className="text-gray-500 text-sm">
           {room.type === "apartment" ? "Căn hộ" : "Phòng trọ"} · {room.area} m²
           {room.floor ? ` · Tầng ${room.floor}` : ""}
