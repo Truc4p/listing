@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(sed -i '' 's/#FF385C/#378451/g; s/#E31C5F/#2D6B42/g' app/page.tsx app/contact/page.tsx app/rooms/page.tsx \"app/rooms/[slug]/page.tsx\" components/contact/ContactForm.tsx components/layout/Header.tsx components/layout/Footer.tsx components/listings/RoomCard.tsx)",
-      "Bash(sed -i '' 's/bg-rose-50/bg-emerald-50/g; s/from-rose-50/from-emerald-50/g; s/bg-rose-500/bg-emerald-600/g; s/border-rose-500/border-emerald-600/g' app/page.tsx app/contact/page.tsx app/rooms/page.tsx \"app/rooms/[slug]/page.tsx\" components/layout/Header.tsx components/listings/RoomCard.tsx)"
+      "Bash(sed -i '' 's/bg-rose-50/bg-emerald-50/g; s/from-rose-50/from-emerald-50/g; s/bg-rose-500/bg-emerald-600/g; s/border-rose-500/border-emerald-600/g' app/page.tsx app/contact/page.tsx app/rooms/page.tsx \"app/rooms/[slug]/page.tsx\" components/layout/Header.tsx components/listings/RoomCard.tsx)",
+      "Bash(npx sanity *)",
+      "Bash(SANITY_AUTH_TOKEN=skYN2zARgALmfHE6ejnlh7dFqOwsx7fNMKJDk8anUdLqDjvYCB49w9slFFDyaMVKjsgB13XfG8nmUOHzyQineLPz2Mp9nHN9V2nGxUK8wd9PlXYOi3SXQF0yTpV745QBLPqYan8NDxGoy4ImOSLeV6n2gTc0mxS3EueulBDtD95vhVWf8wTZ npx sanity cors add http://localhost:3000 --credentials)"
     ],
     "additionalDirectories": [
       "/Users/phamthanhtruc/Documents/1.code/listing/app/rooms/[slug]"
