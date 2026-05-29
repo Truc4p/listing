@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Building2, Phone, Menu, X, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -12,17 +12,56 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const typeOptions = [
+  { value: "any", label: "Any type" },
+  { value: "room", label: "Room" },
+  { value: "apartment", label: "Apartment" },
+];
+
+const priceOptions = [
+  { value: "any", label: "Any budget" },
+  { value: "3000000", label: "Under 3,000,000đ" },
+  { value: "5000000", label: "Under 5,000,000đ" },
+  { value: "8000000", label: "Under 8,000,000đ" },
+  { value: "10000000", label: "Under 10,000,000đ" },
+];
+
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<null | "where" | "type" | "price">(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedType, setSelectedType] = useState("any");
+  const [selectedPrice, setSelectedPrice] = useState("any");
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setActiveSection(null);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.set("q", searchQuery);
+    if (selectedType !== "any") params.set("type", selectedType);
+    if (selectedPrice !== "any") params.set("maxPrice", selectedPrice);
+    const qs = params.toString();
+    router.push(`/rooms${qs ? "?" + qs : ""}`);
+    setActiveSection(null);
+  };
 
   return (
     <header
@@ -42,28 +81,150 @@ export default function Header() {
           </Link>
 
           {/* Search Pill — desktop */}
-          <button
-            onClick={() => router.push("/rooms")}
-            className="hidden md:flex items-center border border-gray-200 rounded-full shadow-sm hover:shadow-md transition-shadow px-2 py-1.5 gap-0 bg-white cursor-pointer"
-          >
-            <div className="flex flex-col items-start px-5 py-1">
-              <span className="text-xs font-semibold text-gray-800">Where</span>
-              <span className="text-sm text-gray-400">Search rooms</span>
+          <div ref={searchRef} className="relative hidden md:block">
+            <div
+              className={cn(
+                "flex items-center border rounded-full shadow-sm transition-shadow px-2 py-1.5 bg-white",
+                activeSection
+                  ? "shadow-md border-gray-300"
+                  : "border-gray-200 hover:shadow-md"
+              )}
+            >
+              {/* Where */}
+              <button
+                onClick={() =>
+                  setActiveSection(activeSection === "where" ? null : "where")
+                }
+                className={cn(
+                  "flex flex-col items-start px-5 py-1 rounded-full transition-colors cursor-pointer",
+                  activeSection === "where" ? "bg-gray-100" : "hover:bg-gray-50"
+                )}
+              >
+                <span className="text-xs font-semibold text-gray-800">Where</span>
+                <span className="text-sm text-gray-400 whitespace-nowrap">
+                  {searchQuery || "Search rooms"}
+                </span>
+              </button>
+
+              <span className="w-px h-8 bg-gray-200 shrink-0" />
+
+              {/* Room type */}
+              <button
+                onClick={() =>
+                  setActiveSection(activeSection === "type" ? null : "type")
+                }
+                className={cn(
+                  "flex flex-col items-start px-5 py-1 rounded-full transition-colors cursor-pointer",
+                  activeSection === "type" ? "bg-gray-100" : "hover:bg-gray-50"
+                )}
+              >
+                <span className="text-xs font-semibold text-gray-800">Room type</span>
+                <span className="text-sm text-gray-400 whitespace-nowrap">
+                  {typeOptions.find((o) => o.value === selectedType)?.label ?? "Any type"}
+                </span>
+              </button>
+
+              <span className="w-px h-8 bg-gray-200 shrink-0" />
+
+              {/* Price */}
+              <button
+                onClick={() =>
+                  setActiveSection(activeSection === "price" ? null : "price")
+                }
+                className={cn(
+                  "flex flex-col items-start px-5 py-1 rounded-full transition-colors cursor-pointer",
+                  activeSection === "price" ? "bg-gray-100" : "hover:bg-gray-50"
+                )}
+              >
+                <span className="text-xs font-semibold text-gray-800">Price</span>
+                <span className="text-sm text-gray-400 whitespace-nowrap">
+                  {priceOptions.find((o) => o.value === selectedPrice)?.label ?? "Any budget"}
+                </span>
+              </button>
+
+              {/* Search button */}
+              <button
+                onClick={handleSearch}
+                className="ml-2 bg-[#378451] hover:bg-[#2D6B42] rounded-full p-3 transition-colors shrink-0"
+              >
+                <Search className="w-4 h-4 text-white" />
+              </button>
             </div>
-            <span className="w-px h-8 bg-gray-200" />
-            <div className="flex flex-col items-start px-5 py-1">
-              <span className="text-xs font-semibold text-gray-800">Room type</span>
-              <span className="text-sm text-gray-400">Any type</span>
-            </div>
-            <span className="w-px h-8 bg-gray-200" />
-            <div className="flex flex-col items-start px-5 py-1">
-              <span className="text-xs font-semibold text-gray-800">Price</span>
-              <span className="text-sm text-gray-400">Any budget</span>
-            </div>
-            <div className="ml-2 bg-[#378451] rounded-full p-3">
-              <Search className="w-4 h-4 text-white" />
-            </div>
-          </button>
+
+            {/* Where dropdown */}
+            {activeSection === "where" && (
+              <div className="absolute top-full mt-2 left-0 bg-white rounded-2xl shadow-xl border border-gray-200 p-4 w-72 z-10">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+                  Search by name
+                </p>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                  placeholder="e.g. Studio, Penthouse..."
+                  autoFocus
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#378451] focus:border-transparent"
+                />
+              </div>
+            )}
+
+            {/* Room type dropdown */}
+            {activeSection === "type" && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-xl border border-gray-200 p-4 w-52 z-10">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+                  Room type
+                </p>
+                <div className="space-y-1">
+                  {typeOptions.map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => {
+                        setSelectedType(opt.value);
+                        setActiveSection(null);
+                      }}
+                      className={cn(
+                        "w-full text-left px-4 py-2.5 rounded-xl text-sm transition-colors",
+                        selectedType === opt.value
+                          ? "bg-[#378451] text-white font-medium"
+                          : "hover:bg-gray-50 text-gray-700"
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Price dropdown */}
+            {activeSection === "price" && (
+              <div className="absolute top-full mt-2 right-14 bg-white rounded-2xl shadow-xl border border-gray-200 p-4 w-56 z-10">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+                  Max price / month
+                </p>
+                <div className="space-y-1">
+                  {priceOptions.map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => {
+                        setSelectedPrice(opt.value);
+                        setActiveSection(null);
+                      }}
+                      className={cn(
+                        "w-full text-left px-4 py-2.5 rounded-xl text-sm transition-colors",
+                        selectedPrice === opt.value
+                          ? "bg-[#378451] text-white font-medium"
+                          : "hover:bg-gray-50 text-gray-700"
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Right actions — desktop */}
           <div className="hidden md:flex items-center gap-2 shrink-0">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { LayoutGrid, BedDouble, Building2, SlidersHorizontal } from "lucide-react";
 import RoomCard from "@/components/listings/RoomCard";
 import type { Room } from "@/types";
@@ -14,10 +15,24 @@ const categories: { value: Filter; label: string; Icon: React.ElementType }[] = 
 ];
 
 export default function RoomsPage() {
+  const searchParams = useSearchParams();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>("all");
   const [availableOnly, setAvailableOnly] = useState(false);
+
+  const q = searchParams.get("q") ?? "";
+  const maxPrice = searchParams.get("maxPrice") ? Number(searchParams.get("maxPrice")) : null;
+
+  // Sync room type filter from URL on navigation
+  useEffect(() => {
+    const typeParam = searchParams.get("type");
+    if (typeParam === "room" || typeParam === "apartment") {
+      setFilter(typeParam);
+    } else {
+      setFilter("all");
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetch("/api/rooms")
@@ -30,6 +45,8 @@ export default function RoomsPage() {
   const filtered = rooms.filter((r) => {
     if (filter !== "all" && r.type !== filter) return false;
     if (availableOnly && !r.available) return false;
+    if (q && !r.title.toLowerCase().includes(q.toLowerCase())) return false;
+    if (maxPrice && r.price > maxPrice) return false;
     return true;
   });
 
@@ -45,7 +62,7 @@ export default function RoomsPage() {
         </p>
       </div>
 
-      {/* Category filter bar — Airbnb-style */}
+      {/* Category filter bar */}
       <div className="sticky top-20 z-30 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 overflow-x-auto py-4 scrollbar-none">
@@ -67,7 +84,6 @@ export default function RoomsPage() {
               ))}
             </div>
 
-            {/* Divider */}
             <div className="w-px h-6 bg-gray-200 mx-1 shrink-0" />
 
             {/* Available toggle */}
@@ -82,6 +98,23 @@ export default function RoomsPage() {
               <SlidersHorizontal className="w-4 h-4" />
               Available
             </button>
+
+            {/* Active search filter badges */}
+            {(q || maxPrice) && (
+              <>
+                <div className="w-px h-6 bg-gray-200 mx-1 shrink-0" />
+                {q && (
+                  <span className="px-3 py-1.5 bg-[#378451]/10 text-[#378451] text-xs font-medium rounded-full whitespace-nowrap">
+                    &ldquo;{q}&rdquo;
+                  </span>
+                )}
+                {maxPrice && (
+                  <span className="px-3 py-1.5 bg-[#378451]/10 text-[#378451] text-xs font-medium rounded-full whitespace-nowrap">
+                    Under {(maxPrice / 1_000_000).toFixed(0)}M đ
+                  </span>
+                )}
+              </>
+            )}
 
             {/* Result count */}
             {!loading && (
@@ -118,9 +151,7 @@ export default function RoomsPage() {
               <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-5">
                 <Building2 className="w-6 h-6 text-gray-400" />
               </div>
-              <h3 className="text-gray-900 font-semibold mb-1.5">
-                No results found
-              </h3>
+              <h3 className="text-gray-900 font-semibold mb-1.5">No results found</h3>
               <p className="text-gray-400 text-sm">
                 Try adjusting your filters or contact us.
               </p>
@@ -130,9 +161,7 @@ export default function RoomsPage() {
           {!loading && rooms.length === 0 && (
             <div className="mt-10 p-8 rounded-2xl border border-dashed border-gray-200 text-center">
               <Building2 className="w-7 h-7 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-700 font-medium mb-1">
-                No rooms yet
-              </p>
+              <p className="text-gray-700 font-medium mb-1">No rooms yet</p>
               <p className="text-gray-400 text-sm">
                 Connect Sanity CMS and add rooms via{" "}
                 <a href="/studio" className="text-[#378451] underline">
