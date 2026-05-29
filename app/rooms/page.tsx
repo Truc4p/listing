@@ -90,7 +90,7 @@ export default function RoomsPage() {
               onClick={() => setAvailableOnly((v) => !v)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-medium transition-all whitespace-nowrap ${
                 availableOnly
-                  ? "bg-emerald-600 text-white border-emerald-600"
+                  ? "bg-primary text-primary-foreground border-primary"
                   : "bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:bg-gray-50"
               }`}
             >
