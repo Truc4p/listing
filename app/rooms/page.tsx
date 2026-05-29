@@ -21,7 +21,7 @@ export default function RoomsPage() {
   const [filter, setFilter] = useState<Filter>("all");
   const [availableOnly, setAvailableOnly] = useState(false);
 
-  const q = searchParams.get("q") ?? "";
+  const date = searchParams.get("date");
   const maxPrice = searchParams.get("maxPrice") ? Number(searchParams.get("maxPrice")) : null;
 
   // Sync room type filter from URL on navigation
@@ -45,7 +45,6 @@ export default function RoomsPage() {
   const filtered = rooms.filter((r) => {
     if (filter !== "all" && r.type !== filter) return false;
     if (availableOnly && !r.available) return false;
-    if (q && !r.title.toLowerCase().includes(q.toLowerCase())) return false;
     if (maxPrice && r.price > maxPrice) return false;
     return true;
   });
@@ -99,13 +98,13 @@ export default function RoomsPage() {
               Available
             </button>
 
-            {/* Active search filter badges */}
-            {(q || maxPrice) && (
+            {/* Active filter badges from header search */}
+            {(date || maxPrice) && (
               <>
                 <div className="w-px h-6 bg-gray-200 mx-1 shrink-0" />
-                {q && (
+                {date && (
                   <span className="px-3 py-1.5 bg-[#378451]/10 text-[#378451] text-xs font-medium rounded-full whitespace-nowrap">
-                    &ldquo;{q}&rdquo;
+                    From {date}
                   </span>
                 )}
                 {maxPrice && (

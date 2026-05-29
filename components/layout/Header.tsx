@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { Building2, Phone, Menu, X, Search } from "lucide-react";
+import { Building2, Phone, Menu, X, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -26,13 +26,149 @@ const priceOptions = [
   { value: "10000000", label: "Under 10,000,000đ" },
 ];
 
+const MONTHS = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December",
+];
+const DAY_HEADERS = ["Su","Mo","Tu","We","Th","Fr","Sa"];
+
+function formatDate(d: Date) {
+  return `${MONTHS[d.getMonth()].slice(0, 3)} ${d.getDate()}`;
+}
+
+function isSameDay(a: Date, b: Date) {
+  return a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+}
+
+function MonthGrid({
+  year,
+  month,
+  selected,
+  onSelect,
+  today,
+}: {
+  year: number;
+  month: number;
+  selected: Date | null;
+  onSelect: (d: Date) => void;
+  today: Date;
+}) {
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDow = new Date(year, month, 1).getDay();
+  const cells: (number | null)[] = [
+    ...Array(firstDow).fill(null),
+    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+  ];
+
+  return (
+    <div className="w-67 select-none">
+      <p className="text-sm font-semibold text-gray-800 text-center mb-4">
+        {MONTHS[month]} {year}
+      </p>
+      <div className="grid grid-cols-7 mb-2">
+        {DAY_HEADERS.map((d) => (
+          <div key={d} className="text-center text-xs text-gray-400 font-medium py-1">
+            {d}
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-7 gap-y-1">
+        {cells.map((day, i) => {
+          if (!day) return <div key={i} />;
+          const date = new Date(year, month, day);
+          const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          const isPast = date < todayStart;
+          const isSelected = selected && isSameDay(date, selected);
+          const isToday = isSameDay(date, today);
+          return (
+            <button
+              key={i}
+              disabled={isPast}
+              onClick={() => onSelect(date)}
+              className={cn(
+                "mx-auto flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
+                isPast && "text-gray-300 cursor-not-allowed",
+                !isPast && !isSelected && "hover:bg-gray-100 text-gray-700",
+                isSelected && "bg-[#378451] text-white font-semibold",
+                isToday && !isSelected && "font-semibold text-[#378451]"
+              )}
+            >
+              {day}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function CalendarPicker({
+  selected,
+  onSelect,
+}: {
+  selected: Date | null;
+  onSelect: (d: Date) => void;
+}) {
+  const today = new Date();
+  const [view, setView] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+
+  const year1 = view.getFullYear();
+  const month1 = view.getMonth();
+  const next = new Date(year1, month1 + 1, 1);
+  const year2 = next.getFullYear();
+  const month2 = next.getMonth();
+
+  const prevMonth = () => setView(new Date(year1, month1 - 1, 1));
+  const nextMonth = () => setView(new Date(year1, month1 + 1, 1));
+
+  return (
+    <div className="select-none">
+      {/* Two-month layout with nav arrows on the sides */}
+      <div className="relative flex gap-8">
+        {/* Prev arrow */}
+        <button
+          onClick={prevMonth}
+          className="absolute -left-2 top-0 p-1.5 rounded-full hover:bg-gray-100 transition-colors z-10"
+        >
+          <ChevronLeft className="w-4 h-4 text-gray-600" />
+        </button>
+
+        <MonthGrid year={year1} month={month1} selected={selected} onSelect={onSelect} today={today} />
+
+        <div className="w-px bg-gray-100 self-stretch" />
+
+        <MonthGrid year={year2} month={month2} selected={selected} onSelect={onSelect} today={today} />
+
+        {/* Next arrow */}
+        <button
+          onClick={nextMonth}
+          className="absolute -right-2 top-0 p-1.5 rounded-full hover:bg-gray-100 transition-colors z-10"
+        >
+          <ChevronRight className="w-4 h-4 text-gray-600" />
+        </button>
+      </div>
+
+      {selected && (
+        <button
+          onClick={() => onSelect(null as unknown as Date)}
+          className="mt-4 w-full text-xs text-gray-400 hover:text-gray-600 transition-colors text-center"
+        >
+          Clear date
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<null | "where" | "type" | "price">(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [activeSection, setActiveSection] = useState<null | "when" | "type" | "price">(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedType, setSelectedType] = useState("any");
   const [selectedPrice, setSelectedPrice] = useState("any");
   const searchRef = useRef<HTMLDivElement>(null);
@@ -55,7 +191,7 @@ export default function Header() {
 
   const handleSearch = () => {
     const params = new URLSearchParams();
-    if (searchQuery) params.set("q", searchQuery);
+    if (selectedDate) params.set("date", selectedDate.toISOString().split("T")[0]);
     if (selectedType !== "any") params.set("type", selectedType);
     if (selectedPrice !== "any") params.set("maxPrice", selectedPrice);
     const qs = params.toString();
@@ -90,19 +226,19 @@ export default function Header() {
                   : "border-gray-200 hover:shadow-md"
               )}
             >
-              {/* Where */}
+              {/* When */}
               <button
                 onClick={() =>
-                  setActiveSection(activeSection === "where" ? null : "where")
+                  setActiveSection(activeSection === "when" ? null : "when")
                 }
                 className={cn(
                   "flex flex-col items-start px-5 py-1 rounded-full transition-colors cursor-pointer",
-                  activeSection === "where" ? "bg-gray-100" : "hover:bg-gray-50"
+                  activeSection === "when" ? "bg-gray-100" : "hover:bg-gray-50"
                 )}
               >
-                <span className="text-xs font-semibold text-gray-800">Where</span>
+                <span className="text-xs font-semibold text-gray-800">When</span>
                 <span className="text-sm text-gray-400 whitespace-nowrap">
-                  {searchQuery || "Search rooms"}
+                  {selectedDate ? formatDate(selectedDate) : "Add dates"}
                 </span>
               </button>
 
@@ -151,21 +287,27 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Where dropdown */}
-            {activeSection === "where" && (
-              <div className="absolute top-full mt-2 left-0 bg-white rounded-2xl shadow-xl border border-gray-200 p-4 w-72 z-10">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                  Search by name
+            {/* When dropdown — calendar */}
+            {activeSection === "when" && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-xl border border-gray-200 p-6 z-10 w-max">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                  Move-in date
                 </p>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  placeholder="e.g. Studio, Penthouse..."
-                  autoFocus
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#378451] focus:border-transparent"
+                <CalendarPicker
+                  selected={selectedDate}
+                  onSelect={(d) => {
+                    setSelectedDate(d);
+                    setActiveSection(null);
+                  }}
                 />
+                {selectedDate && (
+                  <button
+                    onClick={() => setSelectedDate(null)}
+                    className="mt-3 w-full text-xs text-gray-400 hover:text-gray-600 transition-colors text-center"
+                  >
+                    Clear date
+                  </button>
+                )}
               </div>
             )}
 
