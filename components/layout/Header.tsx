@@ -44,15 +44,24 @@ export default function Header() {
           {/* Search Pill — desktop */}
           <button
             onClick={() => router.push("/rooms")}
-            className="hidden md:flex items-center border border-gray-200 rounded-full shadow-sm hover:shadow-md transition-shadow px-2 py-2 gap-0 bg-white cursor-pointer"
+            className="hidden md:flex items-center border border-gray-200 rounded-full shadow-sm hover:shadow-md transition-shadow px-2 py-1.5 gap-0 bg-white cursor-pointer"
           >
-            <span className="text-sm font-medium text-gray-800 px-4">Search rooms</span>
-            <span className="w-px h-5 bg-gray-200" />
-            <span className="text-sm text-gray-500 px-4">Room type</span>
-            <span className="w-px h-5 bg-gray-200" />
-            <span className="text-sm text-gray-500 px-4">Price</span>
-            <div className="ml-1 bg-[#378451] rounded-full p-2.5">
-              <Search className="w-3.5 h-3.5 text-white" />
+            <div className="flex flex-col items-start px-5 py-1">
+              <span className="text-xs font-semibold text-gray-800">Where</span>
+              <span className="text-sm text-gray-400">Search rooms</span>
+            </div>
+            <span className="w-px h-8 bg-gray-200" />
+            <div className="flex flex-col items-start px-5 py-1">
+              <span className="text-xs font-semibold text-gray-800">Room type</span>
+              <span className="text-sm text-gray-400">Any type</span>
+            </div>
+            <span className="w-px h-8 bg-gray-200" />
+            <div className="flex flex-col items-start px-5 py-1">
+              <span className="text-xs font-semibold text-gray-800">Price</span>
+              <span className="text-sm text-gray-400">Any budget</span>
+            </div>
+            <div className="ml-2 bg-[#378451] rounded-full p-3">
+              <Search className="w-4 h-4 text-white" />
             </div>
           </button>
 
