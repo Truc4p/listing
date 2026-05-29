@@ -104,16 +104,31 @@ function MonthGrid({
 
           const isStart = !!start && isSameDay(date, start);
           const isEnd = !!activeEnd && isSameDay(date, activeEnd);
+          const isInRange = !!start && !!activeEnd && date > start && date < activeEnd;
+
+          const dow = date.getDay();
+          // Determine the single band segment for this cell
+          let bandInset = "";
+          if (isInRange) {
+            bandInset = "inset-x-0";
+          } else if (isStart && !!activeEnd && dow !== 6) {
+            bandInset = "left-1/2 right-0";
+          } else if (isEnd && !!start && dow !== 0) {
+            bandInset = "left-0 right-1/2";
+          }
 
           return (
             <div key={i} className="relative flex items-center justify-center h-10">
+              {bandInset && (
+                <div className={`absolute inset-y-1 bg-[#378451]/10 ${bandInset}`} />
+              )}
               <button
                 disabled={isPast}
                 onClick={() => !isPast && onDayClick(date)}
                 onMouseEnter={() => !isPast && onDayHover(date)}
                 onMouseLeave={onDayLeave}
                 className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
+                  "relative z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
                   isPast ? "text-gray-300 cursor-not-allowed" : "cursor-pointer",
                   !isPast && !isStart && !isEnd && "hover:bg-gray-100 text-gray-700",
                   (isStart || isEnd) && "bg-[#378451] text-white font-semibold",
