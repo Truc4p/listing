@@ -74,9 +74,7 @@ function MonthGrid({
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
-  // Effective end: confirmed end OR hovered preview
-  const previewEnd = !end && start && hovered && hovered > start ? hovered : null;
-  const activeEnd = end ?? previewEnd;
+  const activeEnd = end ?? (!end && start && hovered && hovered > start ? hovered : null);
 
   return (
     <div className="w-67 select-none">
@@ -106,57 +104,18 @@ function MonthGrid({
 
           const isStart = !!start && isSameDay(date, start);
           const isEnd = !!activeEnd && isSameDay(date, activeEnd);
-          const isInRange =
-            !!start && !!activeEnd && date > start && date < activeEnd;
-
-          const dow = date.getDay(); // 0=Sun … 6=Sat
-          const isFirstInRow = dow === 0;
-          const isLastInRow = dow === 6;
-
-          // The range band spans the full cell width for in-range days,
-          // the right half for the start day, and the left half for the end day.
-          const showBandLeft = isInRange || (isEnd && !!start);
-          const showBandRight = isInRange || (isStart && !!activeEnd);
-          const clipLeft = isEnd && !isInRange && !isFirstInRow;
-          const clipRight = isStart && !isInRange && !isLastInRow;
 
           return (
             <div key={i} className="relative flex items-center justify-center h-10">
-              {/* Range band – left half */}
-              {(showBandLeft || clipLeft) && (
-                <div
-                  className={cn(
-                    "absolute inset-y-1 left-0 right-1/2 bg-[#378451]/10",
-                    isFirstInRow && "hidden"
-                  )}
-                />
-              )}
-              {/* Range band – right half */}
-              {(showBandRight || clipRight) && (
-                <div
-                  className={cn(
-                    "absolute inset-y-1 left-1/2 right-0 bg-[#378451]/10",
-                    isLastInRow && "hidden"
-                  )}
-                />
-              )}
-              {/* Range band – full (in-range days) */}
-              {isInRange && (
-                <div className="absolute inset-y-1 left-0 right-0 bg-[#378451]/10" />
-              )}
-
-              {/* Day button */}
               <button
                 disabled={isPast}
                 onClick={() => !isPast && onDayClick(date)}
                 onMouseEnter={() => !isPast && onDayHover(date)}
                 onMouseLeave={onDayLeave}
                 className={cn(
-                  "relative z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
-                  isPast
-                    ? "text-gray-300 cursor-not-allowed"
-                    : "cursor-pointer",
-                  !isPast && !isStart && !isEnd && "hover:bg-gray-200 text-gray-700",
+                  "flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
+                  isPast ? "text-gray-300 cursor-not-allowed" : "cursor-pointer",
+                  !isPast && !isStart && !isEnd && "hover:bg-gray-100 text-gray-700",
                   (isStart || isEnd) && "bg-[#378451] text-white font-semibold",
                   isToday && !isStart && !isEnd && "font-semibold text-[#378451]"
                 )}
