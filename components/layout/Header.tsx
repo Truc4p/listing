@@ -32,28 +32,40 @@ const MONTHS = [
 ];
 const DAY_HEADERS = ["Su","Mo","Tu","We","Th","Fr","Sa"];
 
+function isSameDay(a: Date, b: Date) {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
 function formatDate(d: Date) {
   return `${MONTHS[d.getMonth()].slice(0, 3)} ${d.getDate()}`;
 }
 
-function isSameDay(a: Date, b: Date) {
-  return a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate();
-}
+// ── Single-month grid ────────────────────────────────────────────────────────
 
 function MonthGrid({
   year,
   month,
-  selected,
-  onSelect,
+  start,
+  end,
+  hovered,
   today,
+  onDayClick,
+  onDayHover,
+  onDayLeave,
 }: {
   year: number;
   month: number;
-  selected: Date | null;
-  onSelect: (d: Date) => void;
+  start: Date | null;
+  end: Date | null;
+  hovered: Date | null;
   today: Date;
+  onDayClick: (d: Date) => void;
+  onDayHover: (d: Date) => void;
+  onDayLeave: () => void;
 }) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDow = new Date(year, month, 1).getDay();
@@ -62,41 +74,96 @@ function MonthGrid({
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
+  // Effective end: confirmed end OR hovered preview
+  const previewEnd = !end && start && hovered && hovered > start ? hovered : null;
+  const activeEnd = end ?? previewEnd;
+
   return (
     <div className="w-67 select-none">
       <p className="text-sm font-semibold text-gray-800 text-center mb-4">
         {MONTHS[month]} {year}
       </p>
-      <div className="grid grid-cols-7 mb-2">
+
+      {/* Day-of-week headers */}
+      <div className="grid grid-cols-7 mb-1">
         {DAY_HEADERS.map((d) => (
           <div key={d} className="text-center text-xs text-gray-400 font-medium py-1">
             {d}
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-y-1">
+
+      {/* Day cells */}
+      <div className="grid grid-cols-7">
         {cells.map((day, i) => {
-          if (!day) return <div key={i} />;
+          if (!day)
+            return <div key={i} className="h-10" />;
+
           const date = new Date(year, month, day);
           const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
           const isPast = date < todayStart;
-          const isSelected = selected && isSameDay(date, selected);
           const isToday = isSameDay(date, today);
+
+          const isStart = !!start && isSameDay(date, start);
+          const isEnd = !!activeEnd && isSameDay(date, activeEnd);
+          const isInRange =
+            !!start && !!activeEnd && date > start && date < activeEnd;
+
+          const dow = date.getDay(); // 0=Sun … 6=Sat
+          const isFirstInRow = dow === 0;
+          const isLastInRow = dow === 6;
+
+          // The range band spans the full cell width for in-range days,
+          // the right half for the start day, and the left half for the end day.
+          const showBandLeft = isInRange || (isEnd && !!start);
+          const showBandRight = isInRange || (isStart && !!activeEnd);
+          const clipLeft = isEnd && !isInRange && !isFirstInRow;
+          const clipRight = isStart && !isInRange && !isLastInRow;
+
           return (
-            <button
-              key={i}
-              disabled={isPast}
-              onClick={() => onSelect(date)}
-              className={cn(
-                "mx-auto flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
-                isPast && "text-gray-300 cursor-not-allowed",
-                !isPast && !isSelected && "hover:bg-gray-100 text-gray-700",
-                isSelected && "bg-[#378451] text-white font-semibold",
-                isToday && !isSelected && "font-semibold text-[#378451]"
+            <div key={i} className="relative flex items-center justify-center h-10">
+              {/* Range band – left half */}
+              {(showBandLeft || clipLeft) && (
+                <div
+                  className={cn(
+                    "absolute inset-y-1 left-0 right-1/2 bg-[#378451]/10",
+                    isFirstInRow && "hidden"
+                  )}
+                />
               )}
-            >
-              {day}
-            </button>
+              {/* Range band – right half */}
+              {(showBandRight || clipRight) && (
+                <div
+                  className={cn(
+                    "absolute inset-y-1 left-1/2 right-0 bg-[#378451]/10",
+                    isLastInRow && "hidden"
+                  )}
+                />
+              )}
+              {/* Range band – full (in-range days) */}
+              {isInRange && (
+                <div className="absolute inset-y-1 left-0 right-0 bg-[#378451]/10" />
+              )}
+
+              {/* Day button */}
+              <button
+                disabled={isPast}
+                onClick={() => !isPast && onDayClick(date)}
+                onMouseEnter={() => !isPast && onDayHover(date)}
+                onMouseLeave={onDayLeave}
+                className={cn(
+                  "relative z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors",
+                  isPast
+                    ? "text-gray-300 cursor-not-allowed"
+                    : "cursor-pointer",
+                  !isPast && !isStart && !isEnd && "hover:bg-gray-200 text-gray-700",
+                  (isStart || isEnd) && "bg-[#378451] text-white font-semibold",
+                  isToday && !isStart && !isEnd && "font-semibold text-[#378451]"
+                )}
+              >
+                {day}
+              </button>
+            </div>
           );
         })}
       </div>
@@ -104,15 +171,20 @@ function MonthGrid({
   );
 }
 
+// ── Two-month calendar picker ────────────────────────────────────────────────
+
 function CalendarPicker({
-  selected,
-  onSelect,
+  start,
+  end,
+  onChange,
 }: {
-  selected: Date | null;
-  onSelect: (d: Date) => void;
+  start: Date | null;
+  end: Date | null;
+  onChange: (newStart: Date | null, newEnd: Date | null) => void;
 }) {
   const today = new Date();
   const [view, setView] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+  const [hovered, setHovered] = useState<Date | null>(null);
 
   const year1 = view.getFullYear();
   const month1 = view.getMonth();
@@ -120,47 +192,83 @@ function CalendarPicker({
   const year2 = next.getFullYear();
   const month2 = next.getMonth();
 
-  const prevMonth = () => setView(new Date(year1, month1 - 1, 1));
-  const nextMonth = () => setView(new Date(year1, month1 + 1, 1));
+  const handleDayClick = (date: Date) => {
+    if (!start || end) {
+      // Start fresh
+      onChange(date, null);
+    } else if (isSameDay(date, start)) {
+      // Deselect
+      onChange(null, null);
+    } else if (date < start) {
+      // New start earlier than current start
+      onChange(date, null);
+    } else {
+      // Complete the range
+      onChange(start, date);
+    }
+  };
 
   return (
     <div className="select-none">
-      {/* Two-month layout with nav arrows on the sides */}
-      <div className="relative flex gap-8">
-        {/* Prev arrow */}
+      <div className="relative flex gap-8 px-4">
+        {/* Prev */}
         <button
-          onClick={prevMonth}
-          className="absolute -left-2 top-0 p-1.5 rounded-full hover:bg-gray-100 transition-colors z-10"
+          onClick={() => setView(new Date(year1, month1 - 1, 1))}
+          className="absolute left-0 top-0 p-1.5 rounded-full hover:bg-gray-100 transition-colors z-10"
         >
           <ChevronLeft className="w-4 h-4 text-gray-600" />
         </button>
 
-        <MonthGrid year={year1} month={month1} selected={selected} onSelect={onSelect} today={today} />
+        <MonthGrid
+          year={year1} month={month1}
+          start={start} end={end} hovered={hovered} today={today}
+          onDayClick={handleDayClick}
+          onDayHover={setHovered}
+          onDayLeave={() => setHovered(null)}
+        />
 
         <div className="w-px bg-gray-100 self-stretch" />
 
-        <MonthGrid year={year2} month={month2} selected={selected} onSelect={onSelect} today={today} />
+        <MonthGrid
+          year={year2} month={month2}
+          start={start} end={end} hovered={hovered} today={today}
+          onDayClick={handleDayClick}
+          onDayHover={setHovered}
+          onDayLeave={() => setHovered(null)}
+        />
 
-        {/* Next arrow */}
+        {/* Next */}
         <button
-          onClick={nextMonth}
-          className="absolute -right-2 top-0 p-1.5 rounded-full hover:bg-gray-100 transition-colors z-10"
+          onClick={() => setView(new Date(year1, month1 + 1, 1))}
+          className="absolute right-0 top-0 p-1.5 rounded-full hover:bg-gray-100 transition-colors z-10"
         >
           <ChevronRight className="w-4 h-4 text-gray-600" />
         </button>
       </div>
 
-      {selected && (
-        <button
-          onClick={() => onSelect(null as unknown as Date)}
-          className="mt-4 w-full text-xs text-gray-400 hover:text-gray-600 transition-colors text-center"
-        >
-          Clear date
-        </button>
-      )}
+      {/* Footer */}
+      <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4 px-2">
+        <p className="text-xs text-gray-400">
+          {!start
+            ? "Select check-in date"
+            : !end
+            ? "Now select check-out date"
+            : `${formatDate(start)} – ${formatDate(end)}`}
+        </p>
+        {(start || end) && (
+          <button
+            onClick={() => onChange(null, null)}
+            className="text-xs text-gray-500 hover:text-gray-800 underline transition-colors"
+          >
+            Clear dates
+          </button>
+        )}
+      </div>
     </div>
   );
 }
+
+// ── Header ───────────────────────────────────────────────────────────────────
 
 export default function Header() {
   const pathname = usePathname();
@@ -168,7 +276,8 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<null | "when" | "type" | "price">(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [dateStart, setDateStart] = useState<Date | null>(null);
+  const [dateEnd, setDateEnd] = useState<Date | null>(null);
   const [selectedType, setSelectedType] = useState("any");
   const [selectedPrice, setSelectedPrice] = useState("any");
   const searchRef = useRef<HTMLDivElement>(null);
@@ -189,9 +298,25 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const handleRangeChange = (newStart: Date | null, newEnd: Date | null) => {
+    setDateStart(newStart);
+    setDateEnd(newEnd);
+    // Auto-close once both dates are chosen
+    if (newStart && newEnd) {
+      setTimeout(() => setActiveSection(null), 150);
+    }
+  };
+
+  const whenLabel = (() => {
+    if (dateStart && dateEnd) return `${formatDate(dateStart)} – ${formatDate(dateEnd)}`;
+    if (dateStart) return formatDate(dateStart);
+    return "Add dates";
+  })();
+
   const handleSearch = () => {
     const params = new URLSearchParams();
-    if (selectedDate) params.set("date", selectedDate.toISOString().split("T")[0]);
+    if (dateStart) params.set("checkIn", dateStart.toISOString().split("T")[0]);
+    if (dateEnd) params.set("checkOut", dateEnd.toISOString().split("T")[0]);
     if (selectedType !== "any") params.set("type", selectedType);
     if (selectedPrice !== "any") params.set("maxPrice", selectedPrice);
     const qs = params.toString();
@@ -237,8 +362,11 @@ export default function Header() {
                 )}
               >
                 <span className="text-xs font-semibold text-gray-800">When</span>
-                <span className="text-sm text-gray-400 whitespace-nowrap">
-                  {selectedDate ? formatDate(selectedDate) : "Add dates"}
+                <span className={cn(
+                  "text-sm whitespace-nowrap",
+                  dateStart ? "text-gray-700" : "text-gray-400"
+                )}>
+                  {whenLabel}
                 </span>
               </button>
 
@@ -255,7 +383,10 @@ export default function Header() {
                 )}
               >
                 <span className="text-xs font-semibold text-gray-800">Room type</span>
-                <span className="text-sm text-gray-400 whitespace-nowrap">
+                <span className={cn(
+                  "text-sm whitespace-nowrap",
+                  selectedType !== "any" ? "text-gray-700" : "text-gray-400"
+                )}>
                   {typeOptions.find((o) => o.value === selectedType)?.label ?? "Any type"}
                 </span>
               </button>
@@ -273,7 +404,10 @@ export default function Header() {
                 )}
               >
                 <span className="text-xs font-semibold text-gray-800">Price</span>
-                <span className="text-sm text-gray-400 whitespace-nowrap">
+                <span className={cn(
+                  "text-sm whitespace-nowrap",
+                  selectedPrice !== "any" ? "text-gray-700" : "text-gray-400"
+                )}>
                   {priceOptions.find((o) => o.value === selectedPrice)?.label ?? "Any budget"}
                 </span>
               </button>
@@ -287,27 +421,17 @@ export default function Header() {
               </button>
             </div>
 
-            {/* When dropdown — calendar */}
+            {/* When dropdown — two-month calendar */}
             {activeSection === "when" && (
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-xl border border-gray-200 p-6 z-10 w-max">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
-                  Move-in date
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-5">
+                  Move-in / move-out
                 </p>
                 <CalendarPicker
-                  selected={selectedDate}
-                  onSelect={(d) => {
-                    setSelectedDate(d);
-                    setActiveSection(null);
-                  }}
+                  start={dateStart}
+                  end={dateEnd}
+                  onChange={handleRangeChange}
                 />
-                {selectedDate && (
-                  <button
-                    onClick={() => setSelectedDate(null)}
-                    className="mt-3 w-full text-xs text-gray-400 hover:text-gray-600 transition-colors text-center"
-                  >
-                    Clear date
-                  </button>
-                )}
               </div>
             )}
 
