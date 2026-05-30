@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { MultiImageInput } from "../components/MultiImageInput";
 
 export const room = defineType({
   name: "room",
@@ -80,6 +81,7 @@ export const room = defineType({
       name: "images",
       title: "Images",
       type: "array",
+      components: { input: MultiImageInput },
       of: [
         {
           type: "image",
