@@ -13,6 +13,13 @@ declare global {
 export async function getDb(): Promise<Db> {
   if (db) return db;
 
+  if (!uri) {
+    throw new Error("MONGODB_URI is not set in environment variables");
+  }
+
+  const redacted = uri.replace(/:([^@]+)@/, ":<redacted>@");
+  console.log("[mongodb] connecting to:", redacted);
+
   if (process.env.NODE_ENV === "development") {
     if (!global._mongoClient) {
       global._mongoClient = new MongoClient(uri);
