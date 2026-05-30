@@ -331,7 +331,7 @@ export default function Header() {
                   setActiveSection(activeSection === "when" ? null : "when")
                 }
                 className={cn(
-                  "flex flex-col items-start px-5 py-1 rounded-full transition-colors cursor-pointer",
+                  "flex flex-col items-start px-8 py-1 rounded-full transition-colors cursor-pointer",
                   activeSection === "when" ? "bg-gray-100" : "hover:bg-gray-50"
                 )}
               >
@@ -352,7 +352,7 @@ export default function Header() {
                   setActiveSection(activeSection === "type" ? null : "type")
                 }
                 className={cn(
-                  "flex flex-col items-start px-5 py-1 rounded-full transition-colors cursor-pointer",
+                  "flex flex-col items-start px-8 py-1 rounded-full transition-colors cursor-pointer",
                   activeSection === "type" ? "bg-gray-100" : "hover:bg-gray-50"
                 )}
               >
@@ -373,7 +373,7 @@ export default function Header() {
                   setActiveSection(activeSection === "price" ? null : "price")
                 }
                 className={cn(
-                  "flex flex-col items-start px-5 py-1 rounded-full transition-colors cursor-pointer",
+                  "flex flex-col items-start px-8 py-1 rounded-full transition-colors cursor-pointer",
                   activeSection === "price" ? "bg-gray-100" : "hover:bg-gray-50"
                 )}
               >
