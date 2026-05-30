@@ -10,7 +10,7 @@ import {
   Search,
 } from "lucide-react";
 import RoomCard from "@/components/listings/RoomCard";
-import { getFeaturedRooms } from "@/lib/sanity";
+import { getFeaturedRooms } from "@/lib/rooms";
 import type { Room } from "@/types";
 
 const highlights = [

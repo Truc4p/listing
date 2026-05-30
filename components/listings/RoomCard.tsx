@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, Star, Layers } from "lucide-react";
-import { urlFor } from "@/lib/sanity";
 import type { Room } from "@/types";
 
 interface RoomCardProps {
@@ -11,18 +10,16 @@ interface RoomCardProps {
 }
 
 export default function RoomCard({ room }: RoomCardProps) {
-  const imageUrl = room.mainImage
-    ? urlFor(room.mainImage).width(800).height(600).fit("crop").url()
-    : null;
+  const imageUrl = room.images?.[0]?.url ?? null;
 
   return (
-    <Link href={`/rooms/${room.slug.current}`} className="group block">
+    <Link href={`/rooms/${room.slug}`} className="group block">
       {/* Image */}
       <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 mb-3">
         {imageUrl ? (
           <Image
             src={imageUrl}
-            alt={room.title}
+            alt={room.images?.[0]?.alt ?? room.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

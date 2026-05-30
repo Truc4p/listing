@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { PortableText } from "@portabletext/react";
 import {
   Maximize2,
   Layers,
@@ -13,7 +12,7 @@ import {
   CheckCircle2,
   Grid2x2,
 } from "lucide-react";
-import { getAllRoomSlugs, getRoomBySlug, urlFor } from "@/lib/sanity";
+import { getAllRoomSlugs, getRoomBySlug } from "@/lib/rooms";
 import { AMENITY_MAP } from "@/lib/amenities";
 import { RoomJsonLd } from "@/components/seo/JsonLd";
 import type { Room } from "@/types";
@@ -32,9 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const room: Room | null = await getRoomBySlug(slug);
   if (!room) return {};
 
-  const imageUrl = room.images?.[0]
-    ? urlFor(room.images[0]).width(1200).height(630).url()
-    : undefined;
+  const imageUrl = room.images?.[0]?.url;
 
   return {
     title: room.title,
@@ -53,18 +50,14 @@ export default async function RoomDetailPage({ params }: Props) {
   if (!room) notFound();
 
   const images = room.images ?? [];
-  const mainImg = images[0]
-    ? urlFor(images[0]).width(1200).height(800).fit("crop").url()
-    : null;
-  const thumbUrls = images.slice(1, 5).map((img) =>
-    urlFor(img).width(600).height(400).fit("crop").url()
-  );
+  const mainImg = images[0]?.url ?? null;
+  const thumbUrls = images.slice(1, 5).map((img) => img.url);
 
   const descriptionText = `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m², floor ${room.floor ?? "?"}. Rent: ${room.price.toLocaleString("en-US")}₫/month.`;
 
   return (
     <>
-      {room.images?.[0] && (
+      {mainImg && (
         <RoomJsonLd
           title={room.title}
           description={descriptionText}
@@ -72,7 +65,7 @@ export default async function RoomDetailPage({ params }: Props) {
           area={room.area}
           type={room.type}
           slug={slug}
-          imageUrl={mainImg ?? undefined}
+          imageUrl={mainImg}
         />
       )}
 
@@ -88,7 +81,7 @@ export default async function RoomDetailPage({ params }: Props) {
           </Link>
         </nav>
 
-        {/* Title (above photos, like Airbnb) */}
+        {/* Title */}
         <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-5">
           {room.title}
         </h1>
@@ -100,13 +93,13 @@ export default async function RoomDetailPage({ params }: Props) {
           </div>
         ) : (
           <div className="relative mb-8">
-            <div className="grid grid-cols-4 grid-rows-2 gap-2 h-72 sm:h-[420px] rounded-2xl overflow-hidden">
+            <div className="grid grid-cols-4 grid-rows-2 gap-2 h-72 sm:h-105 rounded-2xl overflow-hidden">
               {/* Main image — spans 2 cols × 2 rows */}
               <div className="col-span-2 row-span-2 relative bg-gray-100">
                 {mainImg && (
                   <Image
                     src={mainImg}
-                    alt={room.title}
+                    alt={images[0]?.alt ?? room.title}
                     fill
                     className="object-cover"
                     priority
@@ -120,7 +113,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 <div key={i} className="relative bg-gray-100">
                   <Image
                     src={url}
-                    alt={`${room.title} – photo ${i + 2}`}
+                    alt={images[i + 1]?.alt ?? `${room.title} – photo ${i + 2}`}
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 25vw, 300px"
@@ -128,7 +121,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 </div>
               ))}
 
-              {/* Fill empty thumb slots so grid stays intact */}
+              {/* Fill empty thumb slots */}
               {Array.from({ length: Math.max(0, 4 - thumbUrls.length) }).map(
                 (_, i) => (
                   <div key={`empty-${i}`} className="bg-gray-100" />
@@ -136,7 +129,6 @@ export default async function RoomDetailPage({ params }: Props) {
               )}
             </div>
 
-            {/* Show all photos button */}
             {images.length > 1 && (
               <button className="absolute bottom-4 right-4 flex items-center gap-2 bg-white border border-gray-900 rounded-xl px-4 py-2 text-sm font-semibold shadow-sm hover:bg-gray-50 transition-colors">
                 <Grid2x2 className="w-4 h-4" />
@@ -185,14 +177,14 @@ export default async function RoomDetailPage({ params }: Props) {
             </div>
 
             {/* Description */}
-            {room.description && room.description.length > 0 && (
+            {room.description && (
               <div className="pb-8 border-b border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">
                   Description
                 </h2>
-                <div className="prose prose-slate max-w-none text-gray-600 leading-relaxed text-sm">
-                  <PortableText value={room.description} />
-                </div>
+                <p className="text-gray-600 leading-relaxed text-sm whitespace-pre-wrap">
+                  {room.description}
+                </p>
               </div>
             )}
 

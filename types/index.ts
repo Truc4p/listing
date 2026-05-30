@@ -1,22 +1,21 @@
-import type { PortableTextBlock } from "@portabletext/react";
-import type { Image } from "sanity";
-
-export interface SanityImage extends Image {
+export interface RoomImage {
+  url: string;
   alt?: string;
 }
 
 export interface Room {
   _id: string;
   title: string;
-  slug: { current: string };
+  slug: string;
   type: "room" | "apartment";
   price: number;
   area: number;
   floor?: number;
-  description?: PortableTextBlock[];
+  description?: string;
   amenities?: string[];
-  images?: SanityImage[];
-  mainImage?: SanityImage;
+  images?: RoomImage[];
   available: boolean;
   featured: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

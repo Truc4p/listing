@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllRoomSlugs } from "@/lib/sanity";
+import { getAllRoomSlugs } from "@/lib/rooms";
 
 const BASE_URL = "https://ha-apartment.com";
 

@@ -162,9 +162,9 @@ export default function RoomsPage() {
               <Building2 className="w-7 h-7 text-gray-300 mx-auto mb-3" />
               <p className="text-gray-700 font-medium mb-1">No rooms yet</p>
               <p className="text-gray-400 text-sm">
-                Connect Sanity CMS and add rooms via{" "}
-                <a href="/studio" className="text-[#378451] underline">
-                  /studio
+                Add rooms via the{" "}
+                <a href="/admin" className="text-[#378451] underline">
+                  admin panel
                 </a>
                 .
               </p>
