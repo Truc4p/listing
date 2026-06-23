@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink, Upload } from "lucide-react";
 import type { Room, RoomImage } from "@/types";
 
 const AMENITY_OPTIONS = [
@@ -72,6 +72,8 @@ export default function AdminDashboard() {
   const [saving, setSaving] = useState(false);
   const [newImageUrl, setNewImageUrl] = useState("");
   const [newImageAlt, setNewImageAlt] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchRooms = useCallback(async () => {
     setLoading(true);
@@ -135,6 +137,22 @@ export default function AdminDashboard() {
 
   function removeImage(index: number) {
     setForm((f) => ({ ...f, images: f.images.filter((_, i) => i !== index) }));
+  }
+
+  async function handleFileUpload(files: FileList | null) {
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    for (const file of Array.from(files)) {
+      const body = new FormData();
+      body.append("file", file);
+      const res = await fetch("/api/admin/upload", { method: "POST", body });
+      if (res.ok) {
+        const { url } = await res.json();
+        setForm((f) => ({ ...f, images: [...f.images, { url }] }));
+      }
+    }
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
   async function handleSave() {
@@ -424,7 +442,7 @@ export default function AdminDashboard() {
 
               {/* Images */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Images (URLs)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Images</label>
                 <div className="space-y-2 mb-3">
                   {form.images.map((img, i) => (
                     <div key={i} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2">
@@ -441,6 +459,32 @@ export default function AdminDashboard() {
                     </div>
                   ))}
                 </div>
+
+                {/* Upload from device */}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => handleFileUpload(e.target.files)}
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-300 rounded-xl px-4 py-3 text-sm font-medium text-gray-600 hover:border-[#378451] hover:text-[#378451] transition-colors disabled:opacity-60 mb-3"
+                >
+                  <Upload className="w-4 h-4" />
+                  {uploading ? "Uploading…" : "Upload from your computer"}
+                </button>
+
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="flex-1 h-px bg-gray-200" />
+                  <span className="text-xs text-gray-400">or paste a URL</span>
+                  <div className="flex-1 h-px bg-gray-200" />
+                </div>
+
                 <div className="flex gap-2">
                   <input
                     value={newImageUrl}
@@ -464,9 +508,6 @@ export default function AdminDashboard() {
                     Add
                   </button>
                 </div>
-                <p className="text-xs text-gray-400 mt-1.5">
-                  Upload photos to Cloudinary, Google Drive, or any host and paste the URL here.
-                </p>
               </div>
 
               {/* Toggles */}
