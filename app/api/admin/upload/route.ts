@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   }
 
   const blob = await put(`rooms/${Date.now()}-${file.name}`, file, {
-    access: "public",
+    access: "private",
     addRandomSuffix: true,
   });
 

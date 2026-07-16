@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, Star, Layers } from "lucide-react";
+import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room } from "@/types";
 
 interface RoomCardProps {
@@ -10,7 +11,7 @@ interface RoomCardProps {
 }
 
 export default function RoomCard({ room }: RoomCardProps) {
-  const imageUrl = room.images?.[0]?.url ?? null;
+  const imageUrl = getBlobImageSrc(room.images?.[0]?.url);
 
   return (
     <Link href={`/rooms/${room.slug}`} className="group block">

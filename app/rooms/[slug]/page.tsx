@@ -15,6 +15,7 @@ import {
 import { getAllRoomSlugs, getRoomBySlug } from "@/lib/rooms";
 import { AMENITY_MAP } from "@/lib/amenities";
 import { RoomJsonLd } from "@/components/seo/JsonLd";
+import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room } from "@/types";
 
 interface Props {
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const room: Room | null = await getRoomBySlug(slug);
   if (!room) return {};
 
-  const imageUrl = room.images?.[0]?.url;
+  const imageUrl = getBlobImageSrc(room.images?.[0]?.url);
 
   return {
     title: room.title,
@@ -50,8 +51,8 @@ export default async function RoomDetailPage({ params }: Props) {
   if (!room) notFound();
 
   const images = room.images ?? [];
-  const mainImg = images[0]?.url ?? null;
-  const thumbUrls = images.slice(1, 5).map((img) => img.url);
+  const mainImg = getBlobImageSrc(images[0]?.url);
+  const thumbUrls = images.slice(1, 5).map((img) => getBlobImageSrc(img.url) ?? img.url);
 
   const descriptionText = `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m², floor ${room.floor ?? "?"}. Rent: ${room.price.toLocaleString("en-US")}₫/month.`;
 

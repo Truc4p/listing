@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink, Upload } from "lucide-react";
+import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room, RoomImage } from "@/types";
 
 const AMENITY_OPTIONS = [
@@ -254,7 +255,7 @@ export default function AdminDashboard() {
                 {room.images?.[0]?.url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={room.images[0].url}
+                    src={getBlobImageSrc(room.images[0].url) ?? room.images[0].url}
                     alt={room.title}
                     className="w-14 h-14 rounded-lg object-cover shrink-0"
                   />
@@ -447,7 +448,11 @@ export default function AdminDashboard() {
                   {form.images.map((img, i) => (
                     <div key={i} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={img.url} alt={img.alt ?? ""} className="w-10 h-10 rounded object-cover shrink-0" />
+                      <img
+                        src={getBlobImageSrc(img.url) ?? img.url}
+                        alt={img.alt ?? ""}
+                        className="w-10 h-10 rounded object-cover shrink-0"
+                      />
                       <span className="flex-1 text-xs text-gray-600 truncate">{img.url}</span>
                       <button
                         type="button"
