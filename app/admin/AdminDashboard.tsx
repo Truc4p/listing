@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink, Upload } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink, Upload, ChevronUp, ChevronDown } from "lucide-react";
 import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room, RoomImage } from "@/types";
 
@@ -138,6 +138,19 @@ export default function AdminDashboard() {
 
   function removeImage(index: number) {
     setForm((f) => ({ ...f, images: f.images.filter((_, i) => i !== index) }));
+  }
+
+  function moveImage(index: number, direction: -1 | 1) {
+    setForm((f) => {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= f.images.length) return f;
+
+      const images = [...f.images];
+      const [moved] = images.splice(index, 1);
+      images.splice(targetIndex, 0, moved);
+
+      return { ...f, images };
+    });
   }
 
   async function handleFileUpload(files: FileList | null) {
@@ -446,21 +459,51 @@ export default function AdminDashboard() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Images</label>
                 <div className="space-y-2 mb-3">
                   {form.images.map((img, i) => (
-                    <div key={i} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2">
+                    <div key={`${img.url}-${i}`} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={getBlobImageSrc(img.url) ?? img.url}
                         alt={img.alt ?? ""}
                         className="w-10 h-10 rounded object-cover shrink-0"
                       />
-                      <span className="flex-1 text-xs text-gray-600 truncate">{img.url}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeImage(i)}
-                        className="text-gray-400 hover:text-red-500 transition-colors shrink-0"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          {i === 0 && (
+                            <span className="text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 shrink-0">
+                              Primary
+                            </span>
+                          )}
+                          <span className="text-xs text-gray-600 truncate">{img.url}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => moveImage(i, -1)}
+                          disabled={i === 0}
+                          className="p-1 text-gray-400 hover:text-gray-700 transition-colors disabled:opacity-30 disabled:hover:text-gray-400"
+                          aria-label="Move image up"
+                        >
+                          <ChevronUp className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => moveImage(i, 1)}
+                          disabled={i === form.images.length - 1}
+                          className="p-1 text-gray-400 hover:text-gray-700 transition-colors disabled:opacity-30 disabled:hover:text-gray-400"
+                          aria-label="Move image down"
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeImage(i)}
+                          className="p-1 text-gray-400 hover:text-red-500 transition-colors shrink-0"
+                          aria-label="Remove image"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
