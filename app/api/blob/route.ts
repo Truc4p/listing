@@ -30,12 +30,16 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
+  const responseHeaders = Object.fromEntries(blob.headers.entries());
+
+  if (blob.statusCode === 304) {
+    return new Response(null, {
+      status: 304,
+      headers: responseHeaders,
+    });
+  }
+
   return new Response(blob.stream, {
-    headers: {
-      "Content-Type": blob.contentType ?? "application/octet-stream",
-      ...(blob.contentDisposition ? { "Content-Disposition": blob.contentDisposition } : {}),
-      ...(blob.cacheControlMaxAge ? { "Cache-Control": `public, max-age=${blob.cacheControlMaxAge}` } : {}),
-      ...(blob.etag ? { ETag: blob.etag } : {}),
-    },
+    headers: responseHeaders,
   });
 }
