@@ -10,7 +10,7 @@ import {
   Search,
 } from "lucide-react";
 import RoomCard from "@/components/listings/RoomCard";
-import { getFeaturedRooms } from "@/lib/rooms";
+import { getAvailableRooms } from "@/lib/rooms";
 import type { Room } from "@/types";
 
 const highlights = [
@@ -44,7 +44,7 @@ const stats = [
 ];
 
 export default async function HomePage() {
-  const featuredRooms: Room[] = await getFeaturedRooms();
+  const availableRooms: Room[] = await getAvailableRooms();
 
   return (
     <>
@@ -99,12 +99,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Featured Rooms ────────────────────────────────────── */}
+      {/* ── Available Rooms ───────────────────────────────────── */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-semibold text-gray-900">
-              Featured Rooms
+              Available Rooms
             </h2>
             <Link
               href="/rooms"
@@ -115,16 +115,16 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {featuredRooms.length > 0 ? (
+          {availableRooms.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredRooms.map((room) => (
+              {availableRooms.map((room) => (
                 <RoomCard key={room._id} room={room} />
               ))}
             </div>
           ) : (
             <div className="text-center py-20 border border-dashed border-gray-200 rounded-2xl">
               <p className="text-gray-400 mb-4 text-sm">
-                No featured rooms yet. Please check back later.
+                No available rooms yet. Please check back later.
               </p>
               <Link
                 href="/rooms"
