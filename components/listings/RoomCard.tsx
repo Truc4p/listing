@@ -12,19 +12,29 @@ interface RoomCardProps {
 
 export default function RoomCard({ room }: RoomCardProps) {
   const imageUrl = getBlobImageSrc(room.images?.[0]?.url);
+  const isProxiedBlob = imageUrl?.startsWith("/api/blob?");
 
   return (
     <Link href={`/rooms/${room.slug}`} className="group block">
       {/* Image */}
       <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 mb-3">
         {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={room.images?.[0]?.alt ?? room.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+          isProxiedBlob ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={imageUrl}
+              alt={room.images?.[0]?.alt ?? room.title}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            />
+          ) : (
+            <Image
+              src={imageUrl}
+              alt={room.images?.[0]?.alt ?? room.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          )
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-emerald-50">
             <Layers className="w-10 h-10 text-[#378451] opacity-30" />

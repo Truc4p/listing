@@ -98,27 +98,45 @@ export default async function RoomDetailPage({ params }: Props) {
               {/* Main image — spans 2 cols × 2 rows */}
               <div className="col-span-2 row-span-2 relative bg-gray-100">
                 {mainImg && (
-                  <Image
-                    src={mainImg}
-                    alt={images[0]?.alt ?? room.title}
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 1024px) 50vw, 600px"
-                  />
+                  mainImg.startsWith("/api/blob?") ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={mainImg}
+                      alt={images[0]?.alt ?? room.title}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={mainImg}
+                      alt={images[0]?.alt ?? room.title}
+                      fill
+                      className="object-cover"
+                      priority
+                      sizes="(max-width: 1024px) 50vw, 600px"
+                    />
+                  )
                 )}
               </div>
 
               {/* Thumbnails — up to 4 */}
               {thumbUrls.map((url, i) => (
                 <div key={i} className="relative bg-gray-100">
-                  <Image
-                    src={url}
-                    alt={images[i + 1]?.alt ?? `${room.title} – photo ${i + 2}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 25vw, 300px"
-                  />
+                  {url.startsWith("/api/blob?") ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={url}
+                      alt={images[i + 1]?.alt ?? `${room.title} – photo ${i + 2}`}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={url}
+                      alt={images[i + 1]?.alt ?? `${room.title} – photo ${i + 2}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 25vw, 300px"
+                    />
+                  )}
                 </div>
               ))}
 
