@@ -473,7 +473,7 @@ export default function Header() {
               className="flex items-center gap-1.5 text-sm text-gray-600 hover:bg-gray-100 px-4 py-2.5 rounded-full font-medium transition-colors"
             >
               <Phone className="w-3.5 h-3.5" />
-              0909 000 000
+              0389 609 627
             </a>
             <Link
               href="/contact"
@@ -533,7 +533,7 @@ export default function Header() {
               className="flex items-center gap-2.5 text-sm text-gray-600 px-4 py-2"
             >
               <Phone className="w-4 h-4 text-[#378451]" />
-              0909 000 000
+              0389 609 627
             </a>
             <Link
               href="/contact"

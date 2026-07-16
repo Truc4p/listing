@@ -78,7 +78,7 @@ export default function ContactForm({ prefilledRoom }: ContactFormProps) {
             id="phone"
             name="phone"
             type="tel"
-            placeholder="0909 000 000"
+            placeholder="0389 609 627"
             value={form.phone}
             onChange={handleChange}
             required

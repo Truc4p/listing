@@ -85,7 +85,7 @@ export default function Footer() {
                   href="tel:+84909000000"
                   className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
                 >
-                  0909 000 000
+                  0389 609 627
                 </a>
               </li>
               <li className="flex items-center gap-3">

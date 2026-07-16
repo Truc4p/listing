@@ -15,13 +15,13 @@ const contactInfo = [
   {
     Icon: Phone,
     label: "Phone",
-    value: "0909 000 000",
+    value: "0389 609 627",
     href: "tel:+84909000000",
   },
   {
     Icon: MessageCircle,
     label: "Zalo",
-    value: "0909 000 000",
+    value: "0389 609 627",
     href: "https://zalo.me/0909000000",
   },
   {

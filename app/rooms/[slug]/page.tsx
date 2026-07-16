@@ -313,7 +313,7 @@ export default async function RoomDetailPage({ params }: Props) {
                     className="flex items-center justify-center gap-2 w-full border border-gray-300 hover:border-gray-500 text-gray-700 font-semibold py-3.5 rounded-xl text-sm transition-colors hover:bg-gray-50"
                   >
                     <Phone className="w-4 h-4" />
-                    Call now: 0909 000 000
+                    Call now: 0389 609 627
                   </a>
                 </div>
 

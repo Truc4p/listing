@@ -222,7 +222,7 @@ export default async function HomePage() {
               className="flex items-center gap-2 border border-gray-300 hover:border-gray-400 text-gray-700 hover:bg-gray-100 font-semibold px-8 py-3.5 rounded-full text-sm transition-colors"
             >
               <Phone className="w-4 h-4" />
-              Call 0909 000 000
+              Call 0389 609 627
             </a>
           </div>
         </div>
