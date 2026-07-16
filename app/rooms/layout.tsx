@@ -4,7 +4,7 @@ import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "Rooms & Apartments for Rent",
   description:
-    "Browse rooms and apartments for rent at Thanh Ha Apartments, Son Tra, Da Nang. Fully equipped, affordable pricing.",
+    "Browse rooms and apartments for rent at Ha Apartments, Son Tra, Da Nang. Fully equipped, affordable pricing.",
   alternates: {
     canonical: "https://ha-apartment.com/rooms",
   },
