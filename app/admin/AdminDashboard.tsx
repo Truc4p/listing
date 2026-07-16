@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink, Upload, ChevronUp, ChevronDown } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink, Upload, GripVertical } from "lucide-react";
 import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room, RoomImage } from "@/types";
 
@@ -74,6 +74,7 @@ export default function AdminDashboard() {
   const [newImageUrl, setNewImageUrl] = useState("");
   const [newImageAlt, setNewImageAlt] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [draggingImageIndex, setDraggingImageIndex] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchRooms = useCallback(async () => {
@@ -140,10 +141,10 @@ export default function AdminDashboard() {
     setForm((f) => ({ ...f, images: f.images.filter((_, i) => i !== index) }));
   }
 
-  function moveImage(index: number, direction: -1 | 1) {
+  function moveImage(index: number, targetIndex: number) {
     setForm((f) => {
-      const targetIndex = index + direction;
       if (targetIndex < 0 || targetIndex >= f.images.length) return f;
+      if (index === targetIndex) return f;
 
       const images = [...f.images];
       const [moved] = images.splice(index, 1);
@@ -151,6 +152,21 @@ export default function AdminDashboard() {
 
       return { ...f, images };
     });
+  }
+
+  function handleImageDragStart(index: number) {
+    setDraggingImageIndex(index);
+  }
+
+  function handleImageDragOver(index: number, event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    if (draggingImageIndex === null || draggingImageIndex === index) return;
+    moveImage(draggingImageIndex, index);
+    setDraggingImageIndex(index);
+  }
+
+  function handleImageDragEnd() {
+    setDraggingImageIndex(null);
   }
 
   async function handleFileUpload(files: FileList | null) {
@@ -459,13 +475,23 @@ export default function AdminDashboard() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Images</label>
                 <div className="space-y-2 mb-3">
                   {form.images.map((img, i) => (
-                    <div key={`${img.url}-${i}`} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2">
+                    <div
+                      key={`${img.url}-${i}`}
+                      draggable
+                      onDragStart={() => handleImageDragStart(i)}
+                      onDragOver={(event) => handleImageDragOver(i, event)}
+                      onDragEnd={handleImageDragEnd}
+                      className={`flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border transition-all cursor-grab active:cursor-grabbing ${
+                        draggingImageIndex === i ? "border-[#378451] ring-2 ring-emerald-100" : "border-transparent"
+                      }`}
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={getBlobImageSrc(img.url) ?? img.url}
                         alt={img.alt ?? ""}
                         className="w-10 h-10 rounded object-cover shrink-0"
                       />
+                      <GripVertical className="w-4 h-4 text-gray-400 shrink-0" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           {i === 0 && (
@@ -477,24 +503,6 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1 shrink-0">
-                        <button
-                          type="button"
-                          onClick={() => moveImage(i, -1)}
-                          disabled={i === 0}
-                          className="p-1 text-gray-400 hover:text-gray-700 transition-colors disabled:opacity-30 disabled:hover:text-gray-400"
-                          aria-label="Move image up"
-                        >
-                          <ChevronUp className="w-4 h-4" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => moveImage(i, 1)}
-                          disabled={i === form.images.length - 1}
-                          className="p-1 text-gray-400 hover:text-gray-700 transition-colors disabled:opacity-30 disabled:hover:text-gray-400"
-                          aria-label="Move image down"
-                        >
-                          <ChevronDown className="w-4 h-4" />
-                        </button>
                         <button
                           type="button"
                           onClick={() => removeImage(i)}
