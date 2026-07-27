@@ -13,6 +13,9 @@ import RoomCard from "@/components/listings/RoomCard";
 import { getAvailableRooms } from "@/lib/rooms";
 import type { Room } from "@/types";
 
+// Room data changes in admin — don't bake a snapshot at build time only.
+export const revalidate = 60;
+
 const highlights = [
   {
     Icon: Shield,
