@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <Building2 className="w-6 h-6 text-[#378451]" />
-              <span className="font-bold text-lg text-gray-900">AN Apartments</span>
+              <span className="font-bold text-lg text-gray-900">AN Apartment</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed mb-5">
               Quality rooms and apartments in Son Tra,
@@ -122,7 +122,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
-          <span>© {currentYear} AN Apartments · All rights reserved</span>
+          <span>© {currentYear} AN Apartment · All rights reserved</span>
           <div className="flex items-center gap-1">
             <span>Made with</span>
             <span className="text-[#378451]">♥</span>

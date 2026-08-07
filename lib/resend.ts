@@ -18,7 +18,7 @@ export async function sendContactEmail(data: ContactEmailData) {
   const ownerEmail = process.env.OWNER_EMAIL || "owner@example.com";
 
   const { error } = await getResend().emails.send({
-    from: "AN Apartments <noreply@thanhha.com>",
+    from: "AN Apartment <noreply@thanhha.com>",
     to: ownerEmail,
     replyTo: data.email,
     subject: `New message from ${data.name}`,
@@ -33,7 +33,7 @@ export async function sendContactEmail(data: ContactEmailData) {
           <tr><td style="padding: 8px; font-weight: bold; vertical-align: top;">Message:</td><td style="padding: 8px;">${data.message.replace(/\n/g, "<br>")}</td></tr>
         </table>
         <hr style="margin: 24px 0; border: none; border-top: 1px solid #e5e7eb;" />
-        <p style="color: #6b7280; font-size: 12px;">This email was sent from the contact form at AN Apartments.</p>
+        <p style="color: #6b7280; font-size: 12px;">This email was sent from the contact form at AN Apartment.</p>
       </div>
     `,
   });

@@ -2,7 +2,7 @@ export function LocalBusinessJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    name: "AN Apartments",
+    name: "AN Apartment",
     description:
       "Quality rooms and apartments for rent in Da Nang. Safe, comfortable, and affordable.",
     url: "https://ha-apartment.com",

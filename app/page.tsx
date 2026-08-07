@@ -148,7 +148,7 @@ export default async function HomePage() {
               Our Promise
             </p>
             <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight">
-              Why choose AN Apartments?
+              Why choose AN Apartment?
             </h2>
             <p className="text-gray-500 mt-3 max-w-md">
               We don&apos;t just rent rooms — we create a real home for you.
@@ -193,7 +193,7 @@ export default async function HomePage() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="AN Apartments Location"
+              title="AN Apartment Location"
             />
           </div>
         </div>

@@ -26,25 +26,25 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ha-apartment.com"),
   title: {
-    default: "AN Apartments | Rooms & Apartments for Rent in Da Nang",
-    template: "%s | AN Apartments",
+    default: "AN Apartment | Rooms & Apartments for Rent in Da Nang",
+    template: "%s | AN Apartment",
   },
   description:
-    "AN Apartments offers high-quality rooms and apartments for rent in Son Tra, Da Nang. Clean, safe, comfortable, and affordable.",
+    "AN Apartment offers high-quality rooms and apartments for rent in Son Tra, Da Nang. Clean, safe, comfortable, and affordable.",
   keywords: [
     "room for rent",
     "apartment for rent",
     "rental room",
     "Son Tra",
     "Da Nang",
-    "AN Apartments",
+    "AN Apartment",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://ha-apartment.com",
-    siteName: "AN Apartments",
-    title: "AN Apartments | Rooms & Apartments for Rent in Da Nang",
+    siteName: "AN Apartment",
+    title: "AN Apartment | Rooms & Apartments for Rent in Da Nang",
     description:
       "Quality rooms and apartments for rent in Son Tra, Da Nang.",
     images: [
@@ -52,13 +52,13 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "AN Apartments",
+        alt: "AN Apartment",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AN Apartments | Rooms & Apartments for Rent",
+    title: "AN Apartment | Rooms & Apartments for Rent",
     description: "Rooms and apartments for rent in Da Nang",
   },
   robots: {
