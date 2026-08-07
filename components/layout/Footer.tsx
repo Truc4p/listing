@@ -18,35 +18,40 @@ export default function Footer() {
               Quality rooms and apartments in Son Tra,
               Da Nang.
             </p>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-2">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#378451] hover:text-[#378451] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
+                className="inline-flex h-9 items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 text-sm font-medium text-blue-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-600 hover:text-white hover:shadow-md"
                 aria-label="Facebook"
               >
                 <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                 </svg>
+                <span>Facebook</span>
               </a>
               <a
                 href="https://wa.me/84389609627"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#378451] hover:text-[#378451] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
+                className="inline-flex h-9 items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 text-sm font-medium text-emerald-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-600 hover:text-white hover:shadow-md"
                 aria-label="Whatsapp"
               >
                 <MessageCircle className="w-4 h-4" />
+                <span>Whatsapp</span>
               </a>
               <a
                 href="https://zalo.me/0932117341"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#378451] hover:text-[#378451] text-gray-400 flex items-center justify-center transition-colors shadow-sm text-[10px] font-semibold"
+                className="inline-flex h-9 items-center gap-2 rounded-full border border-sky-100 bg-sky-50 px-3 text-sm font-semibold text-sky-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-sky-200 hover:bg-sky-600 hover:text-white hover:shadow-md"
                 aria-label="Zalo 0932117341"
               >
-                Zalo
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-current text-[9px] font-bold leading-none">
+                  <span className="text-white">Z</span>
+                </span>
+                <span>Zalo</span>
               </a>
             </div>
           </div>
