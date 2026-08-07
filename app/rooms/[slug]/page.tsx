@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: room.title,
     description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² in Son Tra, Da Nang. Rent: ${room.price.toLocaleString("en-US")}₫/month.`,
     openGraph: {
-      title: `${room.title} | Ha Apartments`,
+      title: `${room.title} | AN Apartments`,
       description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² · ${room.price.toLocaleString("en-US")}₫/month`,
       ...(imageUrl && { images: [{ url: imageUrl, width: 1200, height: 630 }] }),
     },

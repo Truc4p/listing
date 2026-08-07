@@ -311,7 +311,7 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <Building2 className="w-7 h-7 text-[#378451]" />
             <span className="font-bold text-xl text-[#378451] hidden sm:block tracking-tight">
-              Ha Apartments
+              AN Apartments
             </span>
           </Link>
 

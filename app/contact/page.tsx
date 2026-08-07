@@ -5,7 +5,7 @@ import ContactForm from "@/components/contact/ContactForm";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Ha Apartments for a free consultation on rooms and apartments for rent in Da Nang.",
+    "Contact AN Apartments for a free consultation on rooms and apartments for rent in Da Nang.",
   alternates: {
     canonical: "https://ha-apartment.com/contact",
   },
@@ -108,7 +108,7 @@ export default function ContactPage() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Ha Apartments Location"
+                  title="AN Apartments Location"
                 />
               </div>
             </div>
