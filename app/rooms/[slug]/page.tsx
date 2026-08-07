@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -10,11 +9,11 @@ import {
   MessageCircle,
   ChevronLeft,
   CheckCircle2,
-  Grid2x2,
 } from "lucide-react";
 import { getAllRoomSlugs, getRoomBySlug } from "@/lib/rooms";
 import { AMENITY_MAP } from "@/lib/amenities";
 import { RoomJsonLd } from "@/components/seo/JsonLd";
+import { RoomPhotoGallery } from "@/components/listings/RoomPhotoGallery";
 import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room } from "@/types";
 
@@ -50,9 +49,13 @@ export default async function RoomDetailPage({ params }: Props) {
   const room: Room | null = await getRoomBySlug(slug);
   if (!room) notFound();
 
-  const images = room.images ?? [];
-  const mainImg = getBlobImageSrc(images[0]?.url);
-  const thumbUrls = images.slice(1, 5).map((img) => getBlobImageSrc(img.url) ?? img.url);
+  const images = (room.images ?? [])
+    .map((img) => ({
+      ...img,
+      url: getBlobImageSrc(img.url) ?? img.url,
+    }))
+    .filter((img) => Boolean(img.url));
+  const mainImg = images[0]?.url;
 
   const descriptionText = `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m², floor ${room.floor ?? "?"}. Rent: ${room.price.toLocaleString("en-US")}₫/month.`;
 
@@ -93,68 +96,7 @@ export default async function RoomDetailPage({ params }: Props) {
             <Layers className="w-12 h-12 text-gray-300" />
           </div>
         ) : (
-          <div className="relative mb-8">
-            <div className="grid grid-cols-4 grid-rows-2 gap-2 h-72 sm:h-105 rounded-2xl overflow-hidden">
-              {/* Main image — spans 2 cols × 2 rows */}
-              <div className="col-span-2 row-span-2 relative bg-gray-100">
-                {mainImg && (
-                  mainImg.startsWith("/api/blob?") ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={mainImg}
-                      alt={images[0]?.alt ?? room.title}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  ) : (
-                    <Image
-                      src={mainImg}
-                      alt={images[0]?.alt ?? room.title}
-                      fill
-                      className="object-cover"
-                      priority
-                      sizes="(max-width: 1024px) 50vw, 600px"
-                    />
-                  )
-                )}
-              </div>
-
-              {/* Thumbnails — up to 4 */}
-              {thumbUrls.map((url, i) => (
-                <div key={i} className="relative bg-gray-100">
-                  {url.startsWith("/api/blob?") ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={url}
-                      alt={images[i + 1]?.alt ?? `${room.title} – photo ${i + 2}`}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  ) : (
-                    <Image
-                      src={url}
-                      alt={images[i + 1]?.alt ?? `${room.title} – photo ${i + 2}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 25vw, 300px"
-                    />
-                  )}
-                </div>
-              ))}
-
-              {/* Fill empty thumb slots */}
-              {Array.from({ length: Math.max(0, 4 - thumbUrls.length) }).map(
-                (_, i) => (
-                  <div key={`empty-${i}`} className="bg-gray-100" />
-                )
-              )}
-            </div>
-
-            {images.length > 1 && (
-              <button className="absolute bottom-4 right-4 flex items-center gap-2 bg-white border border-gray-900 rounded-xl px-4 py-2 text-sm font-semibold shadow-sm hover:bg-gray-50 transition-colors">
-                <Grid2x2 className="w-4 h-4" />
-                Show all {images.length} photos
-              </button>
-            )}
-          </div>
+          <RoomPhotoGallery images={images} roomTitle={room.title} />
         )}
 
         {/* ── Body layout ────────────────────────────────────── */}
