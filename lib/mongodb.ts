@@ -18,7 +18,7 @@ export async function getDb(): Promise<Db> {
   }
 
   const redacted = uri.replace(/:([^@]+)@/, ":<redacted>@");
-  console.log("[mongodb] connecting to:", redacted);
+  // console.log("[mongodb] connecting to:", redacted);
 
   if (process.env.NODE_ENV === "development") {
     if (!global._mongoClient) {

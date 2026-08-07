@@ -31,13 +31,22 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://zalo.me/0909000000"
+                href="https://wa.me/84389609627"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#378451] hover:text-[#378451] text-gray-400 flex items-center justify-center transition-colors shadow-sm"
-                aria-label="Zalo"
+                aria-label="Whatsapp"
               >
                 <MessageCircle className="w-4 h-4" />
+              </a>
+              <a
+                href="https://zalo.me/0932117341"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 hover:border-[#378451] hover:text-[#378451] text-gray-400 flex items-center justify-center transition-colors shadow-sm text-[10px] font-semibold"
+                aria-label="Zalo 0932117341"
+              >
+                Zalo
               </a>
             </div>
           </div>

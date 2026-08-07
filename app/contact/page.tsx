@@ -20,9 +20,9 @@ const contactInfo = [
   },
   {
     Icon: MessageCircle,
-    label: "Zalo",
+    label: "Whatsapp",
     value: "0389 609 627",
-    href: "https://zalo.me/0909000000",
+    href: "https://wa.me/84389609627",
   },
   {
     Icon: Mail,
