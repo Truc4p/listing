@@ -20,7 +20,7 @@ const contactInfo = [
   },
   {
     Icon: MessageCircle,
-    label: "Whatsapp",
+    label: "Whatsapp / Telegram",
     value: "0389 609 627",
     href: "https://wa.me/84389609627",
   },

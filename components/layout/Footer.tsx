@@ -48,9 +48,7 @@ export default function Footer() {
                 className="inline-flex h-9 items-center gap-2 rounded-full border border-sky-100 bg-sky-50 px-3 text-sm font-semibold text-sky-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-sky-200 hover:bg-sky-600 hover:text-white hover:shadow-md"
                 aria-label="Telegram +84389609627"
               >
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-current text-[9px] font-bold leading-none">
-                  <span className="text-white">T</span>
-                </span>
+                <span className="w-4 h-4 text-center text-lg font-bold leading-4">T</span>
                 <span>Telegram</span>
               </a>
             </div>
