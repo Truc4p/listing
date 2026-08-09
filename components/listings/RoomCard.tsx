@@ -93,7 +93,7 @@ export default function RoomCard({ room }: RoomCardProps) {
             className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-800 transition-colors"
           >
             <Phone className="w-3 h-3" />
-            Call / Whatsapp: 0389 609 627
+            Call / Whatsapp / Telegram: 0389 609 627
           </a>
         </div>
       </div>
