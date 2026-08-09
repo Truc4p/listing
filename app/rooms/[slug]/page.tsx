@@ -35,10 +35,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: room.title,
-    description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² in Son Tra, Da Nang. Rent: ${room.price.toLocaleString("en-US")}₫/month.`,
+    description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² in Son Tra, Da Nang. Call/Zalo 0389 609 627 for the best monthly rate.`,
     openGraph: {
       title: `${room.title} | AN Apartment`,
-      description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² · ${room.price.toLocaleString("en-US")}₫/month`,
+      description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² in Son Tra, Da Nang. Contact us for availability and pricing.`,
       ...(imageUrl && { images: [{ url: imageUrl, width: 1200, height: 630 }] }),
     },
   };
@@ -57,7 +57,7 @@ export default async function RoomDetailPage({ params }: Props) {
     .filter((img) => Boolean(img.url));
   const mainImg = images[0]?.url;
 
-  const descriptionText = `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m², floor ${room.floor ?? "?"}. Rent: ${room.price.toLocaleString("en-US")}₫/month.`;
+  const descriptionText = `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m², floor ${room.floor ?? "?"}. Contact 0389 609 627 for availability and best monthly rate.`;
 
   return (
     <>
@@ -201,13 +201,16 @@ export default async function RoomDetailPage({ params }: Props) {
           <div className="lg:col-span-1">
             <div className="sticky top-28">
               <div className="border border-gray-200 rounded-2xl shadow-xl p-6">
-                {/* Price */}
-                <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-2xl font-semibold text-gray-900">
-                    {room.price.toLocaleString("en-US")}₫
-                  </span>
-                  <span className="text-gray-500 text-sm">/month</span>
-                </div>
+                {/* Contact CTA heading */}
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
+                  Pricing
+                </p>
+                <p className="text-xl font-semibold text-[#378451] mb-1">
+                  Contact for latest price
+                </p>
+                <p className="text-sm text-gray-500 mb-5">
+                  Prices may vary by season and availability. Call or Zalo us for the best monthly rate.
+                </p>
 
                 {/* Availability */}
                 <div className="flex items-center gap-2 mb-5">
@@ -260,7 +263,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 </div>
 
                 <p className="mt-4 text-xs text-gray-400 text-center">
-                  Contact us to confirm availability before visiting.
+                  We'll help you find the right room for your budget.
                 </p>
               </div>
             </div>

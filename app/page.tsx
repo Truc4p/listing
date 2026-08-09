@@ -20,7 +20,7 @@ const highlights = [
   {
     Icon: Shield,
     title: "Safety & Security",
-    desc: "24/7 cameras, premium smart locks, professional security team",
+    // desc: "24/7 cameras, premium smart locks, professional security team",
   },
   {
     Icon: MapPin,
@@ -30,7 +30,7 @@ const highlights = [
   {
     Icon: Zap,
     title: "Full Amenities",
-    desc: "Air conditioning, water heater, high-speed WiFi, modern furnishings",
+    desc: "Air conditioning, water heater, high-speed WiFi, furnishings",
   },
   {
     Icon: HeadphonesIcon,

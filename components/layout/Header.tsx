@@ -19,7 +19,7 @@ const typeOptions = [
 ];
 
 const priceOptions = [
-  { value: "any", label: "Any budget" },
+  { value: "any", label: "We'll recommend options" },
   { value: "3000000", label: "Under 3,000,000đ" },
   { value: "5000000", label: "Under 5,000,000đ" },
   { value: "8000000", label: "Under 8,000,000đ" },
@@ -367,7 +367,7 @@ export default function Header() {
 
               <span className="w-px h-8 bg-gray-200 shrink-0" />
 
-              {/* Price */}
+              {/* Budget */}
               <button
                 onClick={() =>
                   setActiveSection(activeSection === "price" ? null : "price")
@@ -377,12 +377,12 @@ export default function Header() {
                   activeSection === "price" ? "bg-gray-100" : "hover:bg-gray-50"
                 )}
               >
-                <span className="text-xs font-semibold text-gray-800">Price</span>
+                <span className="text-xs font-semibold text-gray-800">Budget</span>
                 <span className={cn(
                   "text-sm whitespace-nowrap",
                   selectedPrice !== "any" ? "text-gray-700" : "text-gray-400"
                 )}>
-                  {priceOptions.find((o) => o.value === selectedPrice)?.label ?? "Any budget"}
+                  {priceOptions.find((o) => o.value === selectedPrice)?.label ?? "Tell us your budget"}
                 </span>
               </button>
 
@@ -437,11 +437,11 @@ export default function Header() {
               </div>
             )}
 
-            {/* Price dropdown */}
+            {/* Budget dropdown */}
             {activeSection === "price" && (
               <div className="absolute top-full mt-2 right-14 bg-white rounded-2xl shadow-xl border border-gray-200 p-4 w-56 z-10">
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                  Max price / month
+                  Your budget / month
                 </p>
                 <div className="space-y-1">
                   {priceOptions.map((opt) => (

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Star, Layers } from "lucide-react";
+import { Heart, Star, Layers, Phone } from "lucide-react";
 import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room } from "@/types";
 
@@ -83,12 +83,19 @@ export default function RoomCard({ room }: RoomCardProps) {
           {room.type === "apartment" ? "Apartment" : "Room"} · {room.area} m²
           {room.floor ? ` · Floor ${room.floor}` : ""}
         </p>
-        <p className="pt-1.5 text-gray-900 text-sm">
-          <span className="font-semibold">
-            {room.price.toLocaleString("en-US")}₫
-          </span>{" "}
-          <span className="text-gray-500 font-normal">/month</span>
-        </p>
+        <div className="pt-2 space-y-1">
+          <p className="text-sm font-semibold text-[#378451]">
+            Contact for latest price
+          </p>
+          <a
+            href="tel:+84389609627"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-800 transition-colors"
+          >
+            <Phone className="w-3 h-3" />
+            Call / Whatsapp: 0389 609 627
+          </a>
+        </div>
       </div>
     </Link>
   );
