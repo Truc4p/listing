@@ -75,6 +75,7 @@ export default function AdminDashboard() {
   const [newImageAlt, setNewImageAlt] = useState("");
   const [uploading, setUploading] = useState(false);
   const [draggingImageIndex, setDraggingImageIndex] = useState<number | null>(null);
+  const [draggingRoomIndex, setDraggingRoomIndex] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchRooms = useCallback(async () => {
@@ -167,6 +168,42 @@ export default function AdminDashboard() {
 
   function handleImageDragEnd() {
     setDraggingImageIndex(null);
+  }
+
+  function moveRoom(fromIndex: number, toIndex: number) {
+    if (toIndex < 0 || toIndex >= rooms.length) return;
+    if (fromIndex === toIndex) return;
+
+    setRooms((currentRooms) => {
+      const newRooms = [...currentRooms];
+      const [moved] = newRooms.splice(fromIndex, 1);
+      newRooms.splice(toIndex, 0, moved);
+      return newRooms;
+    });
+  }
+
+  function handleRoomDragStart(index: number) {
+    setDraggingRoomIndex(index);
+  }
+
+  function handleRoomDragOver(index: number, event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    if (draggingRoomIndex === null || draggingRoomIndex === index) return;
+    moveRoom(draggingRoomIndex, index);
+    setDraggingRoomIndex(index);
+  }
+
+  async function handleRoomDragEnd() {
+    if (draggingRoomIndex === null) return;
+    setDraggingRoomIndex(null);
+    
+    // Save the new order to the backend
+    const roomIds = rooms.map((room) => room._id);
+    await fetch("/api/admin/rooms/reorder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ roomIds }),
+    });
   }
 
   async function handleFileUpload(files: FileList | null) {
@@ -275,11 +312,22 @@ export default function AdminDashboard() {
           </div>
         ) : (
           <div className="space-y-2">
-            {rooms.map((room) => (
+            {rooms.map((room, index) => (
               <div
                 key={room._id}
-                className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-4"
+                draggable
+                onDragStart={() => handleRoomDragStart(index)}
+                onDragOver={(event) => handleRoomDragOver(index, event)}
+                onDragEnd={handleRoomDragEnd}
+                className={`bg-white border rounded-xl px-5 py-4 flex items-center gap-4 cursor-grab active:cursor-grabbing transition-all ${
+                  draggingRoomIndex === index 
+                    ? "border-[#378451] ring-2 ring-emerald-100 shadow-lg" 
+                    : "border-gray-200"
+                }`}
               >
+                {/* Drag handle */}
+                <GripVertical className="w-5 h-5 text-gray-400 shrink-0" />
+
                 {/* Thumb */}
                 {room.images?.[0]?.url ? (
                   // eslint-disable-next-line @next/next/no-img-element

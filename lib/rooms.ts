@@ -14,7 +14,7 @@ export async function getFeaturedRooms(): Promise<Room[]> {
   const docs = await db
     .collection("rooms")
     .find({ featured: true })
-    .sort({ createdAt: -1 })
+    .sort({ order: 1, createdAt: -1 })
     .limit(6)
     .project({ title: 1, slug: 1, type: 1, price: 1, area: 1, floor: 1, available: 1, "images": { $slice: 1 } })
     .toArray();
@@ -26,7 +26,7 @@ export async function getAvailableRooms(): Promise<Room[]> {
   const docs = await db
     .collection("rooms")
     .find({ available: true })
-    .sort({ createdAt: -1 })
+    .sort({ order: 1, createdAt: -1 })
     .limit(6)
     .project({ title: 1, slug: 1, type: 1, price: 1, area: 1, floor: 1, available: 1, "images": { $slice: 1 } })
     .toArray();
@@ -38,7 +38,7 @@ export async function getAllRooms(): Promise<Room[]> {
   const docs = await db
     .collection("rooms")
     .find({})
-    .sort({ createdAt: -1 })
+    .sort({ order: 1, createdAt: -1 })
     .project({ title: 1, slug: 1, type: 1, price: 1, area: 1, floor: 1, available: 1, "images": { $slice: 1 } })
     .toArray();
   return docs.map(toRoom);
@@ -85,8 +85,22 @@ export async function deleteRoom(id: string): Promise<boolean> {
 
 export async function getAllRoomsForAdmin(): Promise<Room[]> {
   const db = await getDb();
-  const docs = await db.collection("rooms").find({}).sort({ createdAt: -1 }).toArray();
+  const docs = await db.collection("rooms").find({}).sort({ order: 1, createdAt: -1 }).toArray();
   return docs.map(toRoom);
+}
+
+export async function updateRoomOrder(roomIds: string[]): Promise<void> {
+  const db = await getDb();
+  const bulkOps = roomIds.map((id, index) => ({
+    updateOne: {
+      filter: { _id: new ObjectId(id) },
+      update: { $set: { order: index } }
+    }
+  }));
+  
+  if (bulkOps.length > 0) {
+    await db.collection("rooms").bulkWrite(bulkOps);
+  }
 }
 
 export type { RoomImage };

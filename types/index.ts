@@ -16,6 +16,7 @@ export interface Room {
   images?: RoomImage[];
   available: boolean;
   featured: boolean;
+  order?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
