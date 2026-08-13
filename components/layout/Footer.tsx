@@ -20,18 +20,6 @@ export default function Footer() {
             </p>
             <div className="flex flex-wrap gap-2">
               <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-9 items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 text-sm font-medium text-blue-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-600 hover:text-white hover:shadow-md"
-                aria-label="Facebook"
-              >
-                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                </svg>
-                <span>Facebook</span>
-              </a>
-              <a
                 href="https://wa.me/84389609627"
                 target="_blank"
                 rel="noopener noreferrer"
