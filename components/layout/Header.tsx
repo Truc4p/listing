@@ -469,7 +469,7 @@ export default function Header() {
           {/* Right actions — desktop */}
           <div className="hidden md:flex items-center gap-2 shrink-0">
             <a
-              href="tel:+84909000000"
+              href="tel:+84389609627"
               className="flex items-center gap-1.5 text-sm text-gray-600 hover:bg-gray-100 px-4 py-2.5 rounded-full font-medium transition-colors"
             >
               <Phone className="w-3.5 h-3.5" />
@@ -529,7 +529,7 @@ export default function Header() {
           </nav>
           <div className="border-t border-gray-100 pt-4 space-y-2">
             <a
-              href="tel:+84909000000"
+              href="tel:+84389609627"
               className="flex items-center gap-2.5 text-sm text-gray-600 px-4 py-2"
             >
               <Phone className="w-4 h-4 text-[#378451]" />

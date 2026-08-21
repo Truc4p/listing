@@ -221,7 +221,7 @@ export default async function HomePage() {
               Send a message
             </Link>
             <a
-              href="tel:+84909000000"
+              href="tel:+84389609627"
               className="flex items-center gap-2 border border-gray-300 hover:border-gray-400 text-gray-700 hover:bg-gray-100 font-semibold px-8 py-3.5 rounded-full text-sm transition-colors"
             >
               <Phone className="w-4 h-4" />

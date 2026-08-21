@@ -254,7 +254,7 @@ export default async function RoomDetailPage({ params }: Props) {
                     Contact us
                   </Link>
                   <a
-                    href="tel:+84909000000"
+                    href="tel:+84389609627"
                     className="flex items-center justify-center gap-2 w-full border border-gray-300 hover:border-gray-500 text-gray-700 font-semibold py-3.5 rounded-xl text-sm transition-colors hover:bg-gray-50"
                   >
                     <Phone className="w-4 h-4" />

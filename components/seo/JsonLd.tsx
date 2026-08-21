@@ -6,7 +6,7 @@ export function LocalBusinessJsonLd() {
     description:
       "Quality rooms and apartments for rent in Da Nang. Safe, comfortable, and affordable.",
     url: "https://ha-apartment.com",
-    telephone: "+84909000000",
+    telephone: "+84389609627",
     email: "info@ha-apartment.com",
     address: {
       "@type": "PostalAddress",
