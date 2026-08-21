@@ -31,15 +31,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const room: Room | null = await getRoomBySlug(slug);
   if (!room) return {};
 
-  const imageUrl = getBlobImageSrc(room.images?.[0]?.url);
+  const photoUrl = getBlobImageSrc(room.images?.[0]?.url);
+
+  // Use the actual room photo if available; fall back to a branded OG image
+  // with the room title and type embedded so each listing has a unique preview.
+  const ogImageUrl = photoUrl
+    ? photoUrl
+    : `/api/og?${new URLSearchParams({
+        title: room.title,
+        subtitle: `${room.area}m² · Son Tra, Da Nang`,
+        type: room.type,
+      }).toString()}`;
+
+  const typeLabel = room.type === "apartment" ? "Apartment" : "Room";
+  const description = `${typeLabel} for rent · ${room.area}m²${room.floor ? ` · Floor ${room.floor}` : ""} · Son Tra, Da Nang. Contact us for availability and best monthly rate.`;
 
   return {
     title: room.title,
-    description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² in Son Tra, Da Nang. Call/Zalo 0389 609 627 for the best monthly rate.`,
+    description,
+    alternates: {
+      canonical: `https://ha-apartment.com/rooms/${slug}`,
+    },
     openGraph: {
       title: `${room.title} | AN Apartment`,
-      description: `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m² in Son Tra, Da Nang. Contact us for availability and pricing.`,
-      ...(imageUrl && { images: [{ url: imageUrl, width: 1200, height: 630 }] }),
+      description,
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: room.title }],
     },
   };
 }
