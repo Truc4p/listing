@@ -17,6 +17,64 @@ import { RoomPhotoGallery } from "@/components/listings/RoomPhotoGallery";
 import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room } from "@/types";
 
+/**
+ * Builds a rich, data-driven meta description from actual room fields.
+ * Targets ~150 chars so it fits cleanly in SERPs without truncation.
+ */
+function buildRoomDescription(room: Room): string {
+  const typeLabel = room.type === "apartment" ? "Apartment" : "Room";
+
+  // Core identity: type + size + floor + location
+  const parts: string[] = [
+    `${typeLabel} for rent in Son Tra, Da Nang`,
+    `${room.area} m²`,
+  ];
+  if (room.floor) parts.push(`floor ${room.floor}`);
+
+  // Availability signal — useful keyword for searchers
+  if (room.available) {
+    parts.push("available now");
+  }
+
+  // Up to 3 top amenities — ordered by SEO relevance
+  const PRIORITY_AMENITIES = [
+    "ac",
+    "wifi",
+    "furnished",
+    "kitchen",
+    "fridge",
+    "balcony",
+    "parking",
+    "security",
+    "water_heater",
+    "window",
+  ];
+  const roomAmenities = room.amenities ?? [];
+  const topAmenities = PRIORITY_AMENITIES.filter((k) =>
+    roomAmenities.includes(k)
+  )
+    .slice(0, 3)
+    .map((k) => AMENITY_MAP[k]?.label)
+    .filter(Boolean);
+
+  // Price signal if stored
+  const priceFragment =
+    room.price > 0
+      ? `from ${room.price.toLocaleString("en-US")} VND/month`
+      : null;
+
+  // Assemble: core · amenities · price
+  let description = parts.join(" · ");
+  if (topAmenities.length > 0) {
+    description += `. Includes ${topAmenities.join(", ")}.`;
+  }
+  if (priceFragment) {
+    description += ` Price ${priceFragment}.`;
+  }
+
+  return description;
+}
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -43,8 +101,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         type: room.type,
       }).toString()}`;
 
-  const typeLabel = room.type === "apartment" ? "Apartment" : "Room";
-  const description = `${typeLabel} for rent · ${room.area}m²${room.floor ? ` · Floor ${room.floor}` : ""} · Son Tra, Da Nang. Contact us for availability and best monthly rate.`;
+  const description = buildRoomDescription(room);
 
   return {
     title: room.title,

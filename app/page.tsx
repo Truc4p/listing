@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   Shield,
@@ -52,18 +53,39 @@ export default async function HomePage() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="bg-linear-to-b from-emerald-50 to-white py-24 md:py-36">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative min-h-[88vh] flex items-center justify-center overflow-hidden">
+        {/* Background photo */}
+        <Image
+          src="/hero.jpg"
+          alt="AN Apartment — Son Tra, Da Nang"
+          fill
+          priority
+          quality={90}
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+
+        {/* Gradient overlay: dark at bottom, semi-dark overall for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60" />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-24 md:py-32">
+          {/* Location badge */}
+          <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm border border-white/25 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-8 tracking-wide">
+            <MapPin className="w-3.5 h-3.5" />
+            Son Tra, Da Nang · Vietnam
+          </div>
+
           {/* Heading */}
-          <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-semibold text-gray-900 leading-[1.08] tracking-tight mb-6">
+          <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.08] tracking-tight mb-6 drop-shadow-lg">
             Find your ideal
             <br />
-            <span className="text-[#378451] italic font-medium">
+            <span className="text-emerald-300 italic font-medium">
               living space
             </span>
           </h1>
 
-          <p className="text-gray-500 text-lg sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-white/80 text-lg sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
             Rooms and apartments for rent in Son Tra, Da Nang. Safe,
             comfortable, and affordable.
           </p>
@@ -71,7 +93,7 @@ export default async function HomePage() {
           {/* Search pill */}
           <Link
             href="/rooms"
-            className="inline-flex items-center bg-white border border-gray-200 rounded-full shadow-lg hover:shadow-xl transition-shadow pl-6 pr-2 py-2 gap-4 max-w-md w-full mx-auto"
+            className="inline-flex items-center bg-white rounded-full shadow-2xl hover:shadow-3xl transition-all hover:-translate-y-0.5 pl-6 pr-2 py-2 gap-4 max-w-md w-full mx-auto"
           >
             <Search className="w-4 h-4 text-gray-400 shrink-0" />
             <div className="flex-1 text-left">
@@ -90,14 +112,21 @@ export default async function HomePage() {
             {stats.map(({ value, label }, i) => (
               <div key={label} className="flex items-center gap-8">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">{value}</div>
-                  <div className="text-xs text-gray-400 mt-0.5">{label}</div>
+                  <div className="text-2xl font-bold text-white">{value}</div>
+                  <div className="text-xs text-white/60 mt-0.5">{label}</div>
                 </div>
                 {i < stats.length - 1 && (
-                  <div className="w-px h-8 bg-gray-200" />
+                  <div className="w-px h-8 bg-white/20" />
                 )}
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Scroll hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+          <div className="w-6 h-9 rounded-full border-2 border-white/40 flex items-start justify-center pt-1.5">
+            <div className="w-1 h-2 rounded-full bg-white/60" />
           </div>
         </div>
       </section>
