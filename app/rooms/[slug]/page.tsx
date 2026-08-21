@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { getAllRoomSlugs, getRoomBySlug } from "@/lib/rooms";
 import { AMENITY_MAP } from "@/lib/amenities";
-import { RoomJsonLd } from "@/components/seo/JsonLd";
+import { RoomJsonLd, BreadcrumbListJsonLd } from "@/components/seo/JsonLd";
 import { RoomPhotoGallery } from "@/components/listings/RoomPhotoGallery";
 import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room } from "@/types";
@@ -145,6 +145,19 @@ export default async function RoomDetailPage({ params }: Props) {
           imageUrl={mainImg}
         />
       )}
+      <BreadcrumbListJsonLd
+        items={[
+          { name: "Home", url: "https://listing-psi.vercel.app" },
+          {
+            name: "Rooms & Apartments",
+            url: "https://listing-psi.vercel.app/rooms",
+          },
+          {
+            name: room.title,
+            url: `https://listing-psi.vercel.app/rooms/${slug}`,
+          },
+        ]}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
         {/* Breadcrumb */}
