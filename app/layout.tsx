@@ -49,10 +49,10 @@ export const metadata: Metadata = {
       "Quality rooms and apartments for rent in Son Tra, Da Nang.",
     images: [
       {
-        url: "/api/og",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "AN Apartment — Rooms & Apartments for Rent in Da Nang",
+        alt: "AN Apartment — Rooms & Apartments for Rent in Son Tra, Da Nang",
       },
     ],
   },
