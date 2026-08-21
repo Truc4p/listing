@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: room.title,
     description,
     alternates: {
-      canonical: `https://ha-apartment.com/rooms/${slug}`,
+      canonical: `https://listing-psi.vercel.app/rooms/${slug}`,
     },
     openGraph: {
       title: `${room.title} | AN Apartment`,

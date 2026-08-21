@@ -24,7 +24,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ha-apartment.com"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://listing-psi.vercel.app"
+  ),
   title: {
     default: "AN Apartment | Rooms & Apartments for Rent in Da Nang",
     template: "%s | AN Apartment",
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://ha-apartment.com",
+    url: "https://listing-psi.vercel.app",
     siteName: "AN Apartment",
     title: "AN Apartment | Rooms & Apartments for Rent in Da Nang",
     description:
@@ -71,7 +73,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://ha-apartment.com",
+    canonical: "https://listing-psi.vercel.app",
   },
 };
 

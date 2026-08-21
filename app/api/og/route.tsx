@@ -208,7 +208,7 @@ export async function GET(req: NextRequest) {
                 alignItems: "center",
               }}
             >
-              ha-apartment.com
+              listing-psi.vercel.app
             </div>
           </div>
         </div>

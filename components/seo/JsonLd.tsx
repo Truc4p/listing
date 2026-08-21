@@ -5,9 +5,9 @@ export function LocalBusinessJsonLd() {
     name: "AN Apartment",
     description:
       "Quality rooms and apartments for rent in Da Nang. Safe, comfortable, and affordable.",
-    url: "https://ha-apartment.com",
+    url: "https://listing-psi.vercel.app",
     telephone: "+84389609627",
-    email: "info@ha-apartment.com",
+    email: "info@listing-psi.vercel.app",
     address: {
       "@type": "PostalAddress",
       streetAddress: "75 Luong Huu Khanh",
@@ -63,7 +63,7 @@ export function RoomJsonLd({
     "@type": "RealEstateListing",
     name: title,
     description,
-    url: `https://ha-apartment.com/rooms/${slug}`,
+    url: `https://listing-psi.vercel.app/rooms/${slug}`,
     ...(imageUrl && { image: imageUrl }),
     offers: {
       "@type": "Offer",
