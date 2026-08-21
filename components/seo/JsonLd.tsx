@@ -66,6 +66,13 @@ export function BreadcrumbListJsonLd({ items }: BreadcrumbListJsonLdProps) {
   );
 }
 
+interface RoomImageObject {
+  url: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+}
+
 interface RoomJsonLdProps {
   title: string;
   description: string;
@@ -74,6 +81,7 @@ interface RoomJsonLdProps {
   type: string;
   slug: string;
   imageUrl?: string;
+  images?: RoomImageObject[];
 }
 
 export function RoomJsonLd({
@@ -84,14 +92,44 @@ export function RoomJsonLd({
   type,
   slug,
   imageUrl,
+  images,
 }: RoomJsonLdProps) {
+  // Build ImageObject array from `images` prop; fall back to bare `imageUrl`
+  const imageObjects: object[] | undefined = (() => {
+    if (images && images.length > 0) {
+      return images.map((img) => ({
+        "@type": "ImageObject",
+        url: img.url,
+        ...(img.width && { width: img.width }),
+        ...(img.height && { height: img.height }),
+        contentUrl: img.url,
+        caption: img.caption ?? title,
+        name: img.caption ?? title,
+      }));
+    }
+    if (imageUrl) {
+      return [
+        {
+          "@type": "ImageObject",
+          url: imageUrl,
+          contentUrl: imageUrl,
+          caption: title,
+          name: title,
+        },
+      ];
+    }
+    return undefined;
+  })();
+
   const data = {
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
     name: title,
     description,
     url: `https://listing-psi.vercel.app/rooms/${slug}`,
-    ...(imageUrl && { image: imageUrl }),
+    ...(imageObjects && {
+      image: imageObjects.length === 1 ? imageObjects[0] : imageObjects,
+    }),
     offers: {
       "@type": "Offer",
       price,

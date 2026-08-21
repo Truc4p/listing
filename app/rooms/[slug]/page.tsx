@@ -128,13 +128,12 @@ export default async function RoomDetailPage({ params }: Props) {
       url: getBlobImageSrc(img.url) ?? img.url,
     }))
     .filter((img) => Boolean(img.url));
-  const mainImg = images[0]?.url;
 
   const descriptionText = `${room.type === "apartment" ? "Apartment" : "Room"} ${room.area}m², floor ${room.floor ?? "?"}. Contact 0389 609 627 for availability and best monthly rate.`;
 
   return (
     <>
-      {mainImg && (
+      {images.length > 0 && (
         <RoomJsonLd
           title={room.title}
           description={descriptionText}
@@ -142,7 +141,10 @@ export default async function RoomDetailPage({ params }: Props) {
           area={room.area}
           type={room.type}
           slug={slug}
-          imageUrl={mainImg}
+          images={images.map((img, i) => ({
+            url: img.url,
+            caption: i === 0 ? room.title : `${room.title} — photo ${i + 1}`,
+          }))}
         />
       )}
       <BreadcrumbListJsonLd
