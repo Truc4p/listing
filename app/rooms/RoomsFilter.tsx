@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { LayoutGrid, BedDouble, Building2, SlidersHorizontal } from "lucide-react";
+import { LayoutGrid, BedDouble, Building2, SlidersHorizontal, X } from "lucide-react";
 import RoomCard from "@/components/listings/RoomCard";
 import type { Room } from "@/types";
 
@@ -18,15 +18,27 @@ interface RoomsFilterProps {
   initialRooms: Room[];
 }
 
+/** Returns true if the [checkIn, checkOut] window overlaps any blocked range */
+function isBlockedDuring(room: Room, checkIn: string, checkOut: string): boolean {
+  if (!room.blockedRanges || room.blockedRanges.length === 0) return false;
+  return room.blockedRanges.some((r) => r.from <= checkOut && r.to >= checkIn);
+}
+
+function formatSearchDate(iso: string): string {
+  const d = new Date(iso + "T00:00:00");
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
 export default function RoomsFilter({ initialRooms }: RoomsFilterProps) {
   const searchParams = useSearchParams();
   const [filter, setFilter] = useState<Filter>("all");
   const [availableOnly, setAvailableOnly] = useState(false);
 
-  const date = searchParams.get("date");
+  const checkIn = searchParams.get("checkIn") ?? "";
+  const checkOut = searchParams.get("checkOut") ?? "";
   const maxPrice = searchParams.get("maxPrice") ? Number(searchParams.get("maxPrice")) : null;
 
-  // Sync room type filter from URL on navigation
+  // Sync room type filter from URL (set by header search)
   useEffect(() => {
     const typeParam = searchParams.get("type");
     if (typeParam === "room" || typeParam === "apartment") {
@@ -37,11 +49,25 @@ export default function RoomsFilter({ initialRooms }: RoomsFilterProps) {
   }, [searchParams]);
 
   const filtered = initialRooms.filter((r) => {
+    // Type filter
     if (filter !== "all" && r.type !== filter) return false;
+
+    // Available-only toggle (the room.available boolean = currently free)
     if (availableOnly && !r.available) return false;
+
+    // Budget filter
     if (maxPrice && r.price > maxPrice) return false;
+
+    // Date range: hide rooms that have a blocked period overlapping the search window
+    if (checkIn && checkOut && isBlockedDuring(r, checkIn, checkOut)) return false;
+
     return true;
   });
+
+  const hasDateFilter = Boolean(checkIn && checkOut);
+  const dateLabel = hasDateFilter
+    ? `${formatSearchDate(checkIn)} – ${formatSearchDate(checkOut)}`
+    : null;
 
   return (
     <>
@@ -74,21 +100,28 @@ export default function RoomsFilter({ initialRooms }: RoomsFilterProps) {
               onClick={() => setAvailableOnly((v) => !v)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-medium transition-all whitespace-nowrap ${
                 availableOnly
-                  ? "bg-primary text-primary-foreground border-primary"
+                  ? "bg-[#378451] text-white border-[#378451] shadow-sm"
                   : "bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:bg-gray-50"
               }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
-              Available
+              Available now
             </button>
 
             {/* Active filter badges from header search */}
-            {(date || maxPrice) && (
+            {(dateLabel || maxPrice) && (
               <>
                 <div className="w-px h-6 bg-gray-200 mx-1 shrink-0" />
-                {date && (
-                  <span className="px-3 py-1.5 bg-[#378451]/10 text-[#378451] text-xs font-medium rounded-full whitespace-nowrap">
-                    From {date}
+                {dateLabel && (
+                  <span className="flex items-center gap-1.5 px-3 py-1.5 bg-[#378451]/10 text-[#378451] text-xs font-medium rounded-full whitespace-nowrap">
+                    <X className="w-3 h-3 cursor-pointer" onClick={() => {
+                      const url = new URL(window.location.href);
+                      url.searchParams.delete("checkIn");
+                      url.searchParams.delete("checkOut");
+                      window.history.pushState({}, "", url.toString());
+                      window.dispatchEvent(new PopStateEvent("popstate"));
+                    }} />
+                    {dateLabel}
                   </span>
                 )}
                 {maxPrice && (
@@ -101,7 +134,7 @@ export default function RoomsFilter({ initialRooms }: RoomsFilterProps) {
 
             {/* Result count */}
             <p className="ml-auto shrink-0 text-sm text-gray-400 whitespace-nowrap">
-              {filtered.length} results
+              {filtered.length} result{filtered.length !== 1 ? "s" : ""}
             </p>
           </div>
         </div>
@@ -123,7 +156,9 @@ export default function RoomsFilter({ initialRooms }: RoomsFilterProps) {
               </div>
               <h3 className="text-gray-900 font-semibold mb-1.5">No results found</h3>
               <p className="text-gray-400 text-sm">
-                Try adjusting your filters or contact us.
+                {hasDateFilter
+                  ? "No listings are available for those dates. Try different dates or remove the date filter."
+                  : "Try adjusting your filters or contact us."}
               </p>
             </div>
           )}

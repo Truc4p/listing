@@ -39,7 +39,7 @@ export async function getAllRooms(): Promise<Room[]> {
     .collection("rooms")
     .find({})
     .sort({ order: 1, createdAt: -1 })
-    .project({ title: 1, slug: 1, type: 1, price: 1, area: 1, floor: 1, available: 1, "images": { $slice: 1 } })
+    .project({ title: 1, slug: 1, type: 1, price: 1, area: 1, floor: 1, available: 1, blockedRanges: 1, "images": { $slice: 1 } })
     .toArray();
   return docs.map(toRoom);
 }
