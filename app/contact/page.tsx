@@ -44,7 +44,12 @@ const contactInfo = [
   },
 ];
 
-export default function ContactPage() {
+interface ContactPageProps {
+  searchParams: Promise<{ room?: string; checkIn?: string; checkOut?: string }>;
+}
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const { room, checkIn, checkOut } = await searchParams;
   return (
     <>
       {/* Hero */}
@@ -122,7 +127,11 @@ export default function ContactPage() {
                 <p className="text-gray-500 text-sm mb-7">
                   Fill in the form below and we&apos;ll get back to you within 24 hours.
                 </p>
-                <ContactForm />
+                <ContactForm
+                  prefilledRoom={room}
+                  prefilledCheckIn={checkIn}
+                  prefilledCheckOut={checkOut}
+                />
               </div>
             </div>
           </div>

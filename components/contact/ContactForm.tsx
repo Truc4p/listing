@@ -10,16 +10,36 @@ import { Send, Loader2 } from "lucide-react";
 
 interface ContactFormProps {
   prefilledRoom?: string;
+  prefilledCheckIn?: string;
+  prefilledCheckOut?: string;
 }
 
-export default function ContactForm({ prefilledRoom }: ContactFormProps) {
+function buildPrefilledMessage(checkIn?: string, checkOut?: string): string {
+  if (!checkIn) return "";
+  const fmt = (iso: string) =>
+    new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  if (checkOut) {
+    return `Hi, I'd like to request these dates: ${fmt(checkIn)} – ${fmt(checkOut)}.`;
+  }
+  return `Hi, I'd like to request a stay starting ${fmt(checkIn)}.`;
+}
+
+export default function ContactForm({
+  prefilledRoom,
+  prefilledCheckIn,
+  prefilledCheckOut,
+}: ContactFormProps) {
   const [pending, setPending] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
     roomInterest: prefilledRoom || "",
-    message: "",
+    message: buildPrefilledMessage(prefilledCheckIn, prefilledCheckOut),
   });
 
   function handleChange(
