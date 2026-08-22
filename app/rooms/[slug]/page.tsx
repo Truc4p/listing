@@ -264,9 +264,11 @@ export default async function RoomDetailPage({ params }: Props) {
             )}
 
             {/* Availability Calendar */}
-            {room.blockedRanges && room.blockedRanges.length > 0 && (
-              <AvailabilityCalendar blockedRanges={room.blockedRanges} />
-            )}
+            <AvailabilityCalendar
+              blockedRanges={room.blockedRanges ?? []}
+              roomTitle={room.title}
+              roomSlug={room.slug}
+            />
 
             {/* Location */}
             <div>
