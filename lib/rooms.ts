@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { getDb } from "./mongodb";
-import type { AvailabilityRange, Room, RoomImage } from "@/types";
+import type { BlockedRange, Room, RoomImage } from "@/types";
 
 function toRoom(doc: Record<string, unknown>): Room {
   return {
@@ -112,14 +112,14 @@ export async function getRoomById(id: string): Promise<Room | null> {
 
 export async function updateRoomAvailability(
   id: string,
-  availabilityRanges: AvailabilityRange[]
+  blockedRanges: BlockedRange[]
 ): Promise<boolean> {
   const db = await getDb();
   const result = await db.collection("rooms").updateOne(
     { _id: new ObjectId(id) },
-    { $set: { availabilityRanges, updatedAt: new Date() } }
+    { $set: { blockedRanges, updatedAt: new Date() } }
   );
   return result.matchedCount > 0;
 }
 
-export type { RoomImage, AvailabilityRange };
+export type { RoomImage, BlockedRange };

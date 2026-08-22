@@ -3,11 +3,11 @@ export interface RoomImage {
   alt?: string;
 }
 
-/** A single date-range window during which the listing is available */
-export interface AvailabilityRange {
+/** A date-range window during which the listing is blocked / unavailable */
+export interface BlockedRange {
   from: string; // ISO date string, e.g. "2024-06-01"
   to: string;   // ISO date string, e.g. "2024-08-31"
-  note?: string; // optional admin note, e.g. "summer season"
+  note?: string; // optional admin note, e.g. "Tenant moving out"
 }
 
 export interface Room {
@@ -24,8 +24,8 @@ export interface Room {
   available: boolean;
   featured: boolean;
   order?: number;
-  /** Explicit availability windows set by admin (Airbnb-style) */
-  availabilityRanges?: AvailabilityRange[];
+  /** Blocked / unavailable windows set by admin — all other dates are available */
+  blockedRanges?: BlockedRange[];
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -15,14 +15,14 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { getBlobImageSrc } from "@/lib/blob-url";
-import type { Room, AvailabilityRange } from "@/types";
+import type { Room, BlockedRange } from "@/types";
 
 interface Props {
   initialRooms: Room[];
 }
 
 interface RoomCalendarState {
-  ranges: AvailabilityRange[];
+  ranges: BlockedRange[];
   saving: boolean;
   saved: boolean;
   error: string | null;
@@ -39,11 +39,11 @@ function formatDate(iso: string): string {
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-function rangesOverlap(a: AvailabilityRange, b: AvailabilityRange): boolean {
+function rangesOverlap(a: BlockedRange, b: BlockedRange): boolean {
   return a.from <= b.to && b.from <= a.to;
 }
 
-function validateRanges(ranges: AvailabilityRange[]): string | null {
+function validateRanges(ranges: BlockedRange[]): string | null {
   for (let i = 0; i < ranges.length; i++) {
     const r = ranges[i];
     if (!r.from || !r.to) return `Range ${i + 1}: both start and end dates are required.`;
@@ -65,7 +65,7 @@ export default function CalendarManager({ initialRooms }: Props) {
       const map: Record<string, RoomCalendarState> = {};
       for (const room of initialRooms) {
         map[room._id] = {
-          ranges: room.availabilityRanges ?? [],
+          ranges: room.blockedRanges ?? [],
           saving: false,
           saved: false,
           error: null,
@@ -97,7 +97,7 @@ export default function CalendarManager({ initialRooms }: Props) {
   function updateRange(
     id: string,
     index: number,
-    field: keyof AvailabilityRange,
+    field: keyof BlockedRange,
     value: string
   ) {
     const ranges = calStates[id].ranges.map((r, i) =>
@@ -118,7 +118,7 @@ export default function CalendarManager({ initialRooms }: Props) {
       const res = await fetch(`/api/admin/rooms/${id}/calendar`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ availabilityRanges: ranges }),
+        body: JSON.stringify({ blockedRanges: ranges }),
       });
       if (!res.ok) {
         const body = await res.json();
@@ -164,11 +164,11 @@ export default function CalendarManager({ initialRooms }: Props) {
       <div className="max-w-3xl mx-auto px-6 py-8">
         <div className="mb-6">
           <h1 className="text-xl font-semibold text-gray-900 mb-1">
-            Availability Calendar
+            Blocked Dates
           </h1>
           <p className="text-sm text-gray-500">
-            Set date windows when each listing is available to rent, like Airbnb.
-            Guests see these dates on the listing page.
+            Mark date ranges when a listing is <strong>not available</strong> — e.g. already rented, under maintenance, or reserved.
+            All other dates are shown as available to guests.
           </p>
         </div>
 
@@ -205,8 +205,8 @@ export default function CalendarManager({ initialRooms }: Props) {
                     <p className="font-medium text-gray-900 truncate">{room.title}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
                       {cs.ranges.length === 0
-                        ? "No availability windows set"
-                        : `${cs.ranges.length} window${cs.ranges.length > 1 ? "s" : ""} · ${formatDate(cs.ranges[0].from)} – ${formatDate(cs.ranges[cs.ranges.length - 1].to)}`}
+                        ? "No blocked dates"
+                        : `${cs.ranges.length} blocked period${cs.ranges.length > 1 ? "s" : ""} · ${formatDate(cs.ranges[0].from)} – ${formatDate(cs.ranges[cs.ranges.length - 1].to)}`}
                     </p>
                   </div>
 
@@ -228,13 +228,13 @@ export default function CalendarManager({ initialRooms }: Props) {
                   </div>
                 </button>
 
-                {/* Expanded calendar editor */}
+                {/* Expanded editor */}
                 {cs.expanded && (
                   <div className="border-t border-gray-100 px-5 pb-5 pt-4">
                     {/* Ranges list */}
                     {cs.ranges.length === 0 ? (
                       <p className="text-sm text-gray-400 mb-4">
-                        No availability windows yet. Add one below.
+                        No blocked periods yet. Add one below to mark dates as unavailable.
                       </p>
                     ) : (
                       <div className="space-y-3 mb-4">
@@ -272,7 +272,7 @@ export default function CalendarManager({ initialRooms }: Props) {
                                   className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#378451]"
                                 />
                               </div>
-                              <div className="flex flex-col gap-0.5 flex-1 min-w-35">
+                              <div className="flex flex-col gap-0.5 flex-1 min-w-[140px]">
                                 <label className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide">
                                   Note (optional)
                                 </label>
@@ -282,7 +282,7 @@ export default function CalendarManager({ initialRooms }: Props) {
                                   onChange={(e) =>
                                     updateRange(room._id, i, "note", e.target.value)
                                   }
-                                  placeholder="e.g. Summer season"
+                                  placeholder="e.g. Occupied, maintenance…"
                                   className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#378451]"
                                 />
                               </div>
@@ -291,7 +291,7 @@ export default function CalendarManager({ initialRooms }: Props) {
                               type="button"
                               onClick={() => removeRange(room._id, i)}
                               className="p-1.5 text-gray-400 hover:text-red-500 transition-colors shrink-0 mt-1 sm:mt-0"
-                              aria-label="Remove range"
+                              aria-label="Remove blocked period"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -310,11 +310,11 @@ export default function CalendarManager({ initialRooms }: Props) {
                     {cs.saved && (
                       <div className="flex items-center gap-2 text-sm text-emerald-700 bg-emerald-50 rounded-xl px-4 py-3 mb-4">
                         <CheckCircle2 className="w-4 h-4 shrink-0" />
-                        Availability saved successfully.
+                        Blocked dates saved successfully.
                       </div>
                     )}
 
-                    {/* Actions row */}
+                    {/* Actions */}
                     <div className="flex items-center gap-3">
                       <button
                         type="button"
@@ -322,7 +322,7 @@ export default function CalendarManager({ initialRooms }: Props) {
                         className="flex items-center gap-1.5 text-sm font-medium text-[#378451] border border-[#378451] px-3 py-2 rounded-xl hover:bg-emerald-50 transition-colors"
                       >
                         <Plus className="w-4 h-4" />
-                        Add window
+                        Block dates
                       </button>
                       <button
                         type="button"

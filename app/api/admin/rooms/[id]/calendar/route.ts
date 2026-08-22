@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isAdminAuthed } from "@/lib/admin-auth";
 import { getRoomById, updateRoomAvailability } from "@/lib/rooms";
-import type { AvailabilityRange } from "@/types";
+import type { BlockedRange } from "@/types";
 
 interface Params {
   params: Promise<{ id: string }>;
 }
 
-/** GET /api/admin/rooms/:id/calendar — return existing availability ranges */
+/** GET /api/admin/rooms/:id/calendar — return existing blocked ranges */
 export async function GET(_req: NextRequest, { params }: Params) {
   if (!(await isAdminAuthed())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -15,10 +15,10 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const { id } = await params;
   const room = await getRoomById(id);
   if (!room) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  return NextResponse.json({ availabilityRanges: room.availabilityRanges ?? [] });
+  return NextResponse.json({ blockedRanges: room.blockedRanges ?? [] });
 }
 
-/** PUT /api/admin/rooms/:id/calendar — replace availability ranges */
+/** PUT /api/admin/rooms/:id/calendar — replace blocked ranges */
 export async function PUT(req: NextRequest, { params }: Params) {
   if (!(await isAdminAuthed())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -27,11 +27,11 @@ export async function PUT(req: NextRequest, { params }: Params) {
   const body = await req.json();
 
   // Validate shape
-  if (!Array.isArray(body.availabilityRanges)) {
-    return NextResponse.json({ error: "availabilityRanges must be an array" }, { status: 400 });
+  if (!Array.isArray(body.blockedRanges)) {
+    return NextResponse.json({ error: "blockedRanges must be an array" }, { status: 400 });
   }
 
-  for (const range of body.availabilityRanges as AvailabilityRange[]) {
+  for (const range of body.blockedRanges as BlockedRange[]) {
     if (typeof range.from !== "string" || typeof range.to !== "string") {
       return NextResponse.json({ error: "Each range must have from and to strings" }, { status: 400 });
     }
@@ -40,7 +40,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
     }
   }
 
-  const ok = await updateRoomAvailability(id, body.availabilityRanges);
+  const ok = await updateRoomAvailability(id, body.blockedRanges);
   if (!ok) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json({ ok: true });
 }

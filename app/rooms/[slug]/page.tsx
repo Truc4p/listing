@@ -264,8 +264,8 @@ export default async function RoomDetailPage({ params }: Props) {
             )}
 
             {/* Availability Calendar */}
-            {room.availabilityRanges && room.availabilityRanges.length > 0 && (
-              <AvailabilityCalendar availabilityRanges={room.availabilityRanges} />
+            {room.blockedRanges && room.blockedRanges.length > 0 && (
+              <AvailabilityCalendar blockedRanges={room.blockedRanges} />
             )}
 
             {/* Location */}
