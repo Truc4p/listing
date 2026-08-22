@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { BlockedRange } from "@/types";
 
@@ -170,11 +172,46 @@ function MonthGrid({
 
 export default function AvailabilityCalendar({ blockedRanges, roomTitle }: Props) {
   const now = new Date();
-  const [leftYear, setLeftYear] = useState(now.getFullYear());
-  const [leftMonth, setLeftMonth] = useState(now.getMonth());
-  const [checkIn, setCheckIn] = useState<string | null>(null);
-  const [checkOut, setCheckOut] = useState<string | null>(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Seed initial state from URL query params so browser back preserves selection
+  const initialCheckIn = searchParams.get("checkIn") ?? null;
+  const initialCheckOut = searchParams.get("checkOut") ?? null;
+
+  // If the stored checkIn is in the future and valid, start the calendar there
+  const initialMonth = (() => {
+    if (initialCheckIn) {
+      const d = new Date(initialCheckIn + "T00:00:00");
+      if (!isNaN(d.getTime())) return { year: d.getFullYear(), month: d.getMonth() };
+    }
+    return { year: now.getFullYear(), month: now.getMonth() };
+  })();
+
+  const [leftYear, setLeftYear] = useState(initialMonth.year);
+  const [leftMonth, setLeftMonth] = useState(initialMonth.month);
+  const [checkIn, setCheckIn] = useState<string | null>(initialCheckIn);
+  const [checkOut, setCheckOut] = useState<string | null>(initialCheckOut);
   const [hovered, setHovered] = useState<string | null>(null);
+
+  // Keep URL in sync with selected dates so browser back restores them
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (checkIn) {
+      params.set("checkIn", checkIn);
+    } else {
+      params.delete("checkIn");
+    }
+    if (checkOut) {
+      params.set("checkOut", checkOut);
+    } else {
+      params.delete("checkOut");
+    }
+    const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
+    router.replace(newUrl, { scroll: false });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkIn, checkOut]);
 
   const right = addMonths(leftYear, leftMonth, 1);
 
@@ -321,12 +358,12 @@ export default function AvailabilityCalendar({ blockedRanges, roomTitle }: Props
                 ({nights} night{nights !== 1 ? "s" : ""})
               </span>
             </div>
-            <a
+            <Link
               href={contactHref}
               className="flex items-center gap-1.5 bg-[#378451] hover:bg-[#2D6B42] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors whitespace-nowrap"
             >
               Request these dates
-            </a>
+            </Link>
           </div>
         </div>
       )}
