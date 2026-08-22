@@ -14,6 +14,7 @@ import { getAllRoomSlugs, getRoomBySlug } from "@/lib/rooms";
 import { AMENITY_MAP } from "@/lib/amenities";
 import { RoomJsonLd, BreadcrumbListJsonLd } from "@/components/seo/JsonLd";
 import { RoomPhotoGallery } from "@/components/listings/RoomPhotoGallery";
+import AvailabilityCalendar from "@/components/listings/AvailabilityCalendar";
 import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room } from "@/types";
 
@@ -262,6 +263,11 @@ export default async function RoomDetailPage({ params }: Props) {
               </div>
             )}
 
+            {/* Availability Calendar */}
+            {room.availabilityRanges && room.availabilityRanges.length > 0 && (
+              <AvailabilityCalendar availabilityRanges={room.availabilityRanges} />
+            )}
+
             {/* Location */}
             <div>
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
@@ -310,36 +316,7 @@ export default async function RoomDetailPage({ params }: Props) {
                   </span>
                 </div>
 
-                {/* Availability windows */}
-                {room.availabilityRanges && room.availabilityRanges.length > 0 && (
-                  <div className="mb-5 pb-5 border-b border-gray-100">
-                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2.5">
-                      Available dates
-                    </p>
-                    <ul className="space-y-1.5">
-                      {room.availabilityRanges.map((range, i) => (
-                        <li key={i} className="flex flex-col text-sm text-gray-700">
-                          <span className="font-medium">
-                            {new Date(range.from + "T00:00:00").toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}{" "}
-                            &ndash;{" "}
-                            {new Date(range.to + "T00:00:00").toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}
-                          </span>
-                          {range.note && (
-                            <span className="text-xs text-gray-400">{range.note}</span>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {/* Availability windows — shown in full calendar on left column */}
 
                 {/* Key facts */}
                 <ul className="space-y-2.5 mb-6 pb-6 border-b border-gray-100">
