@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink, Upload, GripVertical } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink, Upload, GripVertical, CalendarRange } from "lucide-react";
 import { getBlobImageSrc } from "@/lib/blob-url";
 import type { Room, RoomImage } from "@/types";
 
@@ -266,6 +267,13 @@ export default function AdminDashboard() {
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
         <h1 className="text-lg font-semibold text-gray-900">Admin — Rooms</h1>
         <div className="flex items-center gap-3">
+          <Link
+            href="/admin/calendar"
+            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+          >
+            <CalendarRange className="w-4 h-4" />
+            Calendar
+          </Link>
           <a
             href="/"
             target="_blank"

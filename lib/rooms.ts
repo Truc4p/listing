@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { getDb } from "./mongodb";
-import type { Room, RoomImage } from "@/types";
+import type { AvailabilityRange, Room, RoomImage } from "@/types";
 
 function toRoom(doc: Record<string, unknown>): Room {
   return {
@@ -103,4 +103,23 @@ export async function updateRoomOrder(roomIds: string[]): Promise<void> {
   }
 }
 
-export type { RoomImage };
+export async function getRoomById(id: string): Promise<Room | null> {
+  const db = await getDb();
+  const doc = await db.collection("rooms").findOne({ _id: new ObjectId(id) });
+  if (!doc) return null;
+  return toRoom(doc as Record<string, unknown>);
+}
+
+export async function updateRoomAvailability(
+  id: string,
+  availabilityRanges: AvailabilityRange[]
+): Promise<boolean> {
+  const db = await getDb();
+  const result = await db.collection("rooms").updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { availabilityRanges, updatedAt: new Date() } }
+  );
+  return result.matchedCount > 0;
+}
+
+export type { RoomImage, AvailabilityRange };
