@@ -15,10 +15,15 @@ export interface ContactEmailData {
 }
 
 export async function sendContactEmail(data: ContactEmailData) {
-  const ownerEmail = process.env.OWNER_EMAIL || "owner@example.com";
+  const ownerEmail = process.env.OWNER_EMAIL;
+  if (!ownerEmail) throw new Error("OWNER_EMAIL env var is not set.");
+
+  const fromAddress =
+    process.env.RESEND_FROM_EMAIL ||
+    "AN Apartment <onboarding@resend.dev>";
 
   const { error } = await getResend().emails.send({
-    from: "AN Apartment <noreply@thanhha.com>",
+    from: fromAddress,
     to: ownerEmail,
     replyTo: data.email,
     subject: `New message from ${data.name}`,

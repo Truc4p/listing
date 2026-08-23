@@ -23,9 +23,10 @@ export async function POST(req: NextRequest) {
     await sendContactEmail({ name, email, phone, message, roomInterest });
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("Contact email error:", err);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[contact] email send error:", message);
     return NextResponse.json(
-      { error: "Failed to send. Please try again later." },
+      { error: message || "Failed to send. Please try again later." },
       { status: 500 }
     );
   }
