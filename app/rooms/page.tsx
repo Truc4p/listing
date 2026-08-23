@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getAllRooms } from "@/lib/rooms";
 import RoomsFilter from "./RoomsFilter";
 
@@ -20,8 +21,22 @@ export default async function RoomsPage() {
         </p>
       </div>
 
-      {/* Interactive filter bar + listing grid (client component) */}
-      <RoomsFilter initialRooms={rooms} />
+      {/*
+        RoomsFilter uses useSearchParams() which requires a Suspense boundary
+        so Next.js can correctly read URL params on the server during SSR.
+        Without this, Vercel receives empty params and filters do nothing.
+      */}
+      <Suspense fallback={
+        <div className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {Array.from({ length: rooms.length }).map((_, i) => (
+              <div key={i} className="h-72 rounded-2xl bg-gray-100 animate-pulse" />
+            ))}
+          </div>
+        </div>
+      }>
+        <RoomsFilter initialRooms={rooms} />
+      </Suspense>
     </>
   );
 }

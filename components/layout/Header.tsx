@@ -289,8 +289,15 @@ export default function Header() {
 
   const handleSearch = () => {
     const params = new URLSearchParams();
-    if (dateStart) params.set("checkIn", dateStart.toISOString().split("T")[0]);
-    if (dateEnd) params.set("checkOut", dateEnd.toISOString().split("T")[0]);
+    if (dateStart) {
+      // Use local date parts to avoid UTC offset shifting the day (e.g. Vietnam = UTC+7)
+      const ci = `${dateStart.getFullYear()}-${String(dateStart.getMonth() + 1).padStart(2, "0")}-${String(dateStart.getDate()).padStart(2, "0")}`;
+      params.set("checkIn", ci);
+    }
+    if (dateEnd) {
+      const co = `${dateEnd.getFullYear()}-${String(dateEnd.getMonth() + 1).padStart(2, "0")}-${String(dateEnd.getDate()).padStart(2, "0")}`;
+      params.set("checkOut", co);
+    }
     if (selectedType !== "any") params.set("type", selectedType);
     if (selectedPrice !== "any") params.set("maxPrice", selectedPrice);
     const qs = params.toString();
