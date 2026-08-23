@@ -24,6 +24,12 @@ function isBlockedDuring(room: Room, checkIn: string, checkOut: string): boolean
   return room.blockedRanges.some((r) => r.from <= checkOut && r.to >= checkIn);
 }
 
+/** Returns true if today falls inside any blocked range */
+function isBlockedToday(room: Room): boolean {
+  const today = new Date().toISOString().slice(0, 10);
+  return isBlockedDuring(room, today, today);
+}
+
 function formatSearchDate(iso: string): string {
   const d = new Date(iso + "T00:00:00");
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -52,8 +58,8 @@ export default function RoomsFilter({ initialRooms }: RoomsFilterProps) {
     // Type filter
     if (filter !== "all" && r.type !== filter) return false;
 
-    // Available-only toggle (the room.available boolean = currently free)
-    if (availableOnly && !r.available) return false;
+    // Available-only toggle: must have available=true AND not blocked today
+    if (availableOnly && (!r.available || isBlockedToday(r))) return false;
 
     // Budget filter
     if (maxPrice && r.price > maxPrice) return false;
