@@ -1,6 +1,10 @@
 import { getAllRooms } from "@/lib/rooms";
 import RoomsFilter from "./RoomsFilter";
 
+// Always fetch fresh from DB so blocked-date / availability changes
+// made in the admin are reflected immediately on Vercel without a redeploy.
+export const dynamic = "force-dynamic";
+
 export default async function RoomsPage() {
   const rooms = await getAllRooms();
 

@@ -80,6 +80,10 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+// Always render fresh from the DB so availability/blocked-date changes
+// made in the admin are reflected immediately without a redeploy.
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   const slugs = await getAllRoomSlugs();
   return slugs.map(({ slug }) => ({ slug }));
