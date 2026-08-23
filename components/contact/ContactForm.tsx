@@ -86,10 +86,16 @@ export default function ContactForm({
   }
 
   function buildWhatsAppText() {
+    // The prefilled message already starts with "Hi, ...", so when we add the
+    // "Hi, my name is X." intro we strip the leading greeting to avoid a
+    // doubled "Hi". If there's no name, keep the message untouched.
+    const message = form.name
+      ? form.message.replace(/^Hi[,\s]*/i, "")
+      : form.message;
     const parts = [
-      `Hi, my name is ${form.name}.`,
+      form.name ? `Hi, my name is ${form.name}.` : "",
       form.roomInterest ? `I'm interested in: ${form.roomInterest}.` : "",
-      form.message,
+      message,
       form.phone ? `My phone: ${form.phone}` : "",
       form.email ? `My email: ${form.email}` : "",
     ].filter(Boolean);
